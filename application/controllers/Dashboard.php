@@ -36,6 +36,12 @@ class Dashboard extends CI_Controller {
         $this->tampil($data);
     }
 
+    public function barang_hapus($id)
+    {
+        $this->m_dashboard->hapus_data('barang','ID_BARANG',$id);
+        redirect(base_url('dashboard/barang'));
+    }
+
        public function uploaddata()
     {
         $config['upload_path'] = './uploads/';

@@ -57,6 +57,15 @@ class M_dashboard extends CI_Model{
       public function insert_multiple($data){
         $this->db->insert_batch('barang', $data);
       }
+
+      function hapus_data($tabel, $kolom, $id)  
+    {
+        $this->db->delete($tabel, array($kolom => $id));
+        if (!$this->db->affected_rows())
+            return (FALSE);
+        else
+            return (TRUE);
+    }
     
 }
  

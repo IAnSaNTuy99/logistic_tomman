@@ -72,6 +72,7 @@
 //============================================Barang=================================================//
 else if ($page == 'barang') {
 ?>
+
   <div class="content-wrapper">
     <section class="content-header">
       <div class="container-fluid">
@@ -83,7 +84,7 @@ else if ($page == 'barang') {
       </div>
     </section>
 
-    <section class="content">
+       <section class="content">
       <?= $this->session->flashdata('pesan'); ?>
       <div class="card">
         <div class="card-body">
@@ -111,6 +112,7 @@ else if ($page == 'barang') {
                 <th>Nama Material</th>
                 <th>Jumlah</th>
                 <th>satuan</th>
+                <th>Aksi</th>
               </tr>
             </thead>
             <?php $i = 1;
@@ -121,6 +123,8 @@ else if ($page == 'barang') {
                 <td><?php echo $data['NAMA_BARANG'] ?></td>
                 <td><?php echo $data['JUMLAH'] ?></td>
                 <td><?php echo $data['SATUAN'] ?></td>
+                <td><a href=<?php echo base_url("dashboard/barang_hapus/") . $data['ID_BARANG']; ?> onclick="return confirm('Yakin menghapus Material : <?php echo $data['NAMA_BARANG']; ?> ?');" ;><i class="fas fa-trash-alt"></i></a></td>
+
               </tr>
             <?php
             }
