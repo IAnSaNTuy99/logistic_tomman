@@ -98,7 +98,7 @@
                       echo "active";
                     ?>
                   ">
-                    <i class="nav-icon fas fa-users"></i>
+                    <i class="nav-icon fas fa-warehouse"></i>
                     <p>Stok Material</p>
                   </a>
                 </li>
