@@ -28,7 +28,7 @@
 <body class="hold-transition login-page">
   <div class="login-box">
     <div class="login-logo">
-      <img src="<?php echo base_url(); ?>assets/img/telkom_logo.png">>
+      <img src="<?php echo base_url(); ?>assets/img/telkom_logo.png">
       <span class="text-warning"><b></b></a></span>
     </div>
     <!-- /.login-logo -->

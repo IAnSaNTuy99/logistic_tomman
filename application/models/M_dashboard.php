@@ -8,10 +8,19 @@ class M_dashboard extends CI_Model{
 
     public function dt_barang()
     {
-        $this->db->select('ID_BARANG, NAMA_BARANG, JUMLAH');
+        $this->db->select('ID_BARANG, NAMA_BARANG, JUMLAH, SATUAN');
         $this->db->from('barang');
         $query = $this->db->get();
         return $query->result_array();        
+    }
+
+     function jumlah_record_tabel($tabel)    
+    {
+        $query = $this->db->select("COUNT(*) as num")->get($tabel);
+        $result = $query->row();
+        if (isset($result))
+            return $result->num;
+        return 0;
     }
 
     // Fungsi untuk melakukan proses upload file

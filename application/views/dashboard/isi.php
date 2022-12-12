@@ -19,12 +19,12 @@
           <div class="col-lg-6 col-12">
             <div class="small-box bg-info">
               <div class="inner">
-                <!-- <h3><?php echo $jml_barang; ?></h3> -->
+                <h3><?php echo $jml_barang; ?></h3>
 
                 <p>Jumlah Barang</p>
               </div>
               <div class="icon">
-                <i class="ion ion-android-people"></i>
+                <i class="ion ion-pie-graph"></i>
               </div>
               <a href="<?php echo base_url('dashboard/barang') ?>" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
@@ -84,17 +84,23 @@ else if ($page == 'barang') {
     </section>
 
     <section class="content">
+      <?= $this->session->flashdata('pesan'); ?>
       <div class="card">
         <div class="card-body">
-           <?= form_open_multipart('dashboard/uploaddata') ?>
-            <div class="col-4">
-              <input type="file" class="form-control-file" id="importexcel" name="importexcel" accept=".xlsx,.xls"></div>
-              <div class="col">
+          <div class="row">
+           <div class="col-sm-0"><?= form_open_multipart('dashboard/uploaddata') ?></div>
+            <div class="col-sm-2.5">
+              <input type="file" class="form-control-file" id="importexcel" name="importexcel" accept=".xlsx,.xls"> 
+            </div>
+              <div class="col-sm-5">
                   <button type="submit" class="btn btn-primary">Import</button>
               </div>
               <div class="col">
-                  <?= $this->session->flashdata('pesan'); ?>
+                  
               </div>
+              <?= form_close(); ?>
+              </div>
+          </div>
              
      
           <table id="datatable_01" class="table table-bordered">
@@ -104,6 +110,7 @@ else if ($page == 'barang') {
                 <th>Kode Material</th>
                 <th>Nama Material</th>
                 <th>Jumlah</th>
+                <th>satuan</th>
               </tr>
             </thead>
             <?php $i = 1;
@@ -113,6 +120,7 @@ else if ($page == 'barang') {
                 <td><?php echo $data['ID_BARANG'] ?></td>
                 <td><?php echo $data['NAMA_BARANG'] ?></td>
                 <td><?php echo $data['JUMLAH'] ?></td>
+                <td><?php echo $data['SATUAN'] ?></td>
               </tr>
             <?php
             }

@@ -1,11 +1,12 @@
 <?php  ?>
+</body>
 <footer class="main-footer">
     <div class="float-right d-none d-sm-block">
       <b>Version</b> 1.0.0
     </div>
     [Telkom Akses Gambut@2022]
     <strong>Copyright &copy; 2015-2022 <a href="https://adminlte.io">Tomman</a>.</strong> All rights reserved.
-  </footer>
+  
  <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
     <!-- Control sidebar content goes here -->
@@ -35,7 +36,7 @@
 
   <!-- AdminLTE App -->
   <script src=" <?php echo base_url(); ?>assets/adminlte/dist/js/adminlte.min.js"></script>
+  </footer>
   
-  </body>
 
   </html>
