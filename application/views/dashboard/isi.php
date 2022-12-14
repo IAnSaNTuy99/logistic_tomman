@@ -69,7 +69,7 @@
 <?php
 }
 
-//============================================Barang=================================================//
+//============================================STOK MATERIAL=================================================//
 else if ($page == 'barang') {
 ?>
 
@@ -135,5 +135,176 @@ else if ($page == 'barang') {
 
 <?php
 }
+//============================================Staff=================================================//
+else if ($page == 'staff_gudang') {
+  ?>
+    <div class="content-wrapper">
+      <section class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1><?php echo  $judul; ?></h1>
+            </div>
+          </div>
+        </div>
+      </section>
+  
+      <section class="content">
+        <div class="card">
+          <div class="card-body">
+          <a href=<?php echo base_url("dashboard/staff_tambah") ?> class="btn btn-primary" style="margin-bottom:15px">
+            Tambah Staff</a>
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>NO</th>
+                  <th>NIK</th>
+                  <th>Nama</th>
+                  <th>Gender</th>
+                  <th>Tanggal Lahir</th>
+                  <th>Aksi</th>
+                </tr>
+              </thead>
+              <?php $i = 1;
+              foreach ($staff_gudang as $data) { ?>
+                <tr>
+                  <td><?= $i++; ?></td>
+                  <td><?php echo $data['id_staff'] ?></td>
+                  <td><?php echo $data['nama_staff'] ?></td>
+                  <td><?php echo $data['jenkel'] ?></td>
+                  <td><?php echo $data['tgl_lahir'] ?></td>
+                  <td>
+                  <a href=<?php echo base_url("dashboard/staff_edit/") . $data['id_staff']; ?>> <i class="fas fa-pencil-alt"></i> </a>
+                  <a href=<?php echo base_url("dashboard/staff_hapus/") . $data['id_staff']; ?> onclick="return confirm('Yakin menghapus staff: <?php echo $data['nama_staff']; ?> ?');" ;><i class="fas fa-trash-alt"></i></a>
+                </td>
+                </tr>
+              <?php
+              }
+              ?>
+            </table>
+  
+          </div>
+      </section>
+    </div>
+  
+  <?php
+  }
+//--------------------------------- TAMBAH ---------------------------------
+else if ($page == 'staff_tambah') {
+  ?>
+    <div class="content-wrapper">
+      <section class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1><?php echo  $judul; ?></h1>
+            </div>
+          </div>
+        </div>
+      </section>
+  
+      <section class="content">
+        <div class="card">
+          <div class="card-body">
+  
+            <form method="POST" action="<?php echo base_url('dashboard/staff_tambah'); ?>" class="form-horizontal">
+  
+              <div class="card-body">
+  
+                <div class="form-group row">
+                  <label for="nama_santri" class="col-sm-2 col-form-label">Nama staff</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" name="nama_staff" id="nama_staff" value="<?php echo set_value('nama_staff'); ?>" placeholder="Masukkan Nama staff">
+                    <span class="badge badge-warning"><?php echo strip_tags(form_error('nama_staff')); ?></span>
+                  </div>
+                </div>
 
+                <div class="form-group row">
+                  <label for="jenkel" class="col-sm-2 col-form-label">Gender</label>
+                  <div class="col-sm-10">
+                  <select name="jenkel" id="jenkel" required>
+                    <option value="Laki-Laki">Laki-Laki</option>
+                    <option value="Perempuan">Perempuan</option>
+                  </div>
+                </div>
+  
+                <div class="form-group row">
+                    <label for="tanggal lahir" class="col-sm-2 col-form-label">Tanggal Lahir</label>
+                      <div class="col-sm-10">
+                        <input type="date" class="form-control" name="tgl_lahir" id="tgl_lahir"
+                              value="<?php echo set_value('tanggal'); ?>">
+                                <span
+                                    class="badge badge-warning"><?php echo strip_tags(form_error('tgl_lahir')); ?></span>
+                      </div>
+                </div>
+              </div>
+              <div class="card-footer">
+                <button type="submit" class="btn btn-info">Simpan</button>
+              </div>
+            </form>
+  
+  
+          </div>
+      </section>
+    </div>
+  <?php
+  } else if ($page == 'staff_edit') {
+    ?>
+      <div class="content-wrapper">
+        <section class="content-header">
+          <div class="container-fluid">
+            <div class="row mb-2">
+              <div class="col-sm-6">
+                <h1><?php echo  $judul; ?></h1>
+              </div>
+            </div>
+          </div>
+        </section>
+    
+        <section class="content">
+          <div class="card">
+            <div class="card-body">
+    
+              <form method="POST" action="<?php echo base_url('dashboard/staff_edit/' . $d['id_staff']); ?>" class="form-horizontal">
+    
+              <div class="card-body">
+                <div class="form-group row">
+                  <label for="nama_santri" class="col-sm-2 col-form-label">Nama staff</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" name="nama_staff" id="nama_staff" value="<?php echo set_value('nama_staff',$d['nama_staff']); ?>" placeholder="Masukkan Nama staff">
+                    <span class="badge badge-warning"><?php echo strip_tags(form_error('nama_staff')); ?></span>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label for="jenkel" class="col-sm-2 col-form-label">Gender</label>
+                  <div class="col-sm-10">
+                  <select class="form-control" name="jenkel" id="jenkel" required >
+                    <option value="Laki-Laki">Laki-Laki</option>
+                    <option value="Perempuan">Perempuan</option>
+                  </div>
+                </div>
+  
+                <div class="form-group row">
+                  <label for="tgl_lahir" class="col-sm-2 col-form-label">tanggal</label>
+                    <div class="col-sm-10">
+                       <input type="text" class="form-control" name="tgl_lahir" id="tgl_lahir"
+                          value="<?php echo set_value('tgl_lahir', $d['tgl_lahir']); ?>">
+                             <span class="badge badge-warning"><?php echo strip_tags(form_error('tgl_lahir')); ?></span>
+                    </div>
+                </div>
+              </div>
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-info">Simpan</button>
+                </div>
+              </form>
+    
+    
+            </div>
+        </section>
+      </div>
+    <?php
+    }
+
+  
  

@@ -36,6 +36,60 @@ class Dashboard extends CI_Controller {
         $this->tampil($data);
     }
 
+    public function staff_gudang()
+    {
+        $data['judul']='Staff WH Gambut';
+        $data['page']='staff_gudang';
+        $data['staff_gudang']=$this->m_dashboard->dt_staff();
+        $this->tampil($data);
+    }
+
+    public function staff_tambah()
+	{
+		$data['judul'] = 'Tambah Data Staff';
+		$data['page'] = 'staff_tambah';
+
+		$this->form_validation->set_rules(
+			'nama_staff',
+			'Nama Staff',
+			'required|min_length[3]|max_length[45]',
+			array('required' => '%s harus diisi.')
+		);
+
+		if ($this->form_validation->run() === FALSE) {
+			$this->tampil($data);
+		} else {
+			$this->m_dashboard->dt_staff_tambah();
+			redirect(base_url('dashboard/staff_gudang'));
+		}
+	}
+	public function staff_edit($id = FALSE)
+	{
+		$data['judul'] = 'Edit Data staff';
+		$data['page'] = 'staff_edit';
+		$this->form_validation->set_rules(
+			'nama_staff',
+			'nama_staff',
+			'required|min_length[3]|max_length[45]',
+			array('required' => '%s harus diisi.')
+		);
+
+		$data['d'] = $this->m_dashboard->cari_data('staff_gudang', 'id_staff', $id);
+
+		if ($this->form_validation->run() === FALSE) {
+			$this->tampil($data);
+		} else {
+			$this->m_dashboard->dt_staff_edit($id);
+			redirect(base_url('dashboard/staff_gudang'));
+		}
+	}
+
+	public function staff_hapus($id)
+	{
+		$this->m_umum->hapus_data('staff', 'id_staff', $id);
+		redirect(base_url('dashboard/staff_gudang'));
+	}
+
     public function barang_hapus($id)
     {
         $this->m_dashboard->hapus_data('barang','ID_BARANG',$id);

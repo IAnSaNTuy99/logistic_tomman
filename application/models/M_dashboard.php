@@ -14,13 +14,52 @@ class M_dashboard extends CI_Model{
         return $query->result_array();        
     }
 
-     function jumlah_record_tabel($tabel)    
+    public function dt_staff()
+    {
+        $this->db->select('sg.id_staff, sg.nama_staff, sg.jenkel, sg.tgl_lahir');
+        $this->db->from('staff_gudang sg');
+        $query = $this->db->get();
+        return $query->result_array();        
+    }
+
+    public function dt_staff_tambah()
+    {
+        $data = array(
+            'nama_staff' => $this->input->post('nama_staff'),
+            'jenkel' => $this->input->post('jenkel'),
+            'tgl_lahir' => $this->input->post('tgl_lahir')
+        );
+        return $this->db->insert('staff_gudang', $data);
+    }
+
+    public function dt_staff_edit($id)
+    {
+        $data = array(
+          'nama_staff' => $this->input->post('nama_staff'),
+          'jenkel' => $this->input->post('jenkel'),
+          'tgl_lahir' => $this->input->post('tgl_lahir')
+        );
+        $this->db->where('id_staff', $id);
+        return $this->db->update('staff_gudang', $data);
+    }
+
+     public function jumlah_record_tabel($tabel)    
     {
         $query = $this->db->select("COUNT(*) as num")->get($tabel);
         $result = $query->row();
         if (isset($result))
             return $result->num;
         return 0;
+    }
+  
+  
+    public function cari_data($tabel, $namafield, $isifield)
+{
+            $this->db->select('*');
+            $this->db->from($tabel);
+            $this->db->where($namafield,$isifield);
+            $query = $this->db->get();
+            return $query->row_array();           
     }
 
     // Fungsi untuk melakukan proses upload file

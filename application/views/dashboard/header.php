@@ -92,7 +92,7 @@
                with font-awesome or any other icon font library -->
             <?php
             $menu_master1 = array('BARANG');
-            // $menu_master2 = array('guru', 'guru_detil', 'guru_tambah', 'guru_edit');
+            $menu_master2 = array('staff_gudang');
             // $menu_master3 = array('kelas', 'kelas_detil', 'kelas_tambah', 'kelas_edit');
             // $menu_master4 = array('sumbangan');
             ?>
@@ -123,10 +123,21 @@
                     <p>Stok Material</p>
                   </a>
                 </li>
+
+                <li class="nav-item">
+                  <a href="<?php echo base_url('dashboard/staff_gudang'); ?>" class="nav-link
+                    <?php
+                    if (in_array($page, $menu_master2))
+                      echo "active";
+                    ?>
+                  ">
+                    <i class="nav-icon fas fa-users"></i>
+                    <p>Staff Gudang</p>
+                  </a>
+                </li>
                 	
                 </ul>
 
-             
 
             <li class="nav-item">
               <a href="<?php echo base_url("login/logout"); ?>" class="nav-link">
