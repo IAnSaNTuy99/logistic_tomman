@@ -36,6 +36,22 @@
 
   <!-- AdminLTE App -->
   <script src=" <?php echo base_url(); ?>assets/adminlte/dist/js/adminlte.min.js"></script>
+  <script>
+  $(function() {
+    $("#datatable_01").DataTable({
+      "paging": true,
+      "lengthChange": true,
+      "searching": true,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+      "dom": 'lfrtip',
+      // "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+      // "buttons": ["copy", "excel", "pdf", "print"]
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+  });
+</script>
   </footer>
   
 

@@ -62,7 +62,6 @@ class Dashboard extends CI_Controller {
                             'nama_barang'  => $row->getCellAtIndex(1),
                             'jumlah'       => $row->getCellAtIndex(2),
                             'satuan'       => $row->getCellAtIndex(3),
-                           
                         );
                         $this->m_dashboard->import_data($databarang);
                     }
@@ -71,15 +70,13 @@ class Dashboard extends CI_Controller {
                 $reader->close();
                 unlink('uploads/' . $file['file_name']);
                 $this->session->set_flashdata('pesan', '<div class="alert alert-success alert-dismissible" role="alert">
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button> Data berhasil ditambahkan </div>');
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button> Data berhasil diperbarui </div>');
                 redirect('dashboard/barang');
             }
         } else {
-            
             $this->session->set_flashdata('pesan', '<div class="alert alert-danger alert-dismissible" role="alert">
   <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button> Data Gagal ditambahkan </div>');
                 redirect('dashboard/barang');
-
         };
     }
 

@@ -97,12 +97,10 @@ else if ($page == 'barang') {
                   <button type="submit" class="btn btn-primary">Import</button>
               </div>
               <div class="col">
-                  
               </div>
               <?= form_close(); ?>
               </div>
           </div>
-             
      
           <table id="datatable_01" class="table table-bordered">
             <thead>
