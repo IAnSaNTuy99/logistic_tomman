@@ -16,8 +16,8 @@ class M_dashboard extends CI_Model{
 
     public function dt_staff()
     {
-        $this->db->select('sg.id_staff, sg.nama_staff, sg.jenkel, sg.tgl_lahir');
-        $this->db->from('staff_gudang sg');
+        $this->db->select('id_staff, nama_staff, jenkel, tgl_lahir');
+        $this->db->from('staff_gudang');
         $query = $this->db->get();
         return $query->result_array();        
     }

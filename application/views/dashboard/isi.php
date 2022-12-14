@@ -212,7 +212,7 @@ else if ($page == 'staff_tambah') {
               <div class="card-body">
   
                 <div class="form-group row">
-                  <label for="nama_santri" class="col-sm-2 col-form-label">Nama staff</label>
+                  <label for="nama_staff" class="col-sm-2 col-form-label">Nama staff</label>
                   <div class="col-sm-10">
                     <input type="text" class="form-control" name="nama_staff" id="nama_staff" value="<?php echo set_value('nama_staff'); ?>" placeholder="Masukkan Nama staff">
                     <span class="badge badge-warning"><?php echo strip_tags(form_error('nama_staff')); ?></span>
@@ -222,9 +222,10 @@ else if ($page == 'staff_tambah') {
                 <div class="form-group row">
                   <label for="jenkel" class="col-sm-2 col-form-label">Gender</label>
                   <div class="col-sm-10">
-                  <select name="jenkel" id="jenkel" required>
+                  <select class="form-control" name="jenkel" id="jenkel" required>
                     <option value="Laki-Laki">Laki-Laki</option>
                     <option value="Perempuan">Perempuan</option>
+                  </select>
                   </div>
                 </div>
   
@@ -263,46 +264,54 @@ else if ($page == 'staff_tambah') {
     
         <section class="content">
           <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Isikan Data Dengan Benar</h3>
+            </div>
             <div class="card-body">
     
-              <form method="POST" action="<?php echo base_url('dashboard/staff_edit/' . $d['id_staff']); ?>" class="form-horizontal">
+              <?php echo validation_errors(); ?>
     
-              <div class="card-body">
-                <div class="form-group row">
-                  <label for="nama_santri" class="col-sm-2 col-form-label">Nama staff</label>
-                  <div class="col-sm-10">
-                    <input type="text" class="form-control" name="nama_staff" id="nama_staff" value="<?php echo set_value('nama_staff',$d['nama_staff']); ?>" placeholder="Masukkan Nama staff">
-                    <span class="badge badge-warning"><?php echo strip_tags(form_error('nama_staff')); ?></span>
+              <form method="POST" action="<?php echo base_url('dashboard/staff_edit'); ?>" class="form-horizontal">
+    
+                <div class="card-body">
+    
+                  <div class="form-group row">
+                    <label for="nama_staff" class="col-sm-2 col-form-label">Nama Staff</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" name="nama_staff" id="nama_staff" value="<?php echo set_value('nama_staff',$d['nama_staff']); ?>" placeholder="Masukkan Nama Staff">
+                      <span class="badge badge-warning"><?php echo strip_tags(form_error('nama_staff')); ?></span>
+                    </div>
                   </div>
-                </div>
 
-                <div class="form-group row">
+                  <div class="form-group row">
                   <label for="jenkel" class="col-sm-2 col-form-label">Gender</label>
                   <div class="col-sm-10">
                   <select class="form-control" name="jenkel" id="jenkel" required >
                     <option value="Laki-Laki">Laki-Laki</option>
                     <option value="Perempuan">Perempuan</option>
+                  </select>
                   </div>
                 </div>
-  
-                <div class="form-group row">
-                  <label for="tgl_lahir" class="col-sm-2 col-form-label">tanggal</label>
+    
+                  <div class="form-group row">
+                    <label for="tgl_lahir" class="col-sm-2 col-form-label">Tanggal Lahir</label>
                     <div class="col-sm-10">
-                       <input type="text" class="form-control" name="tgl_lahir" id="tgl_lahir"
-                          value="<?php echo set_value('tgl_lahir', $d['tgl_lahir']); ?>">
-                             <span class="badge badge-warning"><?php echo strip_tags(form_error('tgl_lahir')); ?></span>
+                      <input type="text" class="form-control" name="tgl_lahir" id="tgl_lahir" value="<?php echo set_value('tgl_lahir',$d['tgl_lahir']); ?>"> 
+                      <span class="badge badge-warning"><?php echo strip_tags(form_error('tgl_lahir')); ?></span>
                     </div>
+                  </div>
+    
                 </div>
-              </div>
                 <div class="card-footer">
                   <button type="submit" class="btn btn-info">Simpan</button>
                 </div>
               </form>
     
-    
             </div>
+          </div>
         </section>
       </div>
+    
     <?php
     }
 

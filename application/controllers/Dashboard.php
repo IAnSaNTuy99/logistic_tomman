@@ -69,7 +69,7 @@ class Dashboard extends CI_Controller {
 		$data['page'] = 'staff_edit';
 		$this->form_validation->set_rules(
 			'nama_staff',
-			'nama_staff',
+			'Nama_Staff',
 			'required|min_length[3]|max_length[45]',
 			array('required' => '%s harus diisi.')
 		);
