@@ -55,7 +55,8 @@ class Dashboard extends CI_Controller {
 			'required|min_length[3]|max_length[45]',
 			array('required' => '%s harus diisi.')
 		);
-
+		$this->form_validation->set_rules('jenkel', 'Gender', 'required', array('required' => '%s harus dipilih'));
+		$this->form_validation->set_rules('tgl_lahir', 'Tanggal Lahir', 'required', array('required' => '%s harus dipilih'));	
 		if ($this->form_validation->run() === FALSE) {
 			$this->tampil($data);
 		} else {
@@ -73,7 +74,8 @@ class Dashboard extends CI_Controller {
 			'required|min_length[3]|max_length[45]',
 			array('required' => '%s harus diisi.')
 		);
-
+		$this->form_validation->set_rules('jenkel', 'Gender', 'required', array('required' => '%s harus dipilih'));
+		$this->form_validation->set_rules('tgl_lahir', 'Tanggal Lahir', 'required', array('required' => '%s harus dipilih'));
 		$data['d'] = $this->m_dashboard->cari_data('staff_gudang', 'id_staff', $id);
 
 		if ($this->form_validation->run() === FALSE) {
@@ -86,7 +88,7 @@ class Dashboard extends CI_Controller {
 
 	public function staff_hapus($id)
 	{
-		$this->m_umum->hapus_data('staff', 'id_staff', $id);
+		$this->m_dashboard->hapus_data('staff_gudang', 'id_staff', $id);
 		redirect(base_url('dashboard/staff_gudang'));
 	}
 
@@ -134,6 +136,15 @@ class Dashboard extends CI_Controller {
         };
     }
 
+//============ Tools ===============
+function dd_cek($str)    //Untuk Validasi DropDown jika tidak dipilih
+{
+	if ($str == '-Pilih-') {
+	  $this->form_validation->set_message('dd_cek', 'Harus dipilih');
+	  return FALSE;
+	} else
+	  return TRUE;
+}
 
 	function tampil($data)
 	{

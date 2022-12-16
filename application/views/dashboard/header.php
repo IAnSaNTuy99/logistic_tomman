@@ -92,15 +92,19 @@
                with font-awesome or any other icon font library -->
             <?php
             $menu_master1 = array('BARANG');
-            $menu_master2 = array('staff_gudang');
+            $menu_master2 = array('staff_gudang', 'staff_edit','staff_tambah');
             // $menu_master3 = array('kelas', 'kelas_detil', 'kelas_tambah', 'kelas_edit');
             // $menu_master4 = array('sumbangan');
             ?>
             <li class="nav-item  
+            <?php
+              if (in_array($page, $menu_master1) || in_array($page, $menu_master2))
+                echo "menu-open";
+              ?>
             "> 
               <a href="#" class="nav-link 
                 <?php
-                if (in_array($page, $menu_master1))
+                if (in_array($page, $menu_master1) || in_array($page, $menu_master2))
                   echo "active";
                 ?>
               ">

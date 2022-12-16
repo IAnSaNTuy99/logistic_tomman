@@ -207,7 +207,7 @@ else if ($page == 'staff_tambah') {
         <div class="card">
           <div class="card-body">
   
-            <form method="POST" action="<?php echo base_url('dashboard/staff_tambah'); ?>" class="form-horizontal">
+            <form method="POST" action="<?php echo base_url('dashboard/staff_tambah/'); ?>" class="form-horizontal">
   
               <div class="card-body">
   
@@ -222,10 +222,19 @@ else if ($page == 'staff_tambah') {
                 <div class="form-group row">
                   <label for="jenkel" class="col-sm-2 col-form-label">Gender</label>
                   <div class="col-sm-10">
-                  <select class="form-control" name="jenkel" id="jenkel" required>
-                    <option value="Laki-Laki">Laki-Laki</option>
-                    <option value="Perempuan">Perempuan</option>
-                  </select>
+                    <label >
+                    <input type="radio"  name="jenkel" id="jenkel" value="Laki-laki" <?php echo set_value('jenkel'); ?>> Laki-Laki
+                  </label>
+                  <label >
+                    <input type="radio"  name="jenkel" id="jenkel" value="Perempuan" <?php echo set_value('jenkel'); ?>> Perempuan
+                  </label>
+                  <!-- <select class="form-control" name="jenkel" id="jenkel" value="<?php echo set_value('jenkel'); ?>" >
+                  <option value="">Pilih Gender</option>
+                  <option value="Laki-Laki">Laki-Laki</option>
+                  <option value="Perempuan">Perempuan</option>
+                 
+                  </select> -->
+                  <span class="badge badge-warning"><?php echo strip_tags(form_error('jenkel')); ?></span>
                   </div>
                 </div>
   
@@ -234,8 +243,7 @@ else if ($page == 'staff_tambah') {
                       <div class="col-sm-10">
                         <input type="date" class="form-control" name="tgl_lahir" id="tgl_lahir"
                               value="<?php echo set_value('tanggal'); ?>">
-                                <span
-                                    class="badge badge-warning"><?php echo strip_tags(form_error('tgl_lahir')); ?></span>
+                                <span class="badge badge-warning"><?php echo strip_tags(form_error('tgl_lahir')); ?></span>
                       </div>
                 </div>
               </div>
@@ -271,14 +279,14 @@ else if ($page == 'staff_tambah') {
     
               <?php echo validation_errors(); ?>
     
-              <form method="POST" action="<?php echo base_url('dashboard/staff_edit'); ?>" class="form-horizontal">
+              <form method="POST" action="<?php echo base_url('dashboard/staff_edit/' . $d['id_staff']); ?>" class="form-horizontal">
     
                 <div class="card-body">
     
                   <div class="form-group row">
                     <label for="nama_staff" class="col-sm-2 col-form-label">Nama Staff</label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" name="nama_staff" id="nama_staff" value="<?php echo set_value('nama_staff',$d['nama_staff']); ?>" placeholder="Masukkan Nama Staff">
+                      <input type="text" class="form-control" name="nama_staff" id="nama_staff" value="<?php echo set_value('nama_staff',$d['nama_staff'],true); ?>" placeholder="Masukkan Nama Staff">
                       <span class="badge badge-warning"><?php echo strip_tags(form_error('nama_staff')); ?></span>
                     </div>
                   </div>
@@ -286,17 +294,26 @@ else if ($page == 'staff_tambah') {
                   <div class="form-group row">
                   <label for="jenkel" class="col-sm-2 col-form-label">Gender</label>
                   <div class="col-sm-10">
-                  <select class="form-control" name="jenkel" id="jenkel" required >
-                    <option value="Laki-Laki">Laki-Laki</option>
-                    <option value="Perempuan">Perempuan</option>
-                  </select>
+                  <!-- <select class="form-control" name="jenkel" id="jenkel" value="<?php echo set_value('jenkel',$d['jenkel']); ?>" >
+                  
+                  <option value="" >Pilih Gender</option>
+                  <option value="<?php echo set_value('jenkel',$d['jenkel']); ?>">Laki-Laki</option>
+                    <option value="<?php echo set_value('jenkel',$d['jenkel']); ?>">Perempuan</option>
+                  </select> -->
+                  <label >
+                    <input type="radio"  name="jenkel" id="jenkel" value="Laki-laki" <?php if($d['jenkel']=='Laki-laki') echo 'checked'?>> Laki-Laki
+                  </label>
+                  <label >
+                    <input type="radio"  name="jenkel" id="jenkel" value="Perempuan" <?php if($d['jenkel']=='Perempuan') echo 'checked'?>> Perempuan
+                  </label>
+                  <span class="badge badge-warning"><?php echo strip_tags(form_error('jenkel')); ?></span>
                   </div>
                 </div>
     
                   <div class="form-group row">
                     <label for="tgl_lahir" class="col-sm-2 col-form-label">Tanggal Lahir</label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" name="tgl_lahir" id="tgl_lahir" value="<?php echo set_value('tgl_lahir',$d['tgl_lahir']); ?>"> 
+                      <input type="date" class="form-control" name="tgl_lahir" id="tgl_lahir" value="<?php echo set_value('tgl_lahir',$d['tgl_lahir']); ?>"> 
                       <span class="badge badge-warning"><?php echo strip_tags(form_error('tgl_lahir')); ?></span>
                     </div>
                   </div>
