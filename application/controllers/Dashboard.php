@@ -25,7 +25,7 @@ class Dashboard extends CI_Controller {
 		$data['page']	='home';
         $data['jml_barang'] =$this->m_dashboard->jumlah_record_tabel('barang');
 		$this->tampil($data);
-		// $this->tampil();//dalam tanda kurung jangan lupa dikasih $data
+		
 	}
 
 	public function barang()
@@ -35,6 +35,98 @@ class Dashboard extends CI_Controller {
         $data['barang']=$this->m_dashboard->dt_barang();
         $this->tampil($data);
     }
+
+    public function barang_edit($id = FALSE)
+	{
+		$data['judul'] = 'Edit Data Barang';
+		$data['page'] = 'barang_edit';
+        $this->form_validation->set_rules('ID_BARANG', 'Kode Material', 'required', array('required' => '%s harus diisi'));
+        // $this->form_validation->set_rules(
+        //     'nama_barang',
+        //     'Nama Barang',
+        //     'required|min_length[3]|max_length[45]',
+        //     array('required' => '%s harus diisi.')
+        // );
+        $this->form_validation->set_rules('SATUAN', 'SATUAN', 'required', array('required' => '%s harus dipilih'));
+        $this->form_validation->set_rules('JUMLAH', 'JUMLAH', 'required', array('required' => '%s harus dipilih'));
+        $data['d'] = $this->m_dashboard->cari_data('barang', 'ID_BARANG', $id);
+
+        if ($this->form_validation->run() === FALSE) {
+            $this->tampil($data);
+        } else {
+            $this->m_dashboard->dt_barang_edit($id);
+            redirect(base_url('dashboard/barang'));
+        }
+        
+	}
+
+
+    //==================Staff================================//
+
+    public function staff_gudang()
+    {
+        $data['judul']='Staff WH Gambut';
+        $data['page']='staff_gudang';
+        $data['staff_gudang']=$this->m_dashboard->dt_staff();
+        $this->tampil($data);
+      
+    }
+
+    public function staff_tambah()
+	{
+		$data['judul'] = 'Tambah Data Staff';
+		$data['page'] = 'staff_tambah';
+
+		$this->form_validation->set_rules(
+			'nama_staff',
+			'Nama Staff',
+			'required|min_length[3]|max_length[45]',
+			array('required' => '%s harus diisi.')
+		);
+		$this->form_validation->set_rules('jenkel', 'Gender', 'required', array('required' => '%s harus dipilih'));
+		$this->form_validation->set_rules('tgl_lahir', 'Tanggal Lahir', 'required', array('required' => '%s harus dipilih'));	
+		if ($this->form_validation->run() === FALSE) {
+			$this->tampil($data);
+		} else {
+			$this->m_dashboard->dt_staff_tambah();
+			redirect(base_url('dashboard/staff_gudang'));
+		}
+	}
+	public function staff_edit($id = FALSE)
+	{
+		$data['judul'] = 'Edit Data staff';
+		$data['page'] = 'staff_edit';
+		$this->form_validation->set_rules(
+			'nama_staff',
+			'Nama_Staff',
+			'required|min_length[3]|max_length[45]',
+			array('required' => '%s harus diisi.')
+		);
+		$this->form_validation->set_rules('jenkel', 'Gender', 'required', array('required' => '%s harus dipilih'));
+		$this->form_validation->set_rules('tgl_lahir', 'Tanggal Lahir', 'required', array('required' => '%s harus dipilih'));
+		$data['d'] = $this->m_dashboard->cari_data('staff_gudang', 'id_staff', $id);
+
+		if ($this->form_validation->run() === FALSE) {
+			$this->tampil($data);
+		} else {
+			$this->m_dashboard->dt_staff_edit($id);
+			redirect(base_url('dashboard/staff_gudang'));
+		}
+	}
+
+	public function barang_keluar()
+    {
+        $data['judul']='Barang keluar';
+        $data['page']='barang_keluar';
+        $data['barang_keluar']=$this->m_dashboard->dt_barang_keluar();
+        $this->tampil($data);
+    }
+
+	public function staff_hapus($id)
+	{
+		$this->m_dashboard->hapus_data('staff_gudang', 'id_staff', $id);
+		redirect(base_url('dashboard/staff_gudang'));
+	}
 
     public function staff_gudang()
     {

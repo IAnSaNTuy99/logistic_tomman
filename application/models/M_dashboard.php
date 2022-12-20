@@ -14,7 +14,59 @@ class M_dashboard extends CI_Model{
         return $query->result_array();        
     }
 
+    public function dt_barang_edit($id)
     public function dt_staff()
+    {
+        $data = array(
+          'ID_BARANG' => $this->input->post('ID_BARANG'),
+          'NAMA_BARANG' => $this->input->post('NAMA_BARANG'),
+          'JUMLAH' => $this->input->post('JUMLAH'),
+          'SATUAN' => $this->input->post('SATUAN')
+        );
+        $this->db->where('ID_BARANG', $id);
+        return $this->db->update('barang', $data);
+       
+    }
+
+//============================STAFF===========================//
+    public function dt_staff()
+    {
+        $this->db->select('id_staff, nama_staff, jenkel, tgl_lahir');
+        $this->db->from('staff_gudang');
+        $query = $this->db->get();
+        return $query->result_array();        
+    }
+
+    public function dt_staff_tambah()
+    {
+        $data = array(
+            'nama_staff' => $this->input->post('nama_staff'),
+            'jenkel' => $this->input->post('jenkel'),
+            'tgl_lahir' => $this->input->post('tgl_lahir')
+        );
+        return $this->db->insert('staff_gudang', $data);
+    }
+
+    public function dt_staff_edit($id)
+    {
+        $data = array(
+          'nama_staff' => $this->input->post('nama_staff'),
+          'jenkel' => $this->input->post('jenkel'),
+          'tgl_lahir' => $this->input->post('tgl_lahir')
+        );
+        $this->db->where('id_staff', $id);
+        return $this->db->update('staff_gudang', $data);
+    }
+
+    public function dt_barang_keluar()
+    {
+      $this->db->select('ID_BARANG_KELUAR, NAMA_BARANG, JUMLAH, TANGGAL');
+        $this->db->from('barang_keluar');
+        $query = $this->db->get();
+        return $query->result_array();    
+    }
+
+     public function jumlah_record_tabel($tabel)    
     {
         $this->db->select('id_staff, nama_staff, jenkel, tgl_lahir');
         $this->db->from('staff_gudang');
