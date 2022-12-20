@@ -91,14 +91,19 @@
             <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
             <?php
-            $menu_master1 = array('BARANG');
-            // $menu_master2 = array('guru', 'guru_detil', 'guru_tambah', 'guru_edit');
-            // $menu_master3 = array('kelas', 'kelas_detil', 'kelas_tambah', 'kelas_edit');
+            $menu_master1 = array('barang', 'barang_edit');
+            $menu_master2 = array('barang_keluar');
+            $menu_master3 = array('staff_gudang', 'staff_edit','staff_tambah');
             // $menu_master4 = array('sumbangan');
             ?>
             <li class="nav-item  
+            <?php
+              if (in_array($page, $menu_master1) || in_array($page, $menu_master2) || in_array($page, $menu_master3))
+                echo "menu-open";
+              ?>
             "> 
-              <a href="#" class="nav-link 
+
+            <a href="#" class="nav-link 
                 <?php
                 if (in_array($page, $menu_master1))
                   echo "active";
@@ -106,10 +111,25 @@
               ">
                 <i class="nav-icon fas fa-book"></i>
                 <p>
-                  Data Master
+                  WH Banjarmasin
                   <i class="right fas fa-angle-left"></i>
                 </p>
               </a>
+
+              <a href="#" class="nav-link 
+                <?php
+                if (in_array($page, $menu_master2))
+                  echo "active";
+                ?>
+              ">
+                <i class="nav-icon fas fa-book"></i>
+                <p>
+                  Barang Out
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+
+
 
               <ul class="nav nav-treeview">
                 <li class="nav-item">
@@ -123,10 +143,35 @@
                     <p>Stok Material</p>
                   </a>
                 </li>
+
+                <li class="nav-item">
+                  <a href="<?php echo base_url('dashboard/barang_keluar'); ?>" class="nav-link
+                    <?php
+                    if (in_array($page, $menu_master2))
+                      echo "active";
+                    ?>
+                  ">
+                    <i class="nav-icon fas fa-right-to-bracket"></i>
+                    <p>Barang Keluar</p>
+                  </a>
+                </li>
+
+                <li class="nav-item">
+                  <a href="<?php echo base_url('dashboard/staff_gudang'); ?>" class="nav-link
+                    <?php
+                    if (in_array($page, $menu_master3))
+                      echo "active";
+                    ?>
+                  ">
+                    <i class="nav-icon fas fa-users"></i>
+                    <p>Staff Gudang</p>
+                  </a>
+                </li>
+
+                
                 	
                 </ul>
 
-             
 
             <li class="nav-item">
               <a href="<?php echo base_url("login/logout"); ?>" class="nav-link">
