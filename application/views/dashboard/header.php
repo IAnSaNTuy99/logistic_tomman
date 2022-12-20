@@ -98,14 +98,14 @@
             ?>
             <li class="nav-item  
             <?php
-              if (in_array($page, $menu_master1) || in_array($page, $menu_master2) || in_array($page, $menu_master3))
+              if (in_array($page, $menu_master1) || in_array($page, $menu_master3))
                 echo "menu-open";
               ?>
             "> 
 
             <a href="#" class="nav-link 
                 <?php
-                if (in_array($page, $menu_master1) || in_array($page, $menu_master2))
+                if (in_array($page, $menu_master1) || in_array($page, $menu_master3))
                   echo "active";
                 ?>
               ">
@@ -116,7 +116,45 @@
                 </p>
               </a>
 
-              <a href="#" class="nav-link 
+
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="<?php echo base_url('dashboard/barang'); ?>" class="nav-link
+                    <?php
+                    if (in_array($page, $menu_master1))
+                      echo "active";
+                    ?>
+                  ">
+                  <p>--</p>
+                    <i class="nav-icon fas fa-warehouse"></i>
+                    <p>Stok Material</p>
+                  </a>
+                </li>
+
+                <li class="nav-item">
+                  <a href="<?php echo base_url('dashboard/staff_gudang'); ?>" class="nav-link
+                    <?php
+                    if (in_array($page, $menu_master3))
+                      echo "active";
+                    ?>
+                  ">
+                  <p>--</p>
+                    <i class="nav-icon fas fa-users"></i>
+                    <p>Staff Gudang</p>
+                  </a>
+                </li>
+
+                
+                	
+                </ul>
+
+          <li class="nav-item  
+            <?php
+              if (in_array($page, $menu_master2))
+                echo "menu-open";
+              ?>
+            "> 
+            <a href="#" class="nav-link 
                 <?php
                 if (in_array($page, $menu_master2))
                   echo "active";
@@ -128,19 +166,19 @@
                   <i class="right fas fa-angle-left"></i>
                 </p>
               </a>
-
-
+              
 
               <ul class="nav nav-treeview">
-                <li class="nav-item">
-                  <a href="<?php echo base_url('dashboard/barang'); ?>" class="nav-link
+              <li class="nav-item">
+                  <a href="<?php echo base_url('dashboard/barang_keluar'); ?>" class="nav-link
                     <?php
-                    if (in_array($page, $menu_master1))
+                    if (in_array($page, $menu_master2))
                       echo "active";
                     ?>
                   ">
-                    <i class="nav-icon fas fa-warehouse"></i>
-                    <p>Stok Material</p>
+                  <p>--</p>
+                    <i class="nav-icon fas fa-right-to-bracket"></i>
+                    <p>Barang Keluar</p>
                   </a>
                 </li>
 
@@ -151,28 +189,13 @@
                       echo "active";
                     ?>
                   ">
+                  <p>--</p>
                     <i class="nav-icon fas fa-right-to-bracket"></i>
-                    <p>Barang Keluar</p>
+                    <p>History</p>
                   </a>
                 </li>
 
-                <li class="nav-item">
-                  <a href="<?php echo base_url('dashboard/staff_gudang'); ?>" class="nav-link
-                    <?php
-                    if (in_array($page, $menu_master3))
-                      echo "active";
-                    ?>
-                  ">
-                    <i class="nav-icon fas fa-users"></i>
-                    <p>Staff Gudang</p>
-                  </a>
-                </li>
-
-                
-                	
-                </ul>
-
-
+              </ul>
             <li class="nav-item">
               <a href="<?php echo base_url("login/logout"); ?>" class="nav-link">
                 <i class="nav-icon fas fa-sign-out-alt"></i>
