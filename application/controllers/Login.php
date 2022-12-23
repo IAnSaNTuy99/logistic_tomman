@@ -5,8 +5,9 @@ class Login extends CI_Controller {
 
 	public function index()
 	{
-		$data['pesan']="";		
-	    $this->form_validation->set_rules('PASSWORD', 'PASSWORD', 'required', array('required'=>'Password tidak boleh kosong'));
+		$data['pesan']="";
+		$this->form_validation->set_rules('NIK', 'NIK', 'required', array('required'=>'Username tidak boleh kosong!'));		
+	    $this->form_validation->set_rules('PASSWORD', 'PASSWORD', 'required', array('required'=>'Password tidak boleh kosong!'));
 		if ($this->form_validation->run() == FALSE)
 			$this->load->view("login",$data);
 	    else

@@ -140,10 +140,13 @@ else if ($page == 'barang') {
 
 <?php
 }
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 
-//==========================================edit barang===============================================//
-  else if ($page == 'barang_edit') {
+//--------------------------------- TAMBAH ---------------------------------
+else if ($page == 'barang_edit') {
     ?>
       <div class="content-wrapper">
         <section class="content-header">
@@ -220,6 +223,8 @@ else if ($page == 'barang') {
     
     <?php
     }
+
+
 
 
 
@@ -317,7 +322,10 @@ else if ($page == 'staff_tambah') {
                   <label >
                     <input type="radio"  name="jenkel" id="jenkel" value="Perempuan" <?php echo set_value('jenkel'); ?>> Perempuan
                   </label>
+<<<<<<< Updated upstream
                   </select> 
+=======
+>>>>>>> Stashed changes
                   <span class="badge badge-warning"><?php echo strip_tags(form_error('jenkel')); ?></span>
                   </div>
                 </div>

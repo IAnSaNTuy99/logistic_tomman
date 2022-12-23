@@ -35,18 +35,22 @@
     <div class="card">
       <div class="card-body login-card-body">
         <p class="login-box-msg">Silahkan Login Disini</p>
+        
 
         <form action="<?php echo base_url("login"); ?>" method="post">
           <div class="input-group mb-3">
             <input type="text" name="NIK" class="form-control" placeholder="Username">
+            <span class="badge badge-warning"><?php echo strip_tags(form_error('NIK')); ?></span>
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-user"></span>
               </div>
             </div>
           </div>
+                  
           <div class="input-group mb-3">
             <input type="password" name="PASSWORD" class="form-control" placeholder="Password">
+            <span class="badge badge-warning"><?php echo strip_tags(form_error('PASSWORD')); ?></span>
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-lock"></span>

@@ -125,8 +125,8 @@
                       echo "active";
                     ?>
                   ">
-                  <p>--</p>
-                    <i class="nav-icon fas fa-warehouse"></i>
+                  <p></p>
+                    <i class="nav-icon fas fa-warehouse" style="margin-left: 10px;"></i>
                     <p>Stok Material</p>
                   </a>
                 </li>
@@ -138,8 +138,8 @@
                       echo "active";
                     ?>
                   ">
-                  <p>--</p>
-                    <i class="nav-icon fas fa-users"></i>
+                  <p>  </p>
+                    <i class="nav-icon fas fa-users" style="margin-left: 10px;"></i>
                     <p>Staff Gudang</p>
                   </a>
                 </li>
@@ -176,7 +176,7 @@
                       echo "active";
                     ?>
                   ">
-                  <p>--</p>
+                  <p>  </p>
                     <i class="nav-icon fas fa-angle-left"></i>
                     <p>Barang Keluar</p>
                   </a>
@@ -189,7 +189,7 @@
                       echo "active";
                     ?>
                   ">
-                  <p>--</p>
+                  <p>  </p>
                     <i class="nav-icon fas fa-minus"></i>
                     <p>History</p>
                   </a>
