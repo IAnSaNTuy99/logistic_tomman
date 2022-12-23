@@ -114,6 +114,7 @@ class Dashboard extends CI_Controller {
 		}
 	}
 
+//====================================BARANG KELUAR==============================//
 	public function barang_keluar()
     {
         $data['judul']='Barang keluar';
@@ -121,6 +122,59 @@ class Dashboard extends CI_Controller {
         $data['barang_keluar']=$this->m_dashboard->dt_barang_keluar();
         $this->tampil($data);
     }
+
+     public function bk_tambah()
+    {
+        $data['judul'] = 'Form Input Data Material Keluar';
+        $data['page'] = 'bk_tambah';
+         $this->form_validation->set_rules('ID_BARANG', 'Pilih ID Barang', 'callback_dd_cek');
+        // $this->form_validation->set_rules(
+        //     'nama_barang',
+        //     'Nama Barang',
+        //     'required|min_length[3]|max_length[45]',
+        //     array('required' => '%s harus diisi.')
+        // );
+        $this->form_validation->set_rules('JUMLAH', 'JUMLAH', 'required', array('required' => '%s harus diisi'));
+        
+       
+
+        $data['ddbarang'] = $this->m_dashboard->dropdown_barang();
+
+        if ($this->form_validation->run() === FALSE) {
+            $this->tampil($data);
+        } else {
+            $this->m_dashboard->dt_barang_keluar_tambah();
+            redirect(base_url('dashboard/barang_keluar'));
+        }
+        
+    }
+   public function bk_edit($id=false)
+    {
+        $data['judul'] = 'Edit Data Barang';
+        $data['page'] = 'bk_edit';
+         $this->form_validation->set_rules('ID_BARANG', 'Pilih ID Barang', 'callback_dd_cek');
+        $this->form_validation->set_rules('JUMLAH', 'JUMLAH', 'required', array('required' => '%s harus diisi'));
+         $data['d'] = $this->m_dashboard->cari_data('barang_keluar', 'ID_BARANG_KELUAR', $id);
+
+
+        $data['ddbarang'] = $this->m_dashboard->dropdown_barang();
+
+        if ($this->form_validation->run() === FALSE) {
+            $this->tampil($data);
+        } else {
+            $this->m_dashboard->dt_bk_edit($id);
+            redirect(base_url('dashboard/barang_keluar'));
+        }
+        
+    }
+
+
+    public function bk_hapus($id)
+	{
+		$this->m_dashboard->hapus_data('barang_keluar', 'ID_BARANG_KELUAR', $id);
+		redirect(base_url('dashboard/barang_keluar'));
+	}
+
 
 	public function staff_hapus($id)
 	{

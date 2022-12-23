@@ -140,89 +140,7 @@ else if ($page == 'barang') {
 
 <?php
 }
-//============================================Staff=================================================//
-else if ($page == 'staff_gudang') {
-  ?>
-    <div class="content-wrapper">
-      <section class="content-header">
-        <div class="container-fluid">
-          <div class="row mb-2">
-            <div class="col-sm-6">
-              <h1><?php echo  $judul; ?></h1>
-            </div>
-          </div>
-        </div>
-      </section>
-  
-      <section class="content">
-        <div class="card">
-          <div class="card-body">
-          <a href=<?php echo base_url("dashboard/staff_tambah") ?> class="btn btn-primary" style="margin-bottom:15px">
-            Tambah Staff</a>
-            <table class="table table-bordered">
-              <thead>
-                <tr>
-                  <th>NO</th>
-                  <th>NIK</th>
-                  <th>Nama</th>
-                  <th>Gender</th>
-                  <th>Tanggal Lahir</th>
-                  <th>Aksi</th>
-                </tr>
-              </thead>
-              <?php $i = 1;
-              foreach ($staff_gudang as $data) { ?>
-                <tr>
-                  <td><?= $i++; ?></td>
-                  <td><?php echo $data['id_staff'] ?></td>
-                  <td><?php echo $data['nama_staff'] ?></td>
-                  <td><?php echo $data['jenkel'] ?></td>
-                  <td><?php echo $data['tgl_lahir'] ?></td>
-                  <td>
-                  <a href=<?php echo base_url("dashboard/staff_edit/") . $data['id_staff']; ?>> <i class="fas fa-pencil-alt"></i> </a>
-                  <a href=<?php echo base_url("dashboard/staff_hapus/") . $data['id_staff']; ?> onclick="return confirm('Yakin menghapus staff: <?php echo $data['nama_staff']; ?> ?');" ;><i class="fas fa-trash-alt"></i></a>
-                </td>
-                </tr>
-              <?php
-              }
-              ?>
-            </table>
-  
-          </div>
-      </section>
-    </div>
-  
-  <?php
-  }
-//--------------------------------- TAMBAH ---------------------------------
-else if ($page == 'staff_tambah') {
-  ?>
-    <div class="content-wrapper">
-      <section class="content-header">
-        <div class="container-fluid">
-          <div class="row mb-2">
-            <div class="col-sm-6">
-              <h1><?php echo  $judul; ?></h1>
-            </div>
-          </div>
-        </div>
-      </section>
-  
-      <section class="content">
-        <div class="card">
-          <div class="card-body">
-  
-            <form method="POST" action="<?php echo base_url('dashboard/staff_tambah/'); ?>" class="form-horizontal">
-  
-              <div class="card-body">
-  
-                <div class="form-group row">
-                  <label for="nama_staff" class="col-sm-2 col-form-label">Nama staff</label>
-                  <div class="col-sm-10">
-                    <input type="text" class="form-control" name="nama_staff" id="nama_staff" value="<?php echo set_value('nama_staff'); ?>" placeholder="Masukkan Nama staff">
-                    <span class="badge badge-warning"><?php echo strip_tags(form_error('nama_staff')); ?></span>
-                  </div>
-                </div>
+
 
 //==========================================edit barang===============================================//
   else if ($page == 'barang_edit') {
@@ -399,7 +317,7 @@ else if ($page == 'staff_tambah') {
                   <label >
                     <input type="radio"  name="jenkel" id="jenkel" value="Perempuan" <?php echo set_value('jenkel'); ?>> Perempuan
                   </label>
-                  </select> -->
+                  </select> 
                   <span class="badge badge-warning"><?php echo strip_tags(form_error('jenkel')); ?></span>
                   </div>
                 </div>
@@ -512,26 +430,33 @@ else if ($page == 'barang_keluar') {
       <section class="content">
         <div class="card">
           <div class="card-body">
-            <a href=<?php echo base_url("dashboard/barang_keluar_tambah") ?> class="btn btn-primary" style="margin-bottom:15px">
+            <a href=<?php echo base_url("dashboard/bk_tambah") ?> class="btn btn-primary" style="margin-bottom:15px">
             Input Barang Out</a>
             <table class="table table-bordered">
               <thead>
                 <tr>
                   <th>NO</th>
-                  <th>Id Barang</th>
+                 <!--  <th>Id Barang</th> -->
                   <th>Nama Barang</th>
                   <th>Jumlah</th>
+                  <th>Satuan</th>
                   <th>Tanggal</th>
+            <!--       <th>Aksi</th> -->
                 </tr>
               </thead>
               <?php $i = 1;
               foreach ($barang_keluar as $data) { ?>
                 <tr>
                   <td><?= $i++; ?></td>
-                  <td><?php echo $data['ID_BARANG_KELUAR'] ?></td>
+                  <!-- <td>BK<?php echo $data['ID_BARANG_KELUAR'] ?></td> -->
                   <td><?php echo $data['NAMA_BARANG'] ?></td>
                   <td><?php echo $data['JUMLAH'] ?></td>
+                  <td><?php echo $data['SATUAN'] ?></td>
                   <td><?php echo $data['TANGGAL'] ?></td>
+                  <!-- <td>
+                  <a href=<?php echo base_url("dashboard/bk_edit/") . $data['ID_BARANG_KELUAR']; ?>> <i class="fas fa-pencil-alt"></i> </a>
+                  <a href=<?php echo base_url("dashboard/bk_hapus/") . $data['ID_BARANG_KELUAR']; ?> onclick="return confirm('Yakin menghapus Data Barang Keluar: <?php echo $data['NAMA_BARANG']; ?> ?');" ;><i class="fas fa-trash-alt"></i></a>
+                </td> -->
                 </tr>
               <?php
               }
@@ -545,3 +470,110 @@ else if ($page == 'barang_keluar') {
   <?php
   }
  
+
+
+//========================================Tambah Barang Keluar==========================//
+  else if ($page == 'bk_tambah') {
+  ?>
+    <div class="content-wrapper">
+      <section class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1><?php echo  $judul; ?></h1>
+            </div>
+          </div>
+        </div>
+      </section>
+  
+      <section class="content">
+        <div class="card">
+          <div class="card-body">
+  
+            <form method="POST" action="<?php echo base_url('dashboard/bk_tambah/'); ?>" class="form-horizontal">
+  
+              <div class="card-body">
+                <div class="form-group row">
+                  <label for="ID_BARANG" class="col-sm-2 col-form-label">Pilih Barang</label>
+                  <div class="col-sm-10" >
+                    <select class="form-control" name="ID_BARANG" id="ID_BARANG" value="<?php echo form_dropdown('ID_BARANG', $ddbarang, set_value('ID_BARANG')); ?>
+                    
+                    <span class="badge badge-warning"><?php echo strip_tags(form_error('ID_BARANG')); ?></span>
+                    </select>
+                </div>
+              </div>
+
+                 <div class="form-group row">
+                <label for="JUMLAH" class="col-sm-2 col-form-label">Jumlah</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" name="JUMLAH" id="JUMLAH" value="<?php echo set_value('JUMLAH'); ?>" placeholder="Masukkan Jumlah">
+                  <span class="badge badge-warning"><?php echo strip_tags(form_error('JUMLAH')); ?></span>
+                </div>
+              </div>
+  
+                
+              </div>
+              <div class="card-footer">
+                <button type="submit" class="btn btn-info">Simpan</button>
+              </div>
+            </form>
+  
+  
+          </div>
+      </section>
+    </div>
+  <?php
+  }
+
+  //========================================Edit Barang Keluar==========================//
+ else if ($page == 'bk_edit') {
+  ?>
+    <div class="content-wrapper">
+      <section class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1><?php echo  $judul; ?></h1>
+            </div>
+          </div>
+        </div>
+      </section>
+  
+      <section class="content">
+        <div class="card">
+          <div class="card-body">
+  
+            <form method="POST" action="<?php echo base_url('dashboard/bk_edit/' . $d['ID_BARANG_KELUAR']); ?>" class="form-horizontal">
+  
+              <div class="card-body">
+                <div class="form-group row">
+                  <label for="ID_BARANG" class="col-sm-2 col-form-label">Pilih Barang</label>
+                  <div class="col-sm-10" >
+                    <select class="form-control" name="ID_BARANG" id="ID_BARANG" value="<?php echo form_dropdown('ID_BARANG', $ddbarang, set_value('ID_BARANG',$d['ID_BARANG'])); ?>
+                    
+                    <span class="badge badge-warning"><?php echo strip_tags(form_error('ID_BARANG')); ?></span>
+                    </select>
+                </div>
+              </div>
+
+                 <div class="form-group row">
+                <label for="JUMLAH" class="col-sm-2 col-form-label">Jumlah</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" name="JUMLAH" id="JUMLAH" value="<?php echo set_value('JUMLAH',$d['JUMLAH']); ?>" placeholder="Masukkan Jumlah">
+                  <span class="badge badge-warning"><?php echo strip_tags(form_error('JUMLAH')); ?></span>
+                </div>
+              </div>
+  
+                
+              </div>
+              <div class="card-footer">
+                <button type="submit" class="btn btn-info">Simpan</button>
+              </div>
+            </form>
+  
+  
+          </div>
+      </section>
+    </div>
+  <?php
+  }

@@ -92,9 +92,9 @@
                with font-awesome or any other icon font library -->
             <?php
             $menu_master1 = array('barang', 'barang_edit');
-            $menu_master2 = array('barang_keluar');
+            $menu_master2 = array('barang_keluar','bk_edit', 'bk_tambah');
             $menu_master3 = array('staff_gudang', 'staff_edit','staff_tambah');
-            // $menu_master4 = array('sumbangan');
+            $menu_master4 = array('history');
             ?>
             <li class="nav-item  
             <?php
@@ -177,7 +177,7 @@
                     ?>
                   ">
                   <p>--</p>
-                    <i class="nav-icon fas fa-right-to-bracket"></i>
+                    <i class="nav-icon fas fa-angle-left"></i>
                     <p>Barang Keluar</p>
                   </a>
                 </li>
@@ -185,12 +185,12 @@
                 <li class="nav-item">
                   <a href="<?php echo base_url('dashboard/barang_keluar'); ?>" class="nav-link
                     <?php
-                    if (in_array($page, $menu_master2))
+                    if (in_array($page, $menu_master4))
                       echo "active";
                     ?>
                   ">
                   <p>--</p>
-                    <i class="nav-icon fas fa-right-to-bracket"></i>
+                    <i class="nav-icon fas fa-minus"></i>
                     <p>History</p>
                   </a>
                 </li>

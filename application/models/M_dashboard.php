@@ -27,6 +27,21 @@ class M_dashboard extends CI_Model{
      
   }
 
+  public function dropdown_barang()
+    {
+        $query = $this->db->get('barang');
+        $result = $query->result();
+
+        $ID_BARANG = array('-Pilih-');
+        $NAMA_BARANG = array('-Pilih-');
+
+        for ($i = 0; $i < count($result); $i++) {
+            array_push($ID_BARANG, $result[$i]->ID_BARANG);
+            array_push($NAMA_BARANG, $result[$i]->NAMA_BARANG);
+        }
+        return array_combine($ID_BARANG, $NAMA_BARANG);
+    }
+
 //============================STAFF===========================//
     public function dt_staff()
     {
@@ -57,12 +72,35 @@ class M_dashboard extends CI_Model{
         return $this->db->update('staff_gudang', $data);
     }
 
+//========================Barang Keluar=========================///
     public function dt_barang_keluar()
     {
-      $this->db->select('ID_BARANG_KELUAR, NAMA_BARANG, JUMLAH, TANGGAL');
-        $this->db->from('barang_keluar');
-        $query = $this->db->get();
-        return $query->result_array();    
+       $this->db->select('bk.ID_BARANG_KELUAR, b.ID_BARANG, b.NAMA_BARANG, bk.JUMLAH, b.SATUAN, bk.TANGGAL');
+         $this->db->from('barang_keluar bk');
+           $this->db->join('barang b', 'bk.ID_BARANG = b.ID_BARANG','left');
+         $query = $this->db->get();
+       return $query->result_array();    
+       
+    }
+
+     public function dt_barang_keluar_tambah()
+    {
+        $data = array(
+            'ID_BARANG' => $this->input->post('ID_BARANG'),
+            'JUMLAH' => $this->input->post('JUMLAH')
+        );
+        $this->db->set('TANGGAL','NOW()', FALSE);
+        return $this->db->insert('barang_keluar', $data);
+    }
+
+      public function dt_bk_edit($id)
+    {
+        $data = array(
+            'ID_BARANG' => $this->input->post('ID_BARANG'),
+            'JUMLAH' => $this->input->post('JUMLAH')
+        );
+        $this->db->where('ID_BARANG_KELUAR', $id);
+        return $this->db->update('barang_keluar', $data);
     }
 
 
@@ -113,6 +151,15 @@ class M_dashboard extends CI_Model{
         if ($jumlah > 0) {
             $this->db->replace('barang', $databarang);
         }
+    }
+
+    function dd_cek($str)    //Untuk Validasi DropDown jika tidak dipilih
+    {
+        if ($str == '-Pilih-') {
+          $this->form_validation->set_message('dd_cek', 'Harus dipilih');
+          return FALSE;
+        } else
+          return TRUE;
     }
       
       // Buat sebuah fungsi untuk melakukan insert lebih dari 1 data
