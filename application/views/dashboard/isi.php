@@ -24,7 +24,7 @@
                 <p>Jumlah Barang</p>
               </div>
               <div class="icon">
-                <i class="ion ion-pie-graph"></i>
+                <i class="ion ion-cube"></i>
               </div>
               <a href="<?php echo base_url('dashboard/barang') ?>" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
@@ -84,12 +84,12 @@ else if ($page == 'barang') {
       </div>
     </section>
 
-       <section class="content">
+      <section class="content">
       <?= $this->session->flashdata('pesan'); ?>
       <div class="card">
         <div class="card-body">
           <div class="row">
-           <div class="col-sm-0"><?= form_open_multipart('dashboard/uploaddata') ?></div>
+           <div class="col-sm-0"><?= form_open_multipart('dashboard/uploaddata') ?> </div>
             <div class="col-sm-2.5">
               <input type="file" class="form-control-file" id="importexcel" name="importexcel" accept=".xlsx,.xls"> 
             </div>
@@ -140,10 +140,6 @@ else if ($page == 'barang') {
 
 <?php
 }
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
 
 //--------------------------------- TAMBAH ---------------------------------
 else if ($page == 'barang_edit') {
@@ -322,10 +318,6 @@ else if ($page == 'staff_tambah') {
                   <label >
                     <input type="radio"  name="jenkel" id="jenkel" value="Perempuan" <?php echo set_value('jenkel'); ?>> Perempuan
                   </label>
-<<<<<<< Updated upstream
-                  </select> 
-=======
->>>>>>> Stashed changes
                   <span class="badge badge-warning"><?php echo strip_tags(form_error('jenkel')); ?></span>
                   </div>
                 </div>
@@ -349,6 +341,8 @@ else if ($page == 'staff_tambah') {
       </section>
     </div>
   <?php
+
+  //--------------------------------- Staff Edit ---------------------------------
   } else if ($page == 'staff_edit') {
     ?>
       <div class="content-wrapper">
@@ -583,5 +577,79 @@ else if ($page == 'barang_keluar') {
           </div>
       </section>
     </div>
+  <?php
+  }
+
+//============================================Quality Check Material=================================================//
+else if ($page == 'qcm') {
+  ?>
+    <div class="content-wrapper">
+      <section class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1><?php echo  $judul; ?></h1>
+            </div>
+          </div>
+        </div>
+      </section>
+  
+      <section class="content">
+        <div class="card">
+          
+          <div class="card-body">
+          <?= $this->session->flashdata('pesan'); ?>
+          <div class="row">
+           <div class="col-sm-0"><?= form_open_multipart('dashboard/uploadimg') ?></div>
+            <div class="col-sm-2.5">
+              <input type="file" class="form-control-file" id="importimg" name="importimg" accept=".xlsx,.xls"> 
+            </div>
+              <div class="col-sm-5">
+                  <button type="submit" class="btn btn-primary">Import Evidence</button>
+              </div>
+              <?= form_close(); ?>
+              </div> 
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>NO</th>
+                  <th>Id Barang</th>
+                  <th>Nama Barang</th>
+                  <th>Evidence</th>
+                  <th>Tgl Upload</th>
+                  <th>Status QC</th>
+            <!--       <th>Aksi</th> -->
+                </tr>
+              </thead>
+              <?php $i = 1;
+              foreach ($qcm as $data) { ?>
+                <tr>
+                  <td><?= $i++; ?></td>
+                  <td><?php echo $data['id_barang'] ?></td>
+                  <td><?php echo $data['nama_barang'] ?></td>
+                  <td><?php echo $data['evidence'] ?></td>
+                  <td><?php echo $data['tgl_upload'] ?></td>
+                  <td><?php echo $data['status_qcm'] ?></td>
+                  <td>
+                  <a href=<?php echo base_url("dashboard/qcm_edit/") . $data['id_qcm']; ?>> <i class="fas fa-pencil-alt"></i> </a>
+                  <a href=<?php echo base_url("dashboard/qcm_hapus/") . $data['id_qcm']; ?> onclick="return confirm('Yakin menghapus staff: <?php echo $data['nama_barang']; ?> ?');" ;><i class="fas fa-trash-alt"></i></a>
+                  </td>
+                </tr>
+              <?php
+              }
+              ?>
+            </table>
+            </div>
+        </div>
+      </section>
+    </div>
+  
+  <?php
+  }
+
+// ----------------------------------------- Tambah QCM -------------------------
+else if ($page == 'qcm_tambah'){
+  ?>
+
   <?php
   }

@@ -124,26 +124,26 @@ class M_dashboard extends CI_Model{
     }
 
     // Fungsi untuk melakukan proses upload file
-      public function upload_file($filename){
-        $this->load->library('upload'); // Load librari upload
+      // public function upload_file($filename){
+      //   $this->load->library('upload'); // Load librari upload
         
-        $config['upload_path'] = './excel/';
-        $config['allowed_types'] = 'xlsx';
-        $config['max_size']  = '10240';
-        $config['overwrite'] = true;
-        $config['file_name'] = $filename;
+      //   $config['upload_path'] = './excel/';
+      //   $config['allowed_types'] = 'xlsx';
+      //   $config['max_size']  = '10240';
+      //   $config['overwrite'] = true;
+      //   $config['file_name'] = $filename;
       
-        $this->upload->initialize($config); // Load konfigurasi uploadnya
-        if($this->upload->do_upload('file')){ // Lakukan upload dan Cek jika proses upload berhasil
-          // Jika berhasil :
-          $return = array('result' => 'success', 'file' => $this->upload->data(), 'error' => '');
-          return $return;
-        }else{
-          // Jika gagal :
-          $return = array('result' => 'failed', 'file' => '', 'error' => $this->upload->display_errors());
-          return $return;
-        }
-      }
+      //   $this->upload->initialize($config); // Load konfigurasi uploadnya
+      //   if($this->upload->do_upload('file')){ // Lakukan upload dan Cek jika proses upload berhasil
+      //     // Jika berhasil :
+      //     $return = array('result' => 'success', 'file' => $this->upload->data(), 'error' => '');
+      //     return $return;
+      //   }else{
+      //     // Jika gagal :
+      //     $return = array('result' => 'failed', 'file' => '', 'error' => $this->upload->display_errors());
+      //     return $return;
+      //   }
+      // }
 
       public function import_data($databarang)
     {
@@ -151,6 +151,21 @@ class M_dashboard extends CI_Model{
         if ($jumlah > 0) {
             $this->db->replace('barang', $databarang);
         }
+    }
+
+    // =========================== Upload QCM ========================
+
+    public function dt_qcm()
+    {
+        $this->db->select('id_qcm,id_barang, nama_barang, evidence, tgl_upload, status_qcm ');
+        $this->db->from('qcmaterial');
+        $query = $this->db->get();
+        return $query->result_array();        
+    }
+
+    function upload_img($data)
+    {
+      $this->db->insert('qcmaterial',$data);
     }
 
     function dd_cek($str)    //Untuk Validasi DropDown jika tidak dipilih
@@ -176,6 +191,7 @@ class M_dashboard extends CI_Model{
             return (TRUE);
     }
     
+
+
 }
- 
  ?>

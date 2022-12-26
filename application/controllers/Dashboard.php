@@ -192,7 +192,14 @@ class Dashboard extends CI_Controller {
 
        public function uploaddata()
     {
-        $config['upload_path'] = './uploads/';
+        
+        $uploadPath='uploads/documents/';
+		if(!is_dir($uploadPath))
+		{
+			mkdir($uploadPath,0777,TRUE);
+		}
+
+        $config['upload_path'] = $uploadPath;
         $config['allowed_types'] = 'xlsx|xls';
         $config['file_name'] = 'doc' . time();
         $this->load->library('upload', $config);
@@ -200,23 +207,23 @@ class Dashboard extends CI_Controller {
             $file = $this->upload->data();
             $reader = ReaderEntityFactory::createXLSXReader();
 
-            $reader->open('uploads/' . $file['file_name']);
+            $reader->open($uploadPath . $file['file_name']);
             foreach ($reader->getSheetIterator() as $sheet) {
                 $numRow = 0;
                 foreach ($sheet->getRowIterator() as $row) {
                     if ($numRow > 0) {
                         $databarang = array(
-                            'id_barang'  => $row->getCellAtIndex(0),
+                            'id_barang'    => $row->getCellAtIndex(0),
                             'nama_barang'  => $row->getCellAtIndex(1),
                             'jumlah'       => $row->getCellAtIndex(2),
                             'satuan'       => $row->getCellAtIndex(3),
                         );
                         $this->m_dashboard->import_data($databarang);
-                    }
+                    }   
                     $numRow++;
                 }
                 $reader->close();
-                unlink('uploads/' . $file['file_name']);
+                unlink($uploadPath . $file['file_name']);
                 $this->session->set_flashdata('pesan', '<div class="alert alert-success alert-dismissible" role="alert">
   <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button> Data berhasil diperbarui </div>');
                 redirect('dashboard/barang');
@@ -245,5 +252,76 @@ function dd_cek($str)    //Untuk Validasi DropDown jika tidak dipilih
 		$this->load->view('dashboard/footer');
 	}
 		
+    //============================= Quality Check Material ================
+    public function qcm()
+    {
+        $data['judul']='QC Material WH Banjarmasin';
+        $data['page']='qcm';
+        $data['qcm']=$this->m_dashboard->dt_qcm();
+        $this->tampil($data);
+    }
+
+    function uploadimg()
+	{
+		$countFiles = count($_FILES['uploadedFiles']['name']);
+		$countUploadedFiles=0;
+        $countErrorUploadFiles=0;
+		for($i=0;$i<$countFiles;$i++)
+		{
+			$_FILES['uploadFile']['name'] = $_FILES['uploadedFiles']['name'][$i]; 
+			$_FILES['uploadFile']['type'] = $_FILES['uploadedFiles']['type'][$i];
+			$_FILES['uploadFile']['size'] = $_FILES['uploadedFiles']['size'][$i];
+			$_FILES['uploadFile']['tmp_name'] = $_FILES['uploadedFiles']['tmp_name'][$i];
+			$_FILES['uploadFile']['error'] = $_FILES['uploadedFiles']['error'][$i];
+
+			$uploadStatus = $this->uploadFileIMG('uploadFile');
+			if($uploadStatus!=false)
+			{
+				$countUploadedFiles++;
+				$this->load->model('upload_img');
+				$data =array(
+					'img_path'=>$uploadStatus,
+					'upload_time'=>date('Y-m-d H:i:s'),
+				);
+				$this->upload_file->upload_data($data);
+			}
+			else
+			{
+				$countErrorUploadFiles++;
+			}
+		}
+
+		$this->session->set_flashdata('messgae','Files Uploaded. Successfull Files Uploaded:'.$countUploadedFiles. ' and Error Uploading Files:'.$countErrorUploadFiles);
+		redirect(base_url('welcome/index'));
+
+	}
+
+	function uploadFileIMG($name)
+	{
+		$uploadPath='uploads/images/';
+		if(!is_dir($uploadPath))
+		{
+			mkdir($uploadPath,0777,TRUE);
+		}
+
+		$config['upload_path'] = $uploadPath;
+		$config['allowed_types']= 'jpeg|JPEG|JPG|jpg|png|PNG';
+        $config['max_size'] = 100;
+        $config['max_width'] = 1024;
+        $config['max_height'] = 768;
+		$config['encrypt_name']=TRUE;
+
+		$this->load->library('upload',$config);
+		$this->upload->initialize($config);
+		if($this->upload->do_upload($name))
+		{
+			$fileData = $this->upload->data();
+			return $fileData['file_name'];
+		}
+		else
+		{
+			return false;
+		}
+	}
 
 }

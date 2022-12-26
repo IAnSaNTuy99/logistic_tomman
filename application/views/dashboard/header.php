@@ -95,6 +95,7 @@
             $menu_master2 = array('barang_keluar','bk_edit', 'bk_tambah');
             $menu_master3 = array('staff_gudang', 'staff_edit','staff_tambah');
             $menu_master4 = array('history');
+            $menu_master5 = array('qcm');
             ?>
             <li class="nav-item  
             <?php
@@ -194,9 +195,45 @@
                     <p>History</p>
                   </a>
                 </li>
-
               </ul>
-            <li class="nav-item">
+          </li>
+          <li class="nav-item  
+            <?php
+              if (in_array($page, $menu_master5))
+                echo "menu-open";
+              ?>
+            "> 
+            <a href="#" class="nav-link 
+                <?php
+                if (in_array($page, $menu_master5))
+                  echo "active";
+                ?>
+              ">
+                <i class="nav-icon fas fa-book"></i>
+                <p>
+                  Quality Check Material
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+              
+
+              <ul class="nav nav-treeview">
+              <li class="nav-item">
+                  <a href="<?php echo base_url('dashboard/qcm'); ?>" class="nav-link
+                    <?php
+                    if (in_array($page, $menu_master5))
+                      echo "active";
+                    ?>
+                  ">
+                  <p>  </p>
+                    <i class="nav-icon fas fa-angle-left"></i>
+                    <p>Upload QC</p>
+                  </a>
+                </li>
+              </ul>
+          </li>
+
+          <li class="nav-item">
               <a href="<?php echo base_url("login/logout"); ?>" class="nav-link">
                 <i class="nav-icon fas fa-sign-out-alt"></i>
                 <p>
