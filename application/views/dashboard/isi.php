@@ -432,8 +432,6 @@ else if ($page == 'barang_keluar') {
       <section class="content">
         <div class="card">
           <div class="card-body">
-            <a href=<?php echo base_url("dashboard/bk_tambah") ?> class="btn btn-primary" style="margin-bottom:15px">
-            Input Barang Out</a>
             <table class="table table-bordered">
               <thead>
                 <tr>
