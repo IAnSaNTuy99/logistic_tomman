@@ -21,7 +21,7 @@ class Dashboard extends CI_Controller {
 
 	public function index()
 	{
-		$data['judul']	='Selamat Datang di Logistic WH Gambut';
+		$data['judul']	='Selamat Datang di Logistic WH Banjermasin';
 		$data['page']	='home';
         $data['jml_barang'] =$this->m_dashboard->jumlah_record_tabel('barang');
 		$this->tampil($data);
@@ -30,7 +30,7 @@ class Dashboard extends CI_Controller {
 
 	public function barang()
     {
-        $data['judul']='Stok Material WH Gambut';
+        $data['judul']='Stok Material WH Banjermasin';
         $data['page']='barang';
         $data['barang']=$this->m_dashboard->dt_barang();
         $this->tampil($data);
@@ -38,7 +38,7 @@ class Dashboard extends CI_Controller {
 
     public function barang_edit($id = FALSE)
 	{
-		$data['judul'] = 'Edit Data Barang';
+		$data['judul'] = 'Edit Data Material';
 		$data['page'] = 'barang_edit';
         $this->form_validation->set_rules('ID_BARANG', 'Kode Material', 'required', array('required' => '%s harus diisi'));
         // $this->form_validation->set_rules(
@@ -65,7 +65,7 @@ class Dashboard extends CI_Controller {
 
     public function staff_gudang()
     {
-        $data['judul']='Staff WH Gambut';
+        $data['judul']='Staff WH Banjermasin';
         $data['page']='staff_gudang';
         $data['staff_gudang']=$this->m_dashboard->dt_staff();
         $this->tampil($data);
@@ -123,10 +123,13 @@ class Dashboard extends CI_Controller {
         $this->tampil($data);
     }
 
-     public function bk_tambah()
+     public function bk_tambah($id=false)
     {
         $data['judul'] = 'Form Input Data Material Keluar';
         $data['page'] = 'bk_tambah';
+        $input = $this->input->post('ID_BARANG', true);
+        $stok = $this->m_dashboard->get('barang', ['ID_BARANG' => $input])['JUMLAH'];
+        $stok_valid = $stok + 1;
          $this->form_validation->set_rules('ID_BARANG', 'Pilih ID Barang', 'callback_dd_cek');
         // $this->form_validation->set_rules(
         //     'nama_barang',
@@ -134,16 +137,24 @@ class Dashboard extends CI_Controller {
         //     'required|min_length[3]|max_length[45]',
         //     array('required' => '%s harus diisi.')
         // );
-        $this->form_validation->set_rules('JUMLAH', 'JUMLAH', 'required', array('required' => '%s harus diisi'));
-        
+        $this->form_validation->set_rules('JUMLAH', 'JUMLAH', 'required|', array('required' => '%s harus diisi'));
+        $this->form_validation->set_rules(
+            'JUMLAH',
+            'JUMLAH',
+            "required|trim|numeric|greater_than[0]|less_than[{$stok_valid}]",
+            [
+                'less_than' => "Jumlah Keluar tidak boleh lebih dari {$stok}"
+            ]
+        );
+        $data['d'] = $this->m_dashboard->cari_data('barang_keluar', 'ID_BARANG_KELUAR', $id);
        
 
         $data['ddbarang'] = $this->m_dashboard->dropdown_barang();
 
-        if ($this->form_validation->run() === FALSE) {
+        if ($this->form_validation->run()  === FALSE ) {
             $this->tampil($data);
         } else {
-            $this->m_dashboard->dt_barang_keluar_tambah();
+            $this->m_dashboard->dt_barang_keluar_tambah($id);
             redirect(base_url('dashboard/barang_keluar'));
         }
         

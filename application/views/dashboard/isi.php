@@ -89,6 +89,7 @@ else if ($page == 'barang') {
       <div class="card">
         <div class="card-body">
           <div class="row">
+            
            <div class="col-sm-0"><?= form_open_multipart('dashboard/uploaddata') ?> </div>
             <div class="col-sm-2.5">
               <input type="file" class="form-control-file" id="importexcel" name="importexcel" accept=".xlsx,.xls"> 
@@ -490,7 +491,7 @@ else if ($page == 'barang_keluar') {
         <div class="card">
           <div class="card-body">
   
-            <form method="POST" action="<?php echo base_url('dashboard/bk_tambah/'); ?>" class="form-horizontal">
+            <form method="POST" action="<?php echo base_url('dashboard/bk_tambah/' ); ?>" class="form-horizontal">
   
               <div class="card-body">
                 <div class="form-group row">
@@ -506,7 +507,7 @@ else if ($page == 'barang_keluar') {
                  <div class="form-group row">
                 <label for="JUMLAH" class="col-sm-2 col-form-label">Jumlah</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" name="JUMLAH" id="JUMLAH" value="<?php echo set_value('JUMLAH'); ?>" placeholder="Masukkan Jumlah">
+                  <input type="text"min="0"  max="<?php echo set_value('b.JUMLAH',$d['JUMLAH']); ?>" class="form-control" name="JUMLAH" id="JUMLAH" value="<?php echo set_value('JUMLAH'); ?>" placeholder="Masukkan Jumlah">
                   <span class="badge badge-warning"><?php echo strip_tags(form_error('JUMLAH')); ?></span>
                 </div>
               </div>

@@ -6,6 +6,8 @@ class M_dashboard extends CI_Model{
         return $this->db->get('barang')->result();
     }
 
+
+
     public function dt_barang()
     {
         $this->db->select('ID_BARANG, NAMA_BARANG, JUMLAH, SATUAN');
@@ -83,13 +85,14 @@ class M_dashboard extends CI_Model{
        
     }
 
-     public function dt_barang_keluar_tambah()
+     public function dt_barang_keluar_tambah($id)
     {
         $data = array(
             'ID_BARANG' => $this->input->post('ID_BARANG'),
             'JUMLAH' => $this->input->post('JUMLAH')
         );
         $this->db->set('TANGGAL','NOW()', FALSE);
+        $this->db->where('ID_BARANG_KELUAR', $id);
         return $this->db->insert('barang_keluar', $data);
     }
 
@@ -104,24 +107,7 @@ class M_dashboard extends CI_Model{
     }
 
 
-     public function jumlah_record_tabel($tabel)    
-    {
-        $query = $this->db->select("COUNT(*) as num")->get($tabel);
-        $result = $query->row();
-        if (isset($result))
-            return $result->num;
-        return 0;
-    }
   
-  
-    public function cari_data($tabel, $namafield, $isifield)
-{
-            $this->db->select('*');
-            $this->db->from($tabel);
-            $this->db->where($namafield,$isifield);
-            $query = $this->db->get();
-            return $query->row_array();           
-    }
 
     // Fungsi untuk melakukan proses upload file
       // public function upload_file($filename){
@@ -145,13 +131,6 @@ class M_dashboard extends CI_Model{
       //   }
       // }
 
-      public function import_data($databarang)
-    {
-        $jumlah = count($databarang);
-        if ($jumlah > 0) {
-            $this->db->replace('barang', $databarang);
-        }
-    }
 
     // =========================== Upload QCM ========================
 
@@ -163,11 +142,12 @@ class M_dashboard extends CI_Model{
         return $query->result_array();        
     }
 
+//================================TOOLS======================//
     function upload_img($data)
     {
       $this->db->insert('qcmaterial',$data);
     }
-
+    
     function dd_cek($str)    //Untuk Validasi DropDown jika tidak dipilih
     {
         if ($str == '-Pilih-') {
@@ -190,7 +170,43 @@ class M_dashboard extends CI_Model{
         else
             return (TRUE);
     }
+
+     public function get($table, $data = null, $where = null)
+    {
+        if ($data != null) {
+            return $this->db->get_where($table, $data)->row_array();
+        } else {
+            return $this->db->get_where($table, $where)->result_array();
+        }
+    }
     
+       public function jumlah_record_tabel($tabel)    
+    {
+        $query = $this->db->select("COUNT(*) as num")->get($tabel);
+        $result = $query->row();
+        if (isset($result))
+            return $result->num;
+        return 0;
+    }
+  
+  
+    public function cari_data($tabel, $namafield, $isifield)
+{
+            $this->db->select('*');
+            $this->db->from($tabel);
+            $this->db->where($namafield,$isifield);
+            $query = $this->db->get();
+            return $query->row_array();           
+    }
+
+    
+      public function import_data($databarang)
+    {
+        $jumlah = count($databarang);
+        if ($jumlah > 0) {
+            $this->db->replace('barang', $databarang);
+        }
+    }
 
 
 }

@@ -4,8 +4,8 @@
     <div class="float-right d-none d-sm-block">
       <b>Version</b> 1.0.0
     </div>
-    [Telkom Akses Gambut@2022]
-    <strong>Copyright &copy; 2015-2022 <a href="https://adminlte.io">Tomman</a>.</strong> All rights reserved.
+    [Telkom Akses WH Banjarmasin@2022]
+    <strong>Copyright &copy; 2015-2022 <a href="https://adminlte.io">Simawar</a>.</strong> All rights reserved.
   
  <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
@@ -45,9 +45,9 @@
       "info": true,
       "autoWidth": false,
       "responsive": true,
-      "dom": 'lfrtip',
+      "dom": 'lBfrtip',
       //buttons: ["copy", "csv", "excel", "pdf", "print", "colvis"],
-      buttons: ["copy", "excel", "pdf", "print"]
+      "buttons": ["copy","pdf", "print"],
     }).buttons().container().appendTo('#example_wrapper .col-md-6:eq(0)');
   });
 </script>
