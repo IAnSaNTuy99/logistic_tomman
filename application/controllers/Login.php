@@ -6,7 +6,7 @@ class Login extends CI_Controller {
 	public function index()
 	{
 		$data['pesan']="";
-		$this->form_validation->set_rules('NIK', 'NIK', 'required', array('required'=>'Username tidak boleh kosong!'));		
+		$this->form_validation->set_rules('USERNAME', 'USERNAME', 'required', array('required'=>'Username tidak boleh kosong!'));	
 	    $this->form_validation->set_rules('PASSWORD', 'PASSWORD', 'required', array('required'=>'Password tidak boleh kosong!'));
 		if ($this->form_validation->run() == FALSE)
 			$this->load->view("login",$data);
@@ -15,17 +15,19 @@ class Login extends CI_Controller {
 	    	if($data['dt']=$this->m_login->cek_login())
 			{
 				$data_user = array(
-			        'NIK'  => $data['dt']['NIK']
+			        'USERNAME'  => $data['dt']['USERNAME']
 			        // 'PASSWORD'  => $data['dt']['PASSWORD']
 					);
-				$this->session->set_userdata($data_user);
+				$this->session->set_userdata($data_user,TRUE);
 				redirect(base_url("dashboard"));
 			}        	
 			else
 	    	{
-	    		$data['pesan']='username password salah';
+	    		$this->session->set_flashdata('message', 'Username or password is incorrect');
+	    		// $data['pesan']='username password salah';
 				$this->load->view("login",$data);			
 	    	}
+	    	
 	    }	
 	    	
 	}
@@ -33,7 +35,7 @@ class Login extends CI_Controller {
 	
 	function logout(){
         unset(
-            $_SESSION['NIK'],
+            $_SESSION['USERNAME'],
             $_SESSION['PASSWORD']
         );  
 		$data['pesan']='Logout Sukses';

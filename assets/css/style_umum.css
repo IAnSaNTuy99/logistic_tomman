@@ -1,8 +1,15 @@
 /* Agar button di Datatable Rapi. By Agus SBN */
 div .dt-buttons {
-    float: left;
+    float:left ;
+    margin-left:50px ;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .dataTables_length {
     float: left;
+}
+
+div .update{
+    float:  right ;
 }

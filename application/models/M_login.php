@@ -8,9 +8,9 @@ class M_login extends CI_Model{
 
      function cek_login()    //Cek apakah user pass ada
     {
-        $nik=$this->input->post('NIK');
+        $username=$this->input->post('USERNAME');
         $password=$this->input->post('PASSWORD');
-        $query=$this->db->get_where('user', array('NIK'=>$nik, 'PASSWORD'=>$password));
+        $query=$this->db->get_where('user', array('USERNAME'=>$username, 'PASSWORD'=>$password));
         return $query->row_array();
     }
 

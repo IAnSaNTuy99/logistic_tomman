@@ -17,7 +17,7 @@
   <link rel="stylesheet" href="<?php echo base_url(); ?>assets/adminlte/dist/css/adminlte.min.css">
   <style>
     .login-page {
-      background-image: url("<?php echo base_url(); ?>assets/img/background.jpg");
+      background-image: url("<?php echo base_url(); ?>assets/img/telkom_wh.jpeg");
       background-position: center center;
       background-size: cover;
       background-attachment: fixed;
@@ -35,12 +35,21 @@
     <div class="card">
       <div class="card-body login-card-body">
         <p class="login-box-msg">Silahkan Login Disini</p>
-        
-
+                <?php if(($this->session->flashdata('message'))){?> 
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                          
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            <span class="sr-only">Close</span>
+                        </button>
+                     <?= $this->session->flashdata('message');?>
+                    </div>
+                    <?php }?>
+     
         <form action="<?php echo base_url("login"); ?>" method="post">
           <div class="input-group mb-3">
-            <input type="text" name="NIK" class="form-control" placeholder="Username">
-            <span class="badge badge-warning"><?php echo strip_tags(form_error('NIK')); ?></span>
+            <input type="text" name="USERNAME" class="form-control" placeholder="Username">
+            <span class="badge badge-warning"><?php echo strip_tags(form_error('USERNAME')); ?></span>
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-user"></span>
@@ -85,6 +94,8 @@
   <script src="<?php echo base_url(); ?>assets/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
   <!-- AdminLTE App -->
   <script src="<?php echo base_url(); ?>assets/adminlte/dist/js/adminlte.min.js"></script>
+
+
 </body>
 
 </html>
