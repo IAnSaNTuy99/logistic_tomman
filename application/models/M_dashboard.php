@@ -136,17 +136,40 @@ class M_dashboard extends CI_Model{
 
     public function dt_qcm()
     {
-        $this->db->select('id_qcm,id_barang, nama_barang, evidence, tgl_upload, status_qcm ');
+        $this->db->select('id_qcm,nama_barang, dokumen, evidence,status_qcm, tgl_qcm, tgl_upload ');
         $this->db->from('qcmaterial');
         $query = $this->db->get();
         return $query->result_array();        
     }
 
-//================================TOOLS======================//
-    function upload_img($data)
+    function dt_qcm_tambah()
     {
-      $this->db->insert('qcmaterial',$data);
+        if ( !$this->upload->do_upload('filepdf')){
+            $error = array('error' => $this->upload->display_errors());
+            return $error;
+        }else if ( !$this->upload->do_upload('fileimg')){
+            $error = array('error' => $this->upload->display_errors());
+            return $error;
+        }else{
+            $uploadedpdf = $this->upload->data();
+            $pdf['filepdf']=$uploadedpdf['file_name'];
+            $uploadedimg = $this->upload->data();
+            $img['fileimg']= $uploadedimg['file_name'];
+            
+            $data = array(
+                'nama_barang' => $this->input->post('nama_barang'),
+                'dokumen' => $pdf,
+                'evidence' => $img,
+                'status_qcm' => $this->input->post('status_qcm'),
+                'tgl_qcm' => $this->input->post('tgl_qcm'),
+                'tgl_upload' => $this->input->post('tgl_upload'),
+            );    
+            return $this->db->insert('qcmaterial', $data);
+        }
+
     }
+
+//================================TOOLS======================//
     
     function dd_cek($str)    //Untuk Validasi DropDown jika tidak dipilih
     {
@@ -154,7 +177,7 @@ class M_dashboard extends CI_Model{
           $this->form_validation->set_message('dd_cek', 'Harus dipilih');
           return FALSE;
         } else
-          return TRUE;
+        return TRUE;
     }
       
       // Buat sebuah fungsi untuk melakukan insert lebih dari 1 data

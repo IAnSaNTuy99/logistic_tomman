@@ -95,8 +95,8 @@
             $menu_master1 = array('barang', 'barang_edit');
             $menu_master2 = array('bk_tambah');
             $menu_master3 = array('staff_gudang', 'staff_edit','staff_tambah');
-            $menu_master4 = array('barang_keluar');
-            $menu_master5 = array('qcm');
+            $menu_master4 = array('history');
+            $menu_master5 = array('qcm','qcm_upload','qcm_edit');
             ?>
             <li class="nav-item  
             <?php

@@ -21,7 +21,7 @@ class Dashboard extends CI_Controller {
 
 	public function index()
 	{
-		$data['judul']	='Selamat Datang di Logistic WH Banjermasin';
+		$data['judul']	='Selamat Datang di Logistic WH Banjarmasin';
 		$data['page']	='home';
         $data['jml_barang'] =$this->m_dashboard->jumlah_record_tabel('barang');
 		$this->tampil($data);
@@ -272,42 +272,52 @@ function dd_cek($str)    //Untuk Validasi DropDown jika tidak dipilih
         $this->tampil($data);
     }
 
-    function uploadimg()
-	{
-		$countFiles = count($_FILES['uploadedFiles']['name']);
-		$countUploadedFiles=0;
-        $countErrorUploadFiles=0;
-		for($i=0;$i<$countFiles;$i++)
-		{
-			$_FILES['uploadFile']['name'] = $_FILES['uploadedFiles']['name'][$i]; 
-			$_FILES['uploadFile']['type'] = $_FILES['uploadedFiles']['type'][$i];
-			$_FILES['uploadFile']['size'] = $_FILES['uploadedFiles']['size'][$i];
-			$_FILES['uploadFile']['tmp_name'] = $_FILES['uploadedFiles']['tmp_name'][$i];
-			$_FILES['uploadFile']['error'] = $_FILES['uploadedFiles']['error'][$i];
+    public function qcm_upload(){
+        $data['judul'] = 'Form Input Data QC Material';
+        $data['page'] = 'qcm_upload';
+        //validate the form data 
+        $this->form_validation->set_rules('nama_barang', 'Pilih Nama Barang', 'callback_dd_cek');
+        $this->form_validation->set_rules('tgl_upload', 'Tanggal Upload', 'required', array('required' => '%s harus diisi'));
+ 
+        $data['ddbarang'] = $this->m_dashboard->dropdown_barang();
 
-			$uploadStatus = $this->uploadFileIMG('uploadFile');
-			if($uploadStatus!=false)
-			{
-				$countUploadedFiles++;
-				$this->load->model('upload_img');
-				$data =array(
-					'img_path'=>$uploadStatus,
-					'upload_time'=>date('Y-m-d H:i:s'),
-				);
-				$this->upload_file->upload_data($data);
-			}
-			else
-			{
-				$countErrorUploadFiles++;
-			}
+        $uploadPathPDF='uploads/docs/';
+		if(!is_dir($uploadPathPDF))
+		{
+			mkdir($uploadPathPDF,0777,TRUE);
 		}
 
-		$this->session->set_flashdata('messgae','Files Uploaded. Successfull Files Uploaded:'.$countUploadedFiles. ' and Error Uploading Files:'.$countErrorUploadFiles);
-		redirect(base_url('welcome/index'));
+		$configpdf['upload_path'] = $uploadPathPDF;
+		$configpdf['allowed_types']= 'pdf';
+        $configpdf['max_size'] = 100;
+		$configpdf['encrypt_name']=TRUE;
 
-	}
+		$this->load->library('upload',$configpdf);
 
-	function uploadFileIMG($name)
+        $uploadPathIMG='uploads/images/';
+		if(!is_dir($uploadPathIMG))
+		{
+			mkdir($uploadPathIMG,0777,TRUE);
+		}
+
+		$configimg['upload_path'] = $uploadPathIMG;
+		$configimg['allowed_types']= 'jpeg|JPEG|JPG|jpg|png|PNG';
+        $configimg['max_size'] = 100;
+		$configimg['encrypt_name']=TRUE;
+
+		$this->load->library('upload',$configimg);
+          
+        //validate the form data 
+        if ($this->form_validation->run() === FALSE){
+            $this->tampil($data);
+        }else{
+            $this->m_dashboard->dt_qcm_tambah();
+            redirect(base_url('dashboard/qcm'));
+        }
+    }
+
+
+	function uploadimg()
 	{
 		$uploadPath='uploads/images/';
 		if(!is_dir($uploadPath))
@@ -318,21 +328,26 @@ function dd_cek($str)    //Untuk Validasi DropDown jika tidak dipilih
 		$config['upload_path'] = $uploadPath;
 		$config['allowed_types']= 'jpeg|JPEG|JPG|jpg|png|PNG';
         $config['max_size'] = 100;
-        $config['max_width'] = 1024;
-        $config['max_height'] = 768;
 		$config['encrypt_name']=TRUE;
 
 		$this->load->library('upload',$config);
-		$this->upload->initialize($config);
-		if($this->upload->do_upload($name))
-		{
-			$fileData = $this->upload->data();
-			return $fileData['file_name'];
-		}
-		else
-		{
-			return false;
-		}
 	}
+
+    function uploadpdf()
+    {
+        $uploadPath='uploads/docs/';
+		if(!is_dir($uploadPath))
+		{
+			mkdir($uploadPath,0777,TRUE);
+		}
+
+		$config['upload_path'] = $uploadPath;
+		$config['allowed_types']= 'pdf';
+        $config['max_size'] = 100;
+		$config['encrypt_name']=TRUE;
+
+		$this->load->library('upload',$config);
+		$this->uploadpdf->initialize($config);
+    }
 
 }
