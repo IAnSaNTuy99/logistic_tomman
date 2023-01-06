@@ -47,7 +47,7 @@
       "responsive": true,
       "dom": 'lBfrtip',
       //buttons: ["copy", "csv", "excel", "pdf", "print", "colvis"],
-      "buttons": ["copy","pdf", "print"],
+      "buttons": ["excel","pdf"],
     }).buttons().container().appendTo('#example_wrapper .col-md-6:eq(0)');
   });
 </script>

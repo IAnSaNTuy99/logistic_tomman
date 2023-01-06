@@ -3,45 +3,54 @@ class M_dashboard extends CI_Model{
 	public function __construct()
     {
         $this->load->database();
-        return $this->db->get('barang')->result();
+        return $this->db->get('MATERIAL')->result();
     }
 
 
 
-    public function dt_barang()
+    public function dt_MATERIAL()
     {
-        $this->db->select('ID_BARANG, NAMA_BARANG, JUMLAH, SATUAN');
-        $this->db->from('barang');
+        $this->db->select('ID_MATERIAL, NAMA_MATERIAL, JUMLAH, SATUAN');
+        $this->db->from('material');
         $query = $this->db->get();
         return $query->result_array();        
     }
 
-    public function dt_barang_edit($id)
+    public function get_last_update()
+    {
+       $this->db->select('updated');
+        $this->db->from('material');
+        $query = $this->db->get();
+        return $query->row_array();
+    }
+
+
+    public function dt_MATERIAL_edit($id)
     {
       $data = array(
-        'ID_BARANG' => $this->input->post('ID_BARANG'),
-        'NAMA_BARANG' => $this->input->post('NAMA_BARANG'),
+        'ID_MATERIAL' => $this->input->post('ID_MATERIAL'),
+        'NAMA_MATERIAL' => $this->input->post('NAMA_MATERIAL'),
         'JUMLAH' => $this->input->post('JUMLAH'),
         'SATUAN' => $this->input->post('SATUAN')
       );
-      $this->db->where('ID_BARANG', $id);
-      return $this->db->update('barang', $data);
+      $this->db->where('ID_MATERIAL', $id);
+      return $this->db->update('material', $data);
      
   }
 
-  public function dropdown_barang()
+  public function dropdown_MATERIAL()
     {
-        $query = $this->db->get('barang');
+        $query = $this->db->get('material');
         $result = $query->result();
 
-        $ID_BARANG = array('-Pilih-');
-        $NAMA_BARANG = array('-Pilih-');
+        $ID_MATERIAL = array('-Pilih-');
+        $NAMA_MATERIAL = array('-Pilih-');
 
         for ($i = 0; $i < count($result); $i++) {
-            array_push($ID_BARANG, $result[$i]->ID_BARANG);
-            array_push($NAMA_BARANG, $result[$i]->NAMA_BARANG);
+            array_push($ID_MATERIAL, $result[$i]->ID_MATERIAL);
+            array_push($NAMA_MATERIAL, $result[$i]->NAMA_MATERIAL);
         }
-        return array_combine($ID_BARANG, $NAMA_BARANG);
+        return array_combine($ID_MATERIAL, $NAMA_MATERIAL);
     }
 
 //============================STAFF===========================//
@@ -74,36 +83,36 @@ class M_dashboard extends CI_Model{
         return $this->db->update('staff_gudang', $data);
     }
 
-//========================Barang Keluar=========================///
-    public function dt_barang_keluar()
+//========================MATERIAL Keluar=========================///
+    public function dt_material_keluar()
     {
-       $this->db->select('bk.ID_BARANG_KELUAR, b.ID_BARANG, b.NAMA_BARANG, bk.JUMLAH, b.SATUAN, bk.TANGGAL');
-         $this->db->from('barang_keluar bk');
-           $this->db->join('barang b', 'bk.ID_BARANG = b.ID_BARANG','left');
+       $this->db->select('bk.ID_MATERIAL_KELUAR, b.ID_MATERIAL, b.NAMA_MATERIAL, bk.JUMLAH, b.SATUAN, bk.TANGGAL');
+         $this->db->from('material_keluar bk');
+           $this->db->join('material b', 'bk.ID_MATERIAL = b.ID_MATERIAL','left');
          $query = $this->db->get();
        return $query->result_array();    
        
     }
 
-     public function dt_barang_keluar_tambah($id)
+     public function dt_material_keluar_tambah($id)
     {
         $data = array(
-            'ID_BARANG' => $this->input->post('ID_BARANG'),
+            'ID_MATERIAL' => $this->input->post('ID_MATERIAL'),
             'JUMLAH' => $this->input->post('JUMLAH')
         );
         $this->db->set('TANGGAL','NOW()', FALSE);
-        $this->db->where('ID_BARANG_KELUAR', $id);
-        return $this->db->insert('barang_keluar', $data);
+        $this->db->where('ID_MATERIAL_KELUAR', $id);
+        return $this->db->insert('material_keluar', $data);
     }
 
       public function dt_bk_edit($id)
     {
         $data = array(
-            'ID_BARANG' => $this->input->post('ID_BARANG'),
+            'ID_MATERIAL' => $this->input->post('ID_MATERIAL'),
             'JUMLAH' => $this->input->post('JUMLAH')
         );
-        $this->db->where('ID_BARANG_KELUAR', $id);
-        return $this->db->update('barang_keluar', $data);
+        $this->db->where('ID_MATERIAL_KELUAR', $id);
+        return $this->db->update('material_keluar', $data);
     }
 
 
@@ -136,7 +145,7 @@ class M_dashboard extends CI_Model{
 
     public function dt_qcm()
     {
-        $this->db->select('id_qcm,nama_barang, dokumen, evidence,status_qcm, tgl_qcm, tgl_upload ');
+        $this->db->select('id_qcm,nama_material, dokumen, evidence,status_qcm, tgl_qcm, tgl_upload ');
         $this->db->from('qcmaterial');
         $query = $this->db->get();
         return $query->result_array();        
@@ -157,7 +166,7 @@ class M_dashboard extends CI_Model{
             $img['fileimg']= $uploadedimg['file_name'];
             
             $data = array(
-                'nama_barang' => $this->input->post('nama_barang'),
+                'nama_material' => $this->input->post('nama_MATERIAL'),
                 'dokumen' => $pdf,
                 'evidence' => $img,
                 'status_qcm' => $this->input->post('status_qcm'),
@@ -182,7 +191,7 @@ class M_dashboard extends CI_Model{
       
       // Buat sebuah fungsi untuk melakukan insert lebih dari 1 data
       public function insert_multiple($data){
-        $this->db->insert_batch('barang', $data);
+        $this->db->insert_batch('material', $data);
       }
 
       function hapus_data($tabel, $kolom, $id)  
@@ -223,11 +232,12 @@ class M_dashboard extends CI_Model{
     }
 
     
-      public function import_data($databarang)
+      public function import_data($datamaterial)
     {
-        $jumlah = count($databarang);
+        $jumlah = count($datamaterial);
         if ($jumlah > 0) {
-            $this->db->replace('barang', $databarang);
+            $this->db->replace('material', $datamaterial);
+
         }
     }
 

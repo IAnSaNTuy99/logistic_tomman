@@ -1,6 +1,8 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 require_once APPPATH . 'third_party/Spout/Autoloader/autoload.php';
+date_default_timezone_set("Asia/Makassar");
+
 use Box\Spout\Reader\Common\Creator\ReaderEntityFactory;
 class Dashboard extends CI_Controller {
 	private $filename = "import_data";
@@ -13,7 +15,7 @@ class Dashboard extends CI_Controller {
 
 	public function login_kah()
 	{
-		if ( $this->session->has_userdata('NIK') )
+		if ( $this->session->has_userdata('USERNAME') )
 			return TRUE; 
 		else
 		  	redirect(base_url('logout'));    
@@ -23,39 +25,42 @@ class Dashboard extends CI_Controller {
 	{
 		$data['judul']	='Selamat Datang di Logistic WH Banjarmasin';
 		$data['page']	='home';
-        $data['jml_barang'] =$this->m_dashboard->jumlah_record_tabel('barang');
+        $data['jml_material'] =$this->m_dashboard->jumlah_record_tabel('material');
 		$this->tampil($data);
 		
 	}
 
-	public function barang()
+	public function material()
     {
         $data['judul']='Stok Material WH Banjermasin';
-        $data['page']='barang';
-        $data['barang']=$this->m_dashboard->dt_barang();
+        $data['page']='material';
+        $data['material']=$this->m_dashboard->dt_material();
+        $data['date']=$this->m_dashboard->get_last_update();
         $this->tampil($data);
     }
 
-    public function barang_edit($id = FALSE)
+    
+
+    public function material_edit($id = FALSE)
 	{
 		$data['judul'] = 'Edit Data Material';
-		$data['page'] = 'barang_edit';
-        $this->form_validation->set_rules('ID_BARANG', 'Kode Material', 'required', array('required' => '%s harus diisi'));
+		$data['page'] = 'material_edit';
+        $this->form_validation->set_rules('ID_MATERIAL', 'Kode Material', 'required', array('required' => '%s harus diisi'));
         // $this->form_validation->set_rules(
-        //     'nama_barang',
-        //     'Nama Barang',
+        //     'nama_material',
+        //     'Nama material',
         //     'required|min_length[3]|max_length[45]',
         //     array('required' => '%s harus diisi.')
         // );
         $this->form_validation->set_rules('SATUAN', 'SATUAN', 'required', array('required' => '%s harus dipilih'));
         $this->form_validation->set_rules('JUMLAH', 'JUMLAH', 'required', array('required' => '%s harus dipilih'));
-        $data['d'] = $this->m_dashboard->cari_data('barang', 'ID_BARANG', $id);
+        $data['d'] = $this->m_dashboard->cari_data('material', 'ID_material', $id);
 
         if ($this->form_validation->run() === FALSE) {
             $this->tampil($data);
         } else {
-            $this->m_dashboard->dt_barang_edit($id);
-            redirect(base_url('dashboard/barang'));
+            $this->m_dashboard->dt_material_edit($id);
+            redirect(base_url('dashboard/material'));
         }
         
 	}
@@ -114,12 +119,12 @@ class Dashboard extends CI_Controller {
 		}
 	}
 
-//====================================BARANG KELUAR==============================//
-	public function barang_keluar()
+//====================================material KELUAR==============================//
+	public function material_keluar()
     {
-        $data['judul']='Barang keluar';
-        $data['page']='barang_keluar';
-        $data['barang_keluar']=$this->m_dashboard->dt_barang_keluar();
+        $data['judul']='Material Keluar';
+        $data['page']='material_keluar';
+        $data['material_keluar']=$this->m_dashboard->dt_material_keluar();
         $this->tampil($data);
     }
 
@@ -127,13 +132,13 @@ class Dashboard extends CI_Controller {
     {
         $data['judul'] = 'Form Input Data Material Keluar';
         $data['page'] = 'bk_tambah';
-        $input = $this->input->post('ID_BARANG', true);
-        $stok = $this->m_dashboard->get('barang', ['ID_BARANG' => $input])['JUMLAH'];
+        $input = $this->input->post('ID_MATERIAL', true);
+        $stok = $this->m_dashboard->get('material', ['ID_MATERIAL' => $input])['JUMLAH'];
         $stok_valid = $stok + 1;
-         $this->form_validation->set_rules('ID_BARANG', 'Pilih ID Barang', 'callback_dd_cek');
+         $this->form_validation->set_rules('ID_MATERIAL', 'Pilih ID material', 'callback_dd_cek');
         // $this->form_validation->set_rules(
-        //     'nama_barang',
-        //     'Nama Barang',
+        //     'nama_material',
+        //     'Nama material',
         //     'required|min_length[3]|max_length[45]',
         //     array('required' => '%s harus diisi.')
         // );
@@ -146,35 +151,35 @@ class Dashboard extends CI_Controller {
                 'less_than' => "Jumlah Keluar tidak boleh lebih dari {$stok}"
             ]
         );
-        $data['d'] = $this->m_dashboard->cari_data('barang_keluar', 'ID_BARANG_KELUAR', $id);
+        $data['d'] = $this->m_dashboard->cari_data('material_keluar', 'ID_material_KELUAR', $id);
        
 
-        $data['ddbarang'] = $this->m_dashboard->dropdown_barang();
+        $data['ddmaterial'] = $this->m_dashboard->dropdown_material();
 
         if ($this->form_validation->run()  === FALSE ) {
             $this->tampil($data);
         } else {
-            $this->m_dashboard->dt_barang_keluar_tambah($id);
-            redirect(base_url('dashboard/barang_keluar'));
+            $this->m_dashboard->dt_material_keluar_tambah($id);
+            redirect(base_url('dashboard/material_keluar'));
         }
         
     }
    public function bk_edit($id=false)
     {
-        $data['judul'] = 'Edit Data Barang';
+        $data['judul'] = 'Edit Data material';
         $data['page'] = 'bk_edit';
-         $this->form_validation->set_rules('ID_BARANG', 'Pilih ID Barang', 'callback_dd_cek');
+         $this->form_validation->set_rules('ID_MATERIAL', 'Pilih ID material', 'callback_dd_cek');
         $this->form_validation->set_rules('JUMLAH', 'JUMLAH', 'required', array('required' => '%s harus diisi'));
-         $data['d'] = $this->m_dashboard->cari_data('barang_keluar', 'ID_BARANG_KELUAR', $id);
+         $data['d'] = $this->m_dashboard->cari_data('material_keluar', 'ID_material_KELUAR', $id);
 
 
-        $data['ddbarang'] = $this->m_dashboard->dropdown_barang();
+        $data['ddmaterial'] = $this->m_dashboard->dropdown_material();
 
         if ($this->form_validation->run() === FALSE) {
             $this->tampil($data);
         } else {
             $this->m_dashboard->dt_bk_edit($id);
-            redirect(base_url('dashboard/barang_keluar'));
+            redirect(base_url('dashboard/material_keluar'));
         }
         
     }
@@ -182,8 +187,8 @@ class Dashboard extends CI_Controller {
 
     public function bk_hapus($id)
 	{
-		$this->m_dashboard->hapus_data('barang_keluar', 'ID_BARANG_KELUAR', $id);
-		redirect(base_url('dashboard/barang_keluar'));
+		$this->m_dashboard->hapus_data('material_keluar', 'ID_MATERIAL_KELUAR', $id);
+		redirect(base_url('dashboard/material_keluar'));
 	}
 
 
@@ -195,10 +200,10 @@ class Dashboard extends CI_Controller {
 
     
 
-    public function barang_hapus($id)
+    public function material_hapus($id)
     {
-        $this->m_dashboard->hapus_data('barang','ID_BARANG',$id);
-        redirect(base_url('dashboard/barang'));
+        $this->m_dashboard->hapus_data('material','ID_MATERIAL',$id);
+        redirect(base_url('dashboard/material'));
     }
 
        public function uploaddata()
@@ -223,13 +228,15 @@ class Dashboard extends CI_Controller {
                 $numRow = 0;
                 foreach ($sheet->getRowIterator() as $row) {
                     if ($numRow > 0) {
-                        $databarang = array(
-                            'id_barang'    => $row->getCellAtIndex(0),
-                            'nama_barang'  => $row->getCellAtIndex(1),
+                        $datamaterial = array(
+                            'id_material'    => $row->getCellAtIndex(0),
+                            'nama_material'  => $row->getCellAtIndex(1),
                             'jumlah'       => $row->getCellAtIndex(2),
                             'satuan'       => $row->getCellAtIndex(3),
+                            'updated' 	   => date('Y-m-d H:i:s')
                         );
-                        $this->m_dashboard->import_data($databarang);
+                        $this->m_dashboard->import_data($datamaterial);
+
                     }   
                     $numRow++;
                 }
@@ -237,12 +244,12 @@ class Dashboard extends CI_Controller {
                 unlink($uploadPath . $file['file_name']);
                 $this->session->set_flashdata('pesan', '<div class="alert alert-success alert-dismissible" role="alert">
   <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button> Data berhasil diperbarui </div>');
-                redirect('dashboard/barang');
+                redirect('dashboard/material');
             }
         } else {
             $this->session->set_flashdata('pesan', '<div class="alert alert-danger alert-dismissible" role="alert">
   <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button> Data Gagal ditambahkan </div>');
-                redirect('dashboard/barang');
+                redirect('dashboard/material');
         };
     }
 
@@ -276,10 +283,10 @@ function dd_cek($str)    //Untuk Validasi DropDown jika tidak dipilih
         $data['judul'] = 'Form Input Data QC Material';
         $data['page'] = 'qcm_upload';
         //validate the form data 
-        $this->form_validation->set_rules('nama_barang', 'Pilih Nama Barang', 'callback_dd_cek');
+        $this->form_validation->set_rules('nama_material', 'Pilih Nama material', 'callback_dd_cek');
         $this->form_validation->set_rules('tgl_upload', 'Tanggal Upload', 'required', array('required' => '%s harus diisi'));
  
-        $data['ddbarang'] = $this->m_dashboard->dropdown_barang();
+        $data['ddmaterial'] = $this->m_dashboard->dropdown_material();
 
         $uploadPathPDF='uploads/pdf/';
 		if(!is_dir($uploadPathPDF))

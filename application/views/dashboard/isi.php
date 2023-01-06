@@ -19,14 +19,14 @@
           <div class="col-lg-6 col-12">
             <div class="small-box bg-info">
               <div class="inner">
-                <h3><?php echo $jml_barang; ?></h3>
+                <h3><?php echo $jml_material; ?></h3>
 
-                <p>Jumlah Barang</p>
+                <p>Jumlah material</p>
               </div>
               <div class="icon">
                 <i class="ion ion-cube"></i>
               </div>
-              <a href="<?php echo base_url('dashboard/barang') ?>" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="<?php echo base_url('dashboard/material') ?>" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
@@ -70,7 +70,7 @@
 }
 
 //============================================STOK MATERIAL=================================================//
-else if ($page == 'barang') {
+else if ($page == 'material') {
 ?>
 
   <div class="content-wrapper">
@@ -86,11 +86,15 @@ else if ($page == 'barang') {
 
       <section class="content">
       <?= $this->session->flashdata('pesan'); ?>
+
       <div class="card">
+
         <div class="card-body">
+           <div class="update">Last Update: <?php echo implode(" ",$date); ?> </div> 
           <div class="row">
             
-           <div class="col-sm-0"><?= form_open_multipart('dashboard/uploaddata') ?> </div>
+           <div class="col-sm-0"><?= form_open_multipart('dashboard/uploaddata')  ?>  </div>
+           
             <div class="col-sm-2.5">
               <input type="file" class="form-control-file" id="importexcel" name="importexcel" accept=".xlsx,.xls"> 
             </div>
@@ -99,7 +103,8 @@ else if ($page == 'barang') {
               </div>
               <?= form_close(); ?>
               </div>  
-     
+            
+
           <table id="datatable_01" class="table table-bordered">
             <thead>
               <tr>
@@ -112,16 +117,16 @@ else if ($page == 'barang') {
               </tr>
             </thead>
             <?php $i = 1;
-            foreach ($barang as $data) { ?>
+            foreach ($material as $data) { ?>
               <tr>
                 <td><?= $i++; ?></td>
-                <td><?php echo $data['ID_BARANG'] ?></td>
-                <td><?php echo $data['NAMA_BARANG'] ?></td>
+                <td><?php echo $data['ID_MATERIAL'] ?></td>
+                <td><?php echo $data['NAMA_MATERIAL'] ?></td>
                 <td><?php echo $data['JUMLAH'] ?></td>
                 <td><?php echo $data['SATUAN'] ?></td>
                 <td>
-                  <a href=<?php echo base_url("dashboard/barang_edit/") . $data['ID_BARANG']; ?>> <i class="fas fa-pencil-alt"></i> </a>
-                  <a href=<?php echo base_url("dashboard/barang_hapus/") . $data['ID_BARANG']; ?> onclick="return confirm('Yakin menghapus Material : <?php echo $data['NAMA_BARANG']; ?> ?');" ;><i class="fas fa-trash-alt"></i></a> <!-- <a href="#"><i class="fas fa-pencil-alt" data-toggle="modal" data-target="#modal-default"></i></a> -->
+                  <a href=<?php echo base_url("dashboard/MATERIAL_edit/") . $data['ID_MATERIAL']; ?>> <i class="fas fa-pencil-alt"></i> </a>
+                  <a href=<?php echo base_url("dashboard/material_hapus/") . $data['ID_MATERIAL']; ?> onclick="return confirm('Yakin menghapus MATERIAL : <?php echo $data['NAMA_MATERIAL']; ?> ?');" ;><i class="fas fa-trash-alt"></i></a> <!-- <a href="#"><i class="fas fa-pencil-alt" data-toggle="modal" data-target="#modal-default"></i></a> -->
                 </button>
 
               </td>
@@ -143,7 +148,7 @@ else if ($page == 'barang') {
 }
 
 //--------------------------------- TAMBAH ---------------------------------
-else if ($page == 'barang_edit') {
+else if ($page == 'material_edit') {
     ?>
       <div class="content-wrapper">
         <section class="content-header">
@@ -165,28 +170,28 @@ else if ($page == 'barang_edit') {
     
               <?php echo validation_errors(); ?>
     
-              <form method="POST" action="<?php echo base_url('dashboard/barang_edit/' . $d['ID_BARANG']); ?>" class="form-horizontal">
+              <form method="POST" action="<?php echo base_url('dashboard/material_edit/' . $d['ID_MATERIAL']); ?>" class="form-horizontal">
     
                 <div class="card-body">
     
                    <div class="form-group row">
-                            <label for="ID_BARANG" class="col-sm-2 col-form-label">Kode Material</label>
+                            <label for="ID_MATERIAL" class="col-sm-2 col-form-label">Kode Material</label>
                             <div class="col-sm-10">
-                              <input type="text" class="form-control" name="ID_BARANG" id="ID_BARANG" value="<?php echo set_value('ID_BARANG',$d['ID_BARANG'],true); ?>" placeholder="Masukkan ID Barang">
-                              <span class="badge badge-warning"><?php echo strip_tags(form_error('ID_BARANG')); ?></span>
+                              <input type="text" class="form-control" name="ID_MATERIAL" id="ID_MATERIAL" value="<?php echo set_value('ID_MATERIAL',$d['ID_MATERIAL'],true); ?>" placeholder="Masukkan ID MATERIAL">
+                              <span class="badge badge-warning"><?php echo strip_tags(form_error('ID_MATERIAL')); ?></span>
                             </div>
                           </div>
 
                          <div class="form-group row">
-                            <label for="nama_barang" class="col-sm-2 col-form-label">Nama Material</label>
+                            <label for="nama_material" class="col-sm-2 col-form-label">Nama Material</label>
                             <div class="col-sm-10">
-                              <input type="text" class="form-control" name="NAMA_BARANG" id="NAMA_BARANG" value="<?php echo set_value('NAMA_BARANG', $d['NAMA_BARANG'],true); ?>" placeholder="Masukkan Nama Barang">
-                              <span class="badge badge-warning"><?php echo strip_tags(form_error('NAMA_BARANG')); ?></span>
+                              <input type="text" class="form-control" name="NAMA_MATERIAL" id="NAMA_MATERIAL" value="<?php echo set_value('NAMA_MATERIAL', $d['NAMA_MATERIAL'],true); ?>" placeholder="Masukkan Nama MATERIAL">
+                              <span class="badge badge-warning"><?php echo strip_tags(form_error('NAMA_MATERIAL')); ?></span>
                             </div>
                           </div>
 
                          <div class="form-group row">
-                            <label for="nama_barang" class="col-sm-2 col-form-label">Jumlah</label>
+                            <label for="nama_material" class="col-sm-2 col-form-label">Jumlah</label>
                             <div class="col-sm-10">
                               <input type="text" class="form-control" name="JUMLAH" id="JUMLAH" value="<?php echo set_value('JUMLAH', $d['JUMLAH'],true); ?>" placeholder="Masukkan Jumlah">
                               <span class="badge badge-warning"><?php echo strip_tags(form_error('JUMLAH')); ?></span>
@@ -416,8 +421,8 @@ else if ($page == 'staff_tambah') {
 
 
 
-//============================================Barang Keluar=================================================//
-else if ($page == 'barang_keluar') {
+//============================================material Keluar=================================================//
+else if ($page == 'material_keluar') {
   ?>
     <div class="content-wrapper">
       <section class="content-header">
@@ -437,8 +442,8 @@ else if ($page == 'barang_keluar') {
               <thead>
                 <tr>
                   <th>NO</th>
-                 <!--  <th>Id Barang</th> -->
-                  <th>Nama Barang</th>
+                 <!--  <th>Id material</th> -->
+                  <th>Nama Material</th>
                   <th>Jumlah</th>
                   <th>Satuan</th>
                   <th>Tanggal</th>
@@ -446,17 +451,17 @@ else if ($page == 'barang_keluar') {
                 </tr>
               </thead>
               <?php $i = 1;
-              foreach ($barang_keluar as $data) { ?>
+              foreach ($material_keluar as $data) { ?>
                 <tr>
                   <td><?= $i++; ?></td>
-                  <!-- <td>BK<?php echo $data['ID_BARANG_KELUAR'] ?></td> -->
-                  <td><?php echo $data['NAMA_BARANG'] ?></td>
+                  <!-- <td>BK<?php echo $data['ID_MATERIAL_KELUAR'] ?></td> -->
+                  <td><?php echo $data['NAMA_MATERIAL'] ?></td>
                   <td><?php echo $data['JUMLAH'] ?></td>
                   <td><?php echo $data['SATUAN'] ?></td>
                   <td><?php echo $data['TANGGAL'] ?></td>
                   <!-- <td>
-                  <a href=<?php echo base_url("dashboard/bk_edit/") . $data['ID_BARANG_KELUAR']; ?>> <i class="fas fa-pencil-alt"></i> </a>
-                  <a href=<?php echo base_url("dashboard/bk_hapus/") . $data['ID_BARANG_KELUAR']; ?> onclick="return confirm('Yakin menghapus Data Barang Keluar: <?php echo $data['NAMA_BARANG']; ?> ?');" ;><i class="fas fa-trash-alt"></i></a>
+                  <a href=<?php echo base_url("dashboard/bk_edit/") . $data['ID_MATERIAL_KELUAR']; ?>> <i class="fas fa-pencil-alt"></i> </a>
+                  <a href=<?php echo base_url("dashboard/bk_hapus/") . $data['ID_MATERIAL_KELUAR']; ?> onclick="return confirm('Yakin menghapus Data MATERIAL Keluar: <?php echo $data['NAMA_MATERIAL']; ?> ?');" ;><i class="fas fa-trash-alt"></i></a>
                 </td> -->
                 </tr>
               <?php
@@ -473,7 +478,7 @@ else if ($page == 'barang_keluar') {
  
 
 
-//========================================Tambah Barang Keluar==========================//
+//========================================Tambah material Keluar==========================//
   else if ($page == 'bk_tambah') {
   ?>
     <div class="content-wrapper">
@@ -495,11 +500,11 @@ else if ($page == 'barang_keluar') {
   
               <div class="card-body">
                 <div class="form-group row">
-                  <label for="ID_BARANG" class="col-sm-2 col-form-label">Pilih Barang</label>
+                  <label for="ID_MATERIAL" class="col-sm-2 col-form-label">Pilih Material</label>
                   <div class="col-sm-10" >
-                    <select class="form-control" name="ID_BARANG" id="ID_BARANG" value="<?php echo form_dropdown('ID_BARANG', $ddbarang, set_value('ID_BARANG')); ?>
+                    <select class="form-control" name="ID_MATERIAL" id="ID_MATERIAL" value="<?php echo form_dropdown('ID_MATERIAL', $ddmaterial, set_value('ID_MATERIAL')); ?>
                     
-                    <span class="badge badge-warning"><?php echo strip_tags(form_error('ID_BARANG')); ?></span>
+                    <span class="badge badge-warning"><?php echo strip_tags(form_error('ID_MATERIAL')); ?></span>
                     </select>
                 </div>
               </div>
@@ -526,7 +531,7 @@ else if ($page == 'barang_keluar') {
   <?php
   }
 
-  //========================================Edit Barang Keluar==========================//
+  //========================================Edit material Keluar==========================//
  else if ($page == 'bk_edit') {
   ?>
     <div class="content-wrapper">
@@ -544,15 +549,15 @@ else if ($page == 'barang_keluar') {
         <div class="card">
           <div class="card-body">
   
-            <form method="POST" action="<?php echo base_url('dashboard/bk_edit/' . $d['ID_BARANG_KELUAR']); ?>" class="form-horizontal">
+            <form method="POST" action="<?php echo base_url('dashboard/bk_edit/' . $d['ID_MATERIAL_KELUAR']); ?>" class="form-horizontal">
   
               <div class="card-body">
                 <div class="form-group row">
-                  <label for="ID_BARANG" class="col-sm-2 col-form-label">Pilih Barang</label>
+                  <label for="ID_MATERIAL" class="col-sm-2 col-form-label">Pilih material</label>
                   <div class="col-sm-10" >
-                    <select class="form-control" name="ID_BARANG" id="ID_BARANG" value="<?php echo form_dropdown('ID_BARANG', $ddbarang, set_value('ID_BARANG',$d['ID_BARANG'])); ?>
+                    <select class="form-control" name="ID_MATERIAL" id="ID_MATERIAL" value="<?php echo form_dropdown('ID_MATERIAL', $ddmaterial, set_value('ID_MATERIAL',$d['ID_MATERIAL'])); ?>
                     
-                    <span class="badge badge-warning"><?php echo strip_tags(form_error('ID_BARANG')); ?></span>
+                    <span class="badge badge-warning"><?php echo strip_tags(form_error('ID_MATERIAL')); ?></span>
                     </select>
                 </div>
               </div>
@@ -603,7 +608,7 @@ else if ($page == 'qcm') {
               <thead>
                 <tr>
                   <th>NO</th>
-                  <th>Nama Barang</th>
+                  <th>Nama material</th>
                   <th>Dokumen</th>
                   <th>Evidence</th>
                   <th>Status QCM</th>
@@ -616,7 +621,7 @@ else if ($page == 'qcm') {
               foreach ($qcm as $data) { ?>
                 <tr>
                   <td><?= $i++; ?></td>
-                  <td><?php echo $data['nama_barang'] ?></td>
+                  <td><?php echo $data['nama_material'] ?></td>
                   <td><?php echo $data['Dokumen'] ?></td>
                   <td><?php echo $data['evidence'] ?></td>
                   <td><?php echo $data['status_qcm'] ?></td>
@@ -624,7 +629,7 @@ else if ($page == 'qcm') {
                   <td><?php echo $data['tgl_upload'] ?></td>
                   <td>
                   <a href=<?php echo base_url("dashboard/qcm_edit/") . $data['id_qcm']; ?>> <i class="fas fa-pencil-alt"></i> </a>
-                  <a href=<?php echo base_url("dashboard/qcm_hapus/") . $data['id_qcm']; ?> onclick="return confirm('Yakin menghapus staff: <?php echo $data['nama_barang']; ?> ?');" ;><i class="fas fa-trash-alt"></i></a>
+                  <a href=<?php echo base_url("dashboard/qcm_hapus/") . $data['id_qcm']; ?> onclick="return confirm('Yakin menghapus staff: <?php echo $data['nama_material']; ?> ?');" ;><i class="fas fa-trash-alt"></i></a>
                   </td>
                 </tr>
               <?php
@@ -663,11 +668,11 @@ else if ($page == 'qcm_upload') {
               <div class="card-body">
 
                 <div class="form-group row">
-                  <label for="nama_barang" class="col-sm-2 col-form-label">Nama Barang</label>
+                  <label for="nama_material" class="col-sm-2 col-form-label">Nama material</label>
                   <div class="col-sm-10">
-                  <select class="form-control" name="nama_barang" id="nama_barang" 
-                  value="<?php echo form_dropdown('NAMA_BARANG', $ddbarang, set_value('NAMA_BARANG')); ?>  
-                    <span class="badge badge-warning"><?php echo strip_tags(form_error('NAMA_BARANG')); ?></span>
+                  <select class="form-control" name="nama_material" id="nama_material" 
+                  value="<?php echo form_dropdown('NAMA_material', $ddmaterial, set_value('NAMA_material')); ?>  
+                    <span class="badge badge-warning"><?php echo strip_tags(form_error('NAMA_material')); ?></span>
                   </div>
                 </div>
 
