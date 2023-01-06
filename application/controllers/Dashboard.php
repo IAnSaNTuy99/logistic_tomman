@@ -281,7 +281,7 @@ function dd_cek($str)    //Untuk Validasi DropDown jika tidak dipilih
  
         $data['ddbarang'] = $this->m_dashboard->dropdown_barang();
 
-        $uploadPathPDF='uploads/docs/';
+        $uploadPathPDF='uploads/pdf/';
 		if(!is_dir($uploadPathPDF))
 		{
 			mkdir($uploadPathPDF,0777,TRUE);
