@@ -1,6 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 require_once APPPATH . 'third_party/Spout/Autoloader/autoload.php';
+
 date_default_timezone_set("Asia/Makassar");
 
 use Box\Spout\Reader\Common\Creator\ReaderEntityFactory;
@@ -70,7 +71,7 @@ class Dashboard extends CI_Controller {
 
     public function staff_gudang()
     {
-        $data['judul']='Staff WH Banjermasin';
+        $data['judul']='Staff WH Banjarmasin';
         $data['page']='staff_gudang';
         $data['staff_gudang']=$this->m_dashboard->dt_staff();
         $this->tampil($data);
@@ -160,7 +161,7 @@ class Dashboard extends CI_Controller {
             $this->tampil($data);
         } else {
             $this->m_dashboard->dt_material_keluar_tambah($id);
-            redirect(base_url('dashboard/material_keluar'));
+            redirect(base_url('dashboard/bk_tambah'));
         }
         
     }
@@ -210,6 +211,7 @@ class Dashboard extends CI_Controller {
     {
         
         $uploadPath='uploads/documents/';
+
 		if(!is_dir($uploadPath))
 		{
 			mkdir($uploadPath,0777,TRUE);
@@ -220,14 +222,52 @@ class Dashboard extends CI_Controller {
         $config['file_name'] = 'doc' . time();
         $this->load->library('upload', $config);
         if ($this->upload->do_upload('importexcel')) {
-            $file = $this->upload->data();
-            $reader = ReaderEntityFactory::createXLSXReader();
 
+            $file = $this->upload->data();
+            $numRow=0;
+            $reader = ReaderEntityFactory::createXLSXReader();
             $reader->open($uploadPath . $file['file_name']);
             foreach ($reader->getSheetIterator() as $sheet) {
-                $numRow = 0;
+
+                // $this->db->empty_table('material');
                 foreach ($sheet->getRowIterator() as $row) {
-                    if ($numRow > 0) {
+            	$rowIsEmpty = true;
+				    // Iterate through each cell in the row
+				    // foreach ($row->getCells() as $cell) {
+				    //   // Check if the cell has a value
+				    //   if ($cell->getValue() !== null) {
+				    //     // The row is not empty
+				    //     $rowIsEmpty = false;
+				    //     break;
+				    //   }
+				    // }
+				    // Check if the row is empty
+				    if ($rowIsEmpty and $numRow>0 and $rowIsEmpty =false) {
+				      // Set an error message and return
+				      $this->session->set_flashdata('pesan', '<div class="alert alert-danger alert-dismissible" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button> Data Excel Kosong </div>');
+                redirect('dashboard/material');
+				    } else {
+				    	$this->db->empty_table('material');
+				    }
+		  }
+		}
+  //             if ($row->isEmpty() and empty($numRow) || empty($numRow)) {
+  //        				// A row after the first row is empty, do not allow upload
+	 //         		 $this->session->set_flashdata('pesan', '<div class="alert alert-danger alert-dismissible" role="alert">
+  // <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button> Data Excel Kosong </div>');
+  //               redirect('dashboard/material');
+	 //      			} 
+
+	      				// $this->db->empty_table('material');
+	      				
+            foreach ($reader->getSheetIterator() as $sheet) {
+
+                // $this->db->empty_table('material');
+                foreach ($sheet->getRowIterator() as $row) {
+
+ 
+	                    if ($numRow >0 ) {
                         $datamaterial = array(
                             'id_material'    => $row->getCellAtIndex(0),
                             'nama_material'  => $row->getCellAtIndex(1),

@@ -51,6 +51,22 @@
     }).buttons().container().appendTo('#example_wrapper .col-md-6:eq(0)');
   });
 </script>
+
+<script>
+  $(function() {
+    $("#datatable_02").DataTable({
+      "paging": true,
+      "lengthChange": true,
+      "searching": true,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+      "dom": 'lfrtip',
+     
+    }).buttons().container().appendTo('#example_wrapper .col-md-6:eq(0)');
+  });
+</script>
   </footer>
   
 

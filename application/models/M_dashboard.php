@@ -3,7 +3,7 @@ class M_dashboard extends CI_Model{
 	public function __construct()
     {
         $this->load->database();
-        return $this->db->get('MATERIAL')->result();
+        return $this->db->get('material')->result();
     }
 
 
@@ -86,7 +86,7 @@ class M_dashboard extends CI_Model{
 //========================MATERIAL Keluar=========================///
     public function dt_material_keluar()
     {
-       $this->db->select('bk.ID_MATERIAL_KELUAR, b.ID_MATERIAL, b.NAMA_MATERIAL, bk.JUMLAH, b.SATUAN, bk.TANGGAL');
+       $this->db->select('bk.ID_MATERIAL_KELUAR, b.ID_MATERIAL, b.NAMA_MATERIAL, bk.JUMLAH, b.SATUAN, bk.TANGGAL, bk.WAKTU');
          $this->db->from('material_keluar bk');
            $this->db->join('material b', 'bk.ID_MATERIAL = b.ID_MATERIAL','left');
          $query = $this->db->get();
@@ -101,6 +101,7 @@ class M_dashboard extends CI_Model{
             'JUMLAH' => $this->input->post('JUMLAH')
         );
         $this->db->set('TANGGAL','NOW()', FALSE);
+        $this->db->set('WAKTU','NOW()', FALSE);
         $this->db->where('ID_MATERIAL_KELUAR', $id);
         return $this->db->insert('material_keluar', $data);
     }
@@ -118,27 +119,6 @@ class M_dashboard extends CI_Model{
 
   
 
-    // Fungsi untuk melakukan proses upload file
-      // public function upload_file($filename){
-      //   $this->load->library('upload'); // Load librari upload
-        
-      //   $config['upload_path'] = './excel/';
-      //   $config['allowed_types'] = 'xlsx';
-      //   $config['max_size']  = '10240';
-      //   $config['overwrite'] = true;
-      //   $config['file_name'] = $filename;
-      
-      //   $this->upload->initialize($config); // Load konfigurasi uploadnya
-      //   if($this->upload->do_upload('file')){ // Lakukan upload dan Cek jika proses upload berhasil
-      //     // Jika berhasil :
-      //     $return = array('result' => 'success', 'file' => $this->upload->data(), 'error' => '');
-      //     return $return;
-      //   }else{
-      //     // Jika gagal :
-      //     $return = array('result' => 'failed', 'file' => '', 'error' => $this->upload->display_errors());
-      //     return $return;
-      //   }
-      // }
 
 
     // =========================== Upload QCM ========================
@@ -234,10 +214,14 @@ class M_dashboard extends CI_Model{
     
       public function import_data($datamaterial)
     {
+
         $jumlah = count($datamaterial);
-        if ($jumlah > 0) {
+        if ($jumlah > 0 ) {
+
             $this->db->replace('material', $datamaterial);
 
+        }else{
+            echo "File Kosong";
         }
     }
 

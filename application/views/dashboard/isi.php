@@ -438,7 +438,7 @@ else if ($page == 'material_keluar') {
       <section class="content">
         <div class="card">
           <div class="card-body">
-            <table class="table table-bordered">
+            <table id="datatable_02" class="table table-bordered">
               <thead>
                 <tr>
                   <th>NO</th>
@@ -447,7 +447,8 @@ else if ($page == 'material_keluar') {
                   <th>Jumlah</th>
                   <th>Satuan</th>
                   <th>Tanggal</th>
-            <!--       <th>Aksi</th> -->
+                  <th>Waktu</th>
+                  <th>Aksi</th>
                 </tr>
               </thead>
               <?php $i = 1;
@@ -459,10 +460,11 @@ else if ($page == 'material_keluar') {
                   <td><?php echo $data['JUMLAH'] ?></td>
                   <td><?php echo $data['SATUAN'] ?></td>
                   <td><?php echo $data['TANGGAL'] ?></td>
-                  <!-- <td>
-                  <a href=<?php echo base_url("dashboard/bk_edit/") . $data['ID_MATERIAL_KELUAR']; ?>> <i class="fas fa-pencil-alt"></i> </a>
+                  <td><?php echo $data['WAKTU'] ?></td>
+                  <td>
+                 <a href=<?php echo base_url("dashboard/bk_edit/") . $data['ID_MATERIAL_KELUAR']; ?>> <i class="fas fa-pencil-alt"></i> </a> 
                   <a href=<?php echo base_url("dashboard/bk_hapus/") . $data['ID_MATERIAL_KELUAR']; ?> onclick="return confirm('Yakin menghapus Data MATERIAL Keluar: <?php echo $data['NAMA_MATERIAL']; ?> ?');" ;><i class="fas fa-trash-alt"></i></a>
-                </td> -->
+                </td>
                 </tr>
               <?php
               }
