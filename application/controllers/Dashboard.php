@@ -160,6 +160,7 @@ class Dashboard extends CI_Controller {
         if ($this->form_validation->run()  === FALSE ) {
             $this->tampil($data);
         } else {
+            
             $this->m_dashboard->dt_material_keluar_tambah($id);
             redirect(base_url('dashboard/bk_tambah'));
         }
@@ -303,7 +304,7 @@ function dd_cek($str)    //Untuk Validasi DropDown jika tidak dipilih
 	  return TRUE;
 }
 
-	function tampil($data)
+function tampil($data)
 	{
 		$this->load->view('dashboard/header',$data);
 		$this->load->view('dashboard/isi');
@@ -319,47 +320,170 @@ function dd_cek($str)    //Untuk Validasi DropDown jika tidak dipilih
         $this->tampil($data);
     }
 
-    public function qcm_upload(){
+    public function qcm_upload()
+    {
+        $data['judul'] = 'Form Input Data QC Material';
+        $data['page'] = 'qcm_upload';
+
+        // set validation rules
+        $this->form_validation->set_rules('id_material', 'Nama material', 'required');
+        // $this->form_validation->set_rules('dokumen', 'Upload PDF', 'callback_file_check');
+        // $this->form_validation->set_rules('evidence', 'Upload Evidence', 'callback_file_check');
+        $this->form_validation->set_rules('status_qcm', 'Status QC', 'required');
+        $this->form_validation->set_rules('tgl_qcm', 'Tanggal QCM', 'required');
+        $this->form_validation->set_rules('tgl_upload', 'Tanggal Upload', 'required');
+
+        $data['ddmaterial'] = $this->m_dashboard->dropdown_material();
+
+        if ($this->form_validation->run() === FALSE){
+            $this->tampil($data);
+        }else{
+
+            // Set configuration for first file input field
+        $config1['upload_path']          = './uploads/';
+        $config1['allowed_types']        = 'gif|jpg|png';
+        $config1['max_size']             = 100;
+        $config1['max_width']            = 1024;
+        $config1['max_height']           = 768;
+ 
+        $this->upload->initialize($config1);
+ 
+        if ( ! $this->upload->do_upload('userfile1'))
+        {
+            // If userfile1 fails the first condition, set userfile1 to null
+            $data1 = null;
+ 
+            // Set configuration for second file input field
+            $config2['upload_path']          = './uploads/';
+            $config2['allowed_types']        = 'gif|jpg|png';
+            $config2['max_size']             = 100;
+            $config2['max_width']            = 1024;
+            $config2['max_height']           = 768;
+ 
+            $this->upload->initialize($config2);
+ 
+            if ( ! $this->upload->do_upload('userfile2'))
+            {
+                $error = array('error' => $this->upload->display_errors());
+ 
+                $this->load->view('upload_form', $error);
+            }
+            else
+            {
+                $data2 = array('upload_data' => $this->upload->data());
+ 
+                $this->load->view('upload_success', array('data1' => $data1, 'data2' => $data2));
+                $this->m_dashboard->dt_qcm_tambah3();
+                redirect(base_url('dashboard/qcm'));
+            }
+        }
+        else
+        {
+            $data1 = array('upload_data' => $this->upload->data());
+ 
+            // Set configuration for second file input field
+            $config2['upload_path']          = './uploads/';
+            $config2['allowed_types']        = 'gif|jpg|png';
+            $config2['max_size']             = 100;
+            $config2['max_width']            = 1024;
+            $config2['max_height']           = 768;
+ 
+            $this->upload->initialize($config2);
+ 
+            if ( ! $this->upload->do_upload('userfile2'))
+            {
+                $error = array('error' => $this->upload->display_errors());
+ 
+                $this->load->view('upload_form', $error);
+            }
+            else
+            {
+                $data2 = array('upload_data' => $this->upload->data());
+ 
+                $this->load->view('upload_success', array('data1' => $data1, 'data2' => $data2));
+                $this->m_dashboard->dt_qcm_tambah3();
+                redirect(base_url('dashboard/qcm'));
+            }
+          }
+        }
+    }
+
+    public function qcm_upload2(){
+        echo "qcm_upload function called";
         $data['judul'] = 'Form Input Data QC Material';
         $data['page'] = 'qcm_upload';
         //validate the form data 
-        $this->form_validation->set_rules('nama_material', 'Pilih Nama material', 'callback_dd_cek');
+        $this->form_validation->set_rules('id_material', 'Pilih Nama material', 'callback_dd_cek');
         $this->form_validation->set_rules('tgl_upload', 'Tanggal Upload', 'required', array('required' => '%s harus diisi'));
  
         $data['ddmaterial'] = $this->m_dashboard->dropdown_material();
 
-        $uploadPathPDF='uploads/pdf/';
-		if(!is_dir($uploadPathPDF))
-		{
-			mkdir($uploadPathPDF,0777,TRUE);
-		}
+        // $uploadPathPDF='uploads/pdf/';
+		// if(!is_dir($uploadPathPDF))
+		// {
+		// 	mkdir($uploadPathPDF,0777,TRUE);
+		// }
+		// $configpdf['upload_path'] = $uploadPathPDF;
+		// $configpdf['allowed_types']= 'pdf';
+        // $configpdf['max_size'] = 100;
+		// $configpdf['encrypt_name']=TRUE;
 
-		$configpdf['upload_path'] = $uploadPathPDF;
-		$configpdf['allowed_types']= 'pdf';
-        $configpdf['max_size'] = 100;
-		$configpdf['encrypt_name']=TRUE;
+        
+        // $uploadPathIMG='uploads/images/';
+		// if(!is_dir($uploadPathIMG))
+		// {
+        //     mkdir($uploadPathIMG,0777,TRUE);
+		// }
+		// $config['upload_path'] = $uploadPathIMG;
+		// $config['allowed_types']= 'jpeg|jpg|png|pdf';
+		// $config['encrypt_name']=TRUE;
+        
 
-		$this->load->library('upload',$configpdf);
+        // $this->load->library('upload',$config);
 
-        $uploadPathIMG='uploads/images/';
-		if(!is_dir($uploadPathIMG))
-		{
-			mkdir($uploadPathIMG,0777,TRUE);
-		}
+        // validate the form data 
+        // if ($this->form_validation->run() === FALSE){
+        //     $this->tampil($data);
+        // }else{
+        //     echo "Form validation passed";
+        //     $this->m_dashboard->dt_qcm_tambah3();
+        //     redirect(base_url('dashboard/qcm'));
+        // }
 
-		$configimg['upload_path'] = $uploadPathIMG;
-		$configimg['allowed_types']= 'jpeg|JPEG|JPG|jpg|png|PNG';
-        $configimg['max_size'] = 100;
-		$configimg['encrypt_name']=TRUE;
-
-		$this->load->library('upload',$configimg);
-          
-        //validate the form data 
         if ($this->form_validation->run() === FALSE){
             $this->tampil($data);
         }else{
-            $this->m_dashboard->dt_qcm_tambah();
-            redirect(base_url('dashboard/qcm'));
+            $this->load->library('upload');
+
+            $config['upload_path'] = './uploads/pdf';
+            $config['allowed_types'] = 'pdf';
+            $config['encrypt_name']=TRUE;
+
+            $this->upload->initialize($config);
+            if (!$this->upload->do_upload('dokumen')) {
+                echo "PDF";
+                $this->tampil($data);
+
+            } else {
+                $uploadedpdf = $this->upload->data(); // added this..
+                
+                unset($config);
+                $config['upload_path'] = './uploads/img';
+                $config['allowed_types'] = 'jpeg|jpg|png';
+                $config['encrypt_name']=TRUE;
+                //$config['max_size'] = '15000';
+                $this->upload->initialize($config);
+                if (!$this->upload->do_upload('evidence')) {
+                    echo "IMG";
+                    $this->tampil($data);
+                } else {
+                    $uploadedimg = $this->upload->data(); // changed this..
+                    $pdf = $uploadedpdf['file_name'];// changed this..
+                    $img = $uploadedimg['file_name']; // changed this..
+                    $this->m_dashboard->dt_qcm_tambah3();
+                    redirect(base_url('dashboard/qcm'));
+                }
+            }
         }
     }
 

@@ -610,12 +610,13 @@ else if ($page == 'qcm') {
               <thead>
                 <tr>
                   <th>NO</th>
-                  <th>Nama material</th>
+                  <th>Id material</th>
                   <th>Dokumen</th>
                   <th>Evidence</th>
                   <th>Status QCM</th>
                   <th>Tgl QCM</th>
                   <th>Tgl Upload</th>
+                  <th>Aksi</th>
             <!--       <th>Aksi</th> -->
                 </tr>
               </thead>
@@ -623,15 +624,15 @@ else if ($page == 'qcm') {
               foreach ($qcm as $data) { ?>
                 <tr>
                   <td><?= $i++; ?></td>
-                  <td><?php echo $data['nama_material'] ?></td>
-                  <td><?php echo $data['Dokumen'] ?></td>
-                  <td><?php echo $data['evidence'] ?></td>
+                  <td><?php echo $data['id_material'] ?></td>
+                  <td><?php echo $data['dokumen'] ? '<a href="' . base_url("uploads/pdf/{$data['dokumen']}") . '" target="_blank">UPLOADED</a>' : 'NOT UPLOADED'?></td>
+                  <td><?php echo $data['evidence'] ? '<a href="' . base_url("uploads/images/{$data['evidence']}") . '" target="_blank">UPLOADED</a>' : 'NOT UPLOADED'?></td>
                   <td><?php echo $data['status_qcm'] ?></td>
                   <td><?php echo $data['tgl_qcm'] ?></td>
                   <td><?php echo $data['tgl_upload'] ?></td>
                   <td>
                   <a href=<?php echo base_url("dashboard/qcm_edit/") . $data['id_qcm']; ?>> <i class="fas fa-pencil-alt"></i> </a>
-                  <a href=<?php echo base_url("dashboard/qcm_hapus/") . $data['id_qcm']; ?> onclick="return confirm('Yakin menghapus staff: <?php echo $data['nama_material']; ?> ?');" ;><i class="fas fa-trash-alt"></i></a>
+                  <a href=<?php echo base_url("dashboard/qcm_hapus/") . $data['id_qcm']; ?> onclick="return confirm('Yakin menghapus staff: <?php echo $data['id_material']; ?> ?');" ;><i class="fas fa-trash-alt"></i></a>
                   </td>
                 </tr>
               <?php
@@ -663,32 +664,33 @@ else if ($page == 'qcm_upload') {
       <section class="content">
         <div class="card">
           <div class="card-body">
-          <?php echo validation_errors(); ?>
+                <!-- <?php echo validation_errors(); ?> -->
 
-          <?php echo form_open_multipart('dashboard/qcm_upload');?>
-  
+          
+               <?php echo form_open_multipart('dashboard/qcm_upload');?>
+
               <div class="card-body">
 
                 <div class="form-group row">
-                  <label for="nama_material" class="col-sm-2 col-form-label">Nama material</label>
+                  <label for="id_material" class="col-sm-2 col-form-label">Nama material</label>
                   <div class="col-sm-10">
-                  <select class="form-control" name="nama_material" id="nama_material" 
-                  value="<?php echo form_dropdown('NAMA_material', $ddmaterial, set_value('NAMA_material')); ?>  
-                    <span class="badge badge-warning"><?php echo strip_tags(form_error('NAMA_material')); ?></span>
+                  <select class="form-control" name="id_material" id="id_material" 
+                  value="<?php echo form_dropdown('id_material', $ddmaterial, set_value('id_material')); ?>  
+                    <span class="badge badge-warning"><?php echo strip_tags(form_error('id_material')); ?></span>
                   </div>
                 </div>
 
                 <div class="form-group row">
-                  <label for="evidence" class="col-sm-2 col-form-label">Upload PDF</label>
+                  <label for="dokumen" class="col-sm-2 col-form-label">Upload PDF</label>
                   <div class="col-sm-10">
-                    <input type="file" class="form-control-file" id="filepdf" name="filepdf" enctype="multipart/form-data">
+                    <input type="file" accept=".pdf" class="form-control-file" id="dokumen" name="dokumen" >
                   </div>
                 </div>
 
                 <div class="form-group row">
                   <label for="evidence" class="col-sm-2 col-form-label">Upload Evidence</label>
                   <div class="col-sm-10">
-                    <input type="file" class="form-control-file" id="fileimg" name="fileimg" enctype="multipart/form-data">
+                    <input type="file" accept=".jpg,.png,.jpeg" class="form-control-file" id="evidence" name="evidence" >
                   </div>
                 </div>
                 
@@ -725,13 +727,106 @@ else if ($page == 'qcm_upload') {
 
                 
 
-              </div>
-              <div class="card-footer">
-                <button type="submit" class="btn btn-info">Simpan</button>
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-info">Simpan</button>
+                </div>
               </div>
               <?= form_close(); ?>
   
+            </div>
+          </div>
+      </section>
+    </div>
+  <?php
+}
+
+//--------------------------------- QCM EDIT ---------------------------------
+else if ($page == 'qcm_edit') {
+  ?>
+    <div class="content-wrapper">
+      <section class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1><?php echo  $judul; ?></h1>
+            </div>
+          </div>
+        </div>
+      </section>
   
+      <section class="content">
+        <div class="card">
+          <div class="card-body">
+                <!-- <?php echo validation_errors(); ?> -->
+
+          
+               <?php echo form_open_multipart('dashboard/qcm_edit');?>
+
+              <div class="card-body">
+
+                <div class="form-group row">
+                  <label for="id_material" class="col-sm-2 col-form-label">Nama material</label>
+                  <div class="col-sm-10">
+                  <select class="form-control" name="id_material" id="id_material" 
+                  value="<?php echo form_dropdown('id_material', $ddmaterial, set_value('id_material')); ?>  
+                    <span class="badge badge-warning"><?php echo strip_tags(form_error('id_material')); ?></span>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label for="dokumen" class="col-sm-2 col-form-label">Upload PDF</label>
+                  <div class="col-sm-10">
+                    <input type="file" accept=".pdf" class="form-control-file" id="dokumen" name="dokumen" >
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label for="evidence" class="col-sm-2 col-form-label">Upload Evidence</label>
+                  <div class="col-sm-10">
+                    <input type="file" accept=".jpg,.png,.jpeg" class="form-control-file" id="evidence" name="evidence" >
+                  </div>
+                </div>
+                
+                <div class="form-group row">
+                  <label for="statusqcm" class="col-sm-2 col-form-label">Status QC</label>
+                  <div class="col-sm-10">
+                    <label >
+                    <input type="radio"  name="status_qcm" id="status_qcm" value="SPEC" <?php echo set_value('status_qcm'); ?>> SPEC
+                  </label>
+                  <label >
+                    <input type="radio"  name="status_qcm" id="status_qcm" value="UNSPEC" <?php echo set_value('status_qcm'); ?>> UNSPEC
+                  </label>
+                  <span class="badge badge-warning"><?php echo strip_tags(form_error('status_qcm')); ?></span>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="tanggal lahir" class="col-sm-2 col-form-label">Tanggal QCM</label>
+                      <div class="col-sm-10">
+                        <input type="date" class="form-control" name="tgl_qcm" id="tgl_qcm"
+                              value="<?php echo set_value('tgl_qcm'); ?>">
+                                <span class="badge badge-warning"><?php echo strip_tags(form_error('tgl_qcm')); ?></span>
+                      </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="tanggal lahir" class="col-sm-2 col-form-label">Tanggal Upload</label>
+                      <div class="col-sm-10">
+                        <input type="date" class="form-control" name="tgl_upload" id="tgl_upload"
+                              value="<?php echo set_value('tgl_upload'); ?>">
+                                <span class="badge badge-warning"><?php echo strip_tags(form_error('tgl_upload')); ?></span>
+                      </div>
+                </div>
+
+                
+
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-info">Simpan</button>
+                </div>
+              </div>
+              <?= form_close(); ?>
+  
+            </div>
           </div>
       </section>
     </div>
