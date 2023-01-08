@@ -19,7 +19,7 @@
   <link rel="stylesheet" href="<?php echo base_url(); ?>assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
   <link rel="stylesheet" href="<?php echo base_url(); ?>assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
   <!-- Theme style -->
-  <link rel="stylesheet" href="<?php echo base_url(); ?>assets/adminlte/dist/css/adminlte.min.css">
+  <link rel="stylesheet" href="<?php echo base_url(); ?>assets/adminlte/dist/css/adminlte.css">
   <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/style_umum.css">
 
     <!-- Load File jquery.min.js yang ada difolder js -->
@@ -94,13 +94,13 @@
             <?php
             $menu_master1 = array('material', 'material_edit');
             $menu_master2 = array('bk_tambah');
-            $menu_master3 = array('staff_gudang', 'staff_edit','staff_tambah');
-            $menu_master4 = array('history');
+            $menu_master3 = array('material_keluar', 'bk_edit', 'bk_hapus');
+            $menu_master4 = array('staff_gudang', 'staff_edit','staff_tambah');
             $menu_master5 = array('qcm','qcm_upload','qcm_edit');
             ?>
             <li class="nav-item  
             <?php
-              if (in_array($page, $menu_master1) || in_array($page, $menu_master3))
+              if (in_array($page, $menu_master1))
                 echo "menu-open";
               ?>
             "> 
@@ -132,19 +132,18 @@
                     <p>Stok Material</p>
                   </a>
                 </li>
-                
-                	
-                </ul>
+              </ul>
+            </li>
 
           <li class="nav-item  
             <?php
-              if (in_array($page, $menu_master2))
+              if (in_array($page, $menu_master2) || in_array($page, $menu_master3))
                 echo "menu-open";
               ?>
             "> 
             <a href="#" class="nav-link 
                 <?php
-                if (in_array($page, $menu_master2))
+                if (in_array($page, $menu_master2)|| in_array($page, $menu_master3))
                   echo "active";
                 ?>
               ">
@@ -154,7 +153,6 @@
                   <i class="right fas fa-angle-left"></i>
                 </p>
               </a>
-              
 
               <ul class="nav nav-treeview">
               <li class="nav-item">
@@ -165,7 +163,7 @@
                     ?>
                   ">
                   <p>  </p>
-                    <i class="nav-icon fas fa-share style" style="margin-left: 10px;"></i>
+                    <i class="nav-icon fas fa-share" style="margin-left: 10px;"></i>
                     <p>Input Material Keluar</p>
                   </a>
                 </li>
@@ -173,17 +171,18 @@
                 <li class="nav-item">
                   <a href="<?php echo base_url('dashboard/material_keluar'); ?>" class="nav-link
                     <?php
-                    if (in_array($page, $menu_master4))
+                    if (in_array($page, $menu_master3))
                       echo "active";
                     ?>
                   ">
                   <p>  </p>
-                    <i class="nav-icon fas fa-history " style="margin-left: 10px;"></i>
+                    <i class="nav-icon fas fa-history" style="margin-left: 10px;"></i>
                     <p>History Material Keluar</p>
                   </a>
                 </li>
               </ul>
-          </li>
+                
+          
           <li class="nav-item  
             <?php
               if (in_array($page, $menu_master5))
@@ -223,7 +222,7 @@
            <li class="nav-item">
                   <a href="<?php echo base_url('dashboard/staff_gudang'); ?>" class="nav-link
                     <?php
-                    if (in_array($page, $menu_master3))
+                    if (in_array($page, $menu_master4))
                       echo "active";
                     ?>
                   "><i class="nav-icon fas fa-users"></i>

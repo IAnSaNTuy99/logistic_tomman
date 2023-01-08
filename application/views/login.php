@@ -14,7 +14,7 @@
   <!-- icheck bootstrap -->
   <link rel="stylesheet" href="<?php echo base_url(); ?>assets/adminlte/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
   <!-- Theme style -->
-  <link rel="stylesheet" href="<?php echo base_url(); ?>assets/adminlte/dist/css/adminlte.min.css">
+  <link rel="stylesheet" href="<?php echo base_url(); ?>assets/adminlte/dist/css/adminlte.css">
   <style>
     .login-page {
       background-image: url("<?php echo base_url(); ?>assets/img/telkom_wh.jpeg");

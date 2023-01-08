@@ -167,7 +167,7 @@ class Dashboard extends CI_Controller {
     }
    public function bk_edit($id=false)
     {
-        $data['judul'] = 'Edit Data material';
+        $data['judul'] = 'Edit Data Material Keluar';
         $data['page'] = 'bk_edit';
          $this->form_validation->set_rules('ID_MATERIAL', 'Pilih ID material', 'callback_dd_cek');
         $this->form_validation->set_rules('JUMLAH', 'JUMLAH', 'required', array('required' => '%s harus diisi'));

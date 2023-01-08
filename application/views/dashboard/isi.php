@@ -17,7 +17,7 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col-lg-6 col-12">
-            <div class="small-box bg-info">
+            <div class="small-box bg-danger">
               <div class="inner">
                 <h3><?php echo $jml_material; ?></h3>
 
@@ -112,8 +112,8 @@ else if ($page == 'material') {
                 <th>Kode Material</th>
                 <th>Nama Material</th>
                 <th>Jumlah</th>
-                <th>satuan</th>
-                <th>Aksi</th>
+                <th>Satuan</th>
+                <!-- <th>Aksi</th> -->
               </tr>
             </thead>
             <?php $i = 1;
@@ -124,12 +124,7 @@ else if ($page == 'material') {
                 <td><?php echo $data['NAMA_MATERIAL'] ?></td>
                 <td><?php echo $data['JUMLAH'] ?></td>
                 <td><?php echo $data['SATUAN'] ?></td>
-                <td>
-                  <a href=<?php echo base_url("dashboard/MATERIAL_edit/") . $data['ID_MATERIAL']; ?>> <i class="fas fa-pencil-alt"></i> </a>
-                  <a href=<?php echo base_url("dashboard/material_hapus/") . $data['ID_MATERIAL']; ?> onclick="return confirm('Yakin menghapus MATERIAL : <?php echo $data['NAMA_MATERIAL']; ?> ?');" ;><i class="fas fa-trash-alt"></i></a> <!-- <a href="#"><i class="fas fa-pencil-alt" data-toggle="modal" data-target="#modal-default"></i></a> -->
-                </button>
 
-              </td>
                 
                  
               </tr>
@@ -250,12 +245,12 @@ else if ($page == 'staff_gudang') {
           <div class="card-body">
           <a href=<?php echo base_url("dashboard/staff_tambah") ?> class="btn btn-primary" style="margin-bottom:15px">
             Tambah Staff</a>
-            <table class="table table-bordered">
+            <table id="datatable_03" class="table table-bordered">
               <thead>
                 <tr>
                   <th>NO</th>
-                  <th>NIK</th>
-                  <th>Nama</th>
+                  <!-- <th>NIK</th> -->
+                  <th>Nama Staff</th>
                   <th>Gender</th>
                   <th>Tanggal Lahir</th>
                   <th>Aksi</th>
@@ -265,7 +260,7 @@ else if ($page == 'staff_gudang') {
               foreach ($staff_gudang as $data) { ?>
                 <tr>
                   <td><?= $i++; ?></td>
-                  <td><?php echo $data['id_staff'] ?></td>
+                  <!-- <td><?php echo $data['id_staff'] ?></td> -->
                   <td><?php echo $data['nama_staff'] ?></td>
                   <td><?php echo $data['jenkel'] ?></td>
                   <td><?php echo $data['tgl_lahir'] ?></td>
