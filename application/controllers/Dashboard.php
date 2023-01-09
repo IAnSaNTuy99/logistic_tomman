@@ -21,6 +21,7 @@ class Dashboard extends CI_Controller {
 		else
 		  	redirect(base_url('logout'));    
 	}
+	
 
 	public function index()
 	{
@@ -192,6 +193,81 @@ class Dashboard extends CI_Controller {
 		$this->m_dashboard->hapus_data('material_keluar', 'ID_MATERIAL_KELUAR', $id);
 		redirect(base_url('dashboard/material_keluar'));
 	}
+
+	//====================================material masuk==============================//
+	public function material_masuk()
+    {
+        $data['judul']='Material Masuk';
+        $data['page']='material_masuk';
+        $data['material_masuk']=$this->m_dashboard->dt_material_masuk();
+        $this->tampil($data);
+    }
+
+     public function bm_tambah($id=false)
+    {
+        $data['judul'] = 'Form Input Data Material Masuk';
+        $data['page'] = 'bm_tambah';
+        $input = $this->input->post('ID_MATERIAL', true);
+        $stok = $this->m_dashboard->get('material', ['ID_MATERIAL' => $input])['JUMLAH'];
+        $stok_valid = $stok + 1;
+         $this->form_validation->set_rules('ID_MATERIAL', 'Pilih ID material', 'callback_dd_cek');
+        // $this->form_validation->set_rules(
+        //     'nama_material',
+        //     'Nama material',
+        //     'required|min_length[3]|max_length[45]',
+        //     array('required' => '%s harus diisi.')
+        // );
+        $this->form_validation->set_rules('JUMLAH', 'JUMLAH', 'required|', array('required' => '%s harus diisi'));
+        $this->form_validation->set_rules(
+            'JUMLAH',
+            'JUMLAH',
+            "required|trim|numeric|greater_than[0]",
+            [
+                'less_than' => "Jumlah Keluar tidak boleh kurang dari 0"
+            ]
+        );
+        $data['d'] = $this->m_dashboard->cari_data('material_masuk', 'ID_MATERIAL_MASUK', $id);
+       
+
+        $data['ddmaterial'] = $this->m_dashboard->dropdown_material();
+
+        if ($this->form_validation->run()  === FALSE ) {
+            $this->tampil($data);
+        } else {
+            $this->m_dashboard->dt_material_masuk_tambah($id);
+            redirect(base_url('dashboard/bm_tambah'));
+        }
+        
+    }
+
+   public function bm_edit($id=false)
+    {
+        $data['judul'] = 'Edit Data material';
+        $data['page'] = 'bm_edit';
+         $this->form_validation->set_rules('ID_MATERIAL', 'Pilih ID material', 'callback_dd_cek');
+        $this->form_validation->set_rules('JUMLAH', 'JUMLAH', 'required', array('required' => '%s harus diisi'));
+         $data['d'] = $this->m_dashboard->cari_data('material_masuk', 'ID_MATERIAL_MASUK', $id);
+
+
+        $data['ddmaterial'] = $this->m_dashboard->dropdown_material();
+
+        if ($this->form_validation->run() === FALSE) {
+            $this->tampil($data);
+        } else {
+            $this->m_dashboard->dt_bm_edit($id);
+            redirect(base_url('dashboard/material_masuk'));
+        }
+        
+    }
+
+
+    public function bm_hapus($id)
+	{
+		$this->m_dashboard->hapus_data('material_masuk', 'ID_MATERIAL_MASUK', $id);
+		redirect(base_url('dashboard/material_masuk'));
+	}
+
+	//////////////////////////////////////////
 
 
 	public function staff_hapus($id)

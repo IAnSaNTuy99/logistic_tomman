@@ -116,6 +116,52 @@ class M_dashboard extends CI_Model{
         return $this->db->update('material_keluar', $data);
     }
 
+    //========================MATERIAL Keluar=========================///
+    public function dt_material_masuk()
+    {
+       $this->db->select('bm.ID_MATERIAL_MASUK, b.ID_MATERIAL, b.NAMA_MATERIAL, bm.JUMLAH, b.SATUAN, bm.TANGGAL, bm.WAKTU');
+         $this->db->from('material_masuk bm');
+           $this->db->join('material b', 'bm.ID_MATERIAL = b.ID_MATERIAL','left');
+         $query = $this->db->get();
+       return $query->result_array();    
+       
+    }
+
+     public function dt_material_masuk_tambah($id)
+    {
+        $data = array(
+            'ID_MATERIAL' => $this->input->post('ID_MATERIAL'),
+            'JUMLAH' => $this->input->post('JUMLAH')
+        );
+        $this->db->set('TANGGAL','NOW()', FALSE);
+        $this->db->set('WAKTU','NOW()', FALSE);
+        $this->db->where('ID_MATERIAL_MASUK', $id);
+        return $this->db->insert('material_masuk', $data);
+    }
+
+    public function dt_material_baru_tambah()
+    {
+        $data = array(
+        'ID_MATERIAL' => $this->input->post('ID_MATERIAL'),
+        'NAMA_MATERIAL' => $this->input->post('NAMA_MATERIAL'),
+        'JUMLAH' => $this->input->post('JUMLAH'),
+        'SATUAN' => $this->input->post('SATUAN')
+        );
+        $this->db->set('UPDATED','NOW()', FALSE);
+        // $this->db->set('WAKTU','NOW()', FALSE);
+        return $this->db->insert('material', $data);
+    }
+
+      public function dt_bm_edit($id)
+    {
+        $data = array(
+            'ID_MATERIAL' => $this->input->post('ID_MATERIAL'),
+            'JUMLAH' => $this->input->post('JUMLAH')
+        );
+        $this->db->where('ID_MATERIAL_MASUK', $id);
+        return $this->db->update('material_masuk', $data);
+    }
+
 
   
 

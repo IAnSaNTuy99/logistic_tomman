@@ -97,6 +97,9 @@
             $menu_master3 = array('material_keluar', 'bk_edit', 'bk_hapus');
             $menu_master4 = array('staff_gudang', 'staff_edit','staff_tambah');
             $menu_master5 = array('qcm','qcm_upload','qcm_edit');
+             $menu_master6 = array('bm_tambah');
+             $menu_master7 = array('material_masuk','bm_edit','bm_hapus');
+
             ?>
             <li class="nav-item  
             <?php
@@ -181,8 +184,56 @@
                   </a>
                 </li>
               </ul>
-                
-          
+          </li>
+          <li class="nav-item  
+            <?php
+              if (in_array($page, $menu_master6))
+                echo "menu-open";
+              ?>
+            "> 
+            <a href="#" class="nav-link 
+                <?php
+                if (in_array($page, $menu_master6)||in_array($page, $menu_master7 ))
+                  echo "active";
+                ?>
+              ">
+                <i class="nav-icon fas fa-book" ></i>
+                <p>
+                  Material In
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+              
+
+              <ul class="nav nav-treeview">
+              <li class="nav-item">
+                  <a href="<?php echo base_url('dashboard/bm_tambah'); ?>" class="nav-link
+                    <?php
+                    if (in_array($page, $menu_master6))
+                      echo "active";
+                    ?>
+                  ">
+                  <p>  </p>
+                    <i class="nav-icon fas fa-share style" style="margin-left: 10px;"></i>
+                    <p>Input Material Masuk</p>
+                  </a>
+                </li>
+
+                <li class="nav-item">
+                  <a href="<?php echo base_url('dashboard/material_masuk'); ?>" class="nav-link
+                    <?php
+                    if (in_array($page, $menu_master7))
+                      echo "active";
+                    ?>
+                  ">
+                  <p>  </p>
+                    <i class="nav-icon fas fa-history " style="margin-left: 10px;"></i>
+                    <p>History Material Masuk</p>
+                  </a>
+                </li>
+              </ul>
+          </li>
+
           <li class="nav-item  
             <?php
               if (in_array($page, $menu_master5))

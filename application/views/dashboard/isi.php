@@ -126,6 +126,7 @@ else if ($page == 'material') {
                 <td><?php echo $data['SATUAN'] ?></td>
 
                 
+                
                  
               </tr>
             <?php
@@ -827,4 +828,250 @@ else if ($page == 'qcm_edit') {
     </div>
   <?php
 }
-?>
+
+
+//============================================material Keluar=================================================//
+else if ($page == 'material_masuk') {
+  ?>
+    <div class="content-wrapper">
+      <section class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1><?php echo  $judul; ?></h1>
+            </div>
+          </div>
+        </div>
+      </section>
+  
+      <section class="content">
+        <div class="card">
+          <div class="card-body">
+            <table id="datatable_02" class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>NO</th>
+                 <!--  <th>Id material</th> -->
+                  <th>Nama Material</th>
+                  <th>Jumlah</th>
+                  <th>Satuan</th>
+                  <th>Tanggal</th>
+                  <th>Waktu</th>
+                  <th>Aksi</th>
+                </tr>
+              </thead>
+              <?php $i = 1;
+              foreach ($material_masuk as $data) { ?>
+                <tr>
+                  <td><?= $i++; ?></td>
+                  <!-- <td>BK<?php echo $data['ID_MATERIAL_MASUK'] ?></td> -->
+                  <td><?php echo $data['NAMA_MATERIAL'] ?></td>
+                  <td><?php echo $data['JUMLAH'] ?></td>
+                  <td><?php echo $data['SATUAN'] ?></td>
+                  <td><?php echo $data['TANGGAL'] ?></td>
+                  <td><?php echo $data['WAKTU'] ?></td>
+                  <td>
+                 <a href=<?php echo base_url("dashboard/bm_edit/") . $data['ID_MATERIAL_MASUK']; ?>> <i class="fas fa-pencil-alt"></i> </a> 
+                  <a href=<?php echo base_url("dashboard/bm_hapus/") . $data['ID_MATERIAL_MASUK']; ?> onclick="return confirm('Yakin menghapus Data MATERIAL Keluar: <?php echo $data['NAMA_MATERIAL']; ?> ?');" ;><i class="fas fa-trash-alt"></i></a>
+                </td>
+                </tr>
+              <?php
+              }
+              ?>
+            </table>
+            </div>
+        </div>
+      </section>
+    </div>
+  
+  <?php
+  }
+ 
+
+
+//========================================Tambah material Keluar==========================//
+  else if ($page == 'bm_tambah') {
+  ?>
+    <div class="content-wrapper">
+      <section class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1><?php echo  $judul; ?></h1>
+            </div>
+          </div>
+        </div>
+      </section>
+  
+      <section class="content">
+        <div class="card">
+          <div class="card-body">
+         <!--  <a href=<?php echo base_url("dashboard/bmnew_tambah") ?> class="btn btn-primary" style="margin-bottom:15px">
+            Tambah Data Material Baru</a> -->
+            <form method="POST" action="<?php echo base_url('dashboard/bm_tambah/' ); ?>" class="form-horizontal">
+  
+              <div class="card-body">
+                <div class="form-group row">
+                  <label for="ID_MATERIAL" class="col-sm-2 col-form-label">Pilih Material</label>
+                  <div class="col-sm-10" >
+                    <select class="form-control" name="ID_MATERIAL" id="ID_MATERIAL" value="<?php echo form_dropdown('ID_MATERIAL', $ddmaterial, set_value('ID_MATERIAL')); ?>
+                    
+                    <span class="badge badge-warning"><?php echo strip_tags(form_error('ID_MATERIAL')); ?></span>
+                    </select>
+                </div>
+              </div>
+
+                 <div class="form-group row">
+                <label for="JUMLAH" class="col-sm-2 col-form-label">Jumlah</label>
+                <div class="col-sm-10">
+                  <input type="text"min="0"  max="<?php echo set_value('b.JUMLAH',$d['JUMLAH']); ?>" class="form-control" name="JUMLAH" id="JUMLAH" value="<?php echo set_value('JUMLAH'); ?>" placeholder="Masukkan Jumlah">
+                  <span class="badge badge-warning"><?php echo strip_tags(form_error('JUMLAH')); ?></span>
+                </div>
+              </div>
+  
+                
+              </div>
+              <div class="card-footer">
+                <button type="submit" class="btn btn-info">Simpan</button>
+              </div>
+            </form>
+  
+  
+          </div>
+      </section>
+    </div>
+  <?php
+  }
+
+  //--------------------------------- TAMBAH ---------------------------------
+else if ($page == 'bmnew_tambah') {
+    ?>
+      <div class="content-wrapper">
+        <section class="content-header">
+          <div class="container-fluid">
+            <div class="row mb-2">
+              <div class="col-sm-6">
+                <h1><?php echo  $judul; ?></h1>
+              </div>
+            </div>
+          </div>
+        </section>
+    
+        <section class="content">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Isikan Data Dengan Benar</h3>
+            </div>
+            <div class="card-body">
+    
+              <?php echo validation_errors(); ?>
+    
+              <form method="POST" action="<?php echo base_url('dashboard/bmnew_tambah/' ); ?>" class="form-horizontal">
+    
+                <div class="card-body">
+    
+                   <div class="form-group row">
+                            <label for="ID_MATERIAL" class="col-sm-2 col-form-label">Kode Material</label>
+                            <div class="col-sm-10">
+                              <input type="text" class="form-control" name="ID_MATERIAL" id="ID_MATERIAL" value="<?php echo set_value('ID_MATERIAL'); ?>" placeholder="Masukkan ID MATERIAL">
+                              <span class="badge badge-warning"><?php echo strip_tags(form_error('ID_MATERIAL')); ?></span>
+                            </div>
+                          </div>
+
+                         <div class="form-group row">
+                            <label for="nama_material" class="col-sm-2 col-form-label">Nama Material</label>
+                            <div class="col-sm-10">
+                              <input type="text" class="form-control" name="NAMA_MATERIAL" id="NAMA_MATERIAL" value="<?php echo set_value('NAMA_MATERIAL'); ?>" placeholder="Masukkan Nama MATERIAL">
+                              <span class="badge badge-warning"><?php echo strip_tags(form_error('NAMA_MATERIAL')); ?></span>
+                            </div>
+                          </div>
+
+                         <div class="form-group row">
+                            <label for="nama_material" class="col-sm-2 col-form-label">Jumlah</label>
+                            <div class="col-sm-10">
+                              <input type="text" class="form-control" name="JUMLAH" id="JUMLAH" value="<?php echo set_value('JUMLAH'); ?>" placeholder="Masukkan Jumlah">
+                              <span class="badge badge-warning"><?php echo strip_tags(form_error('JUMLAH')); ?></span>
+                            </div>
+                          </div>
+
+                          <div class="form-group row">
+                            <label for="SATUAN" class="col-sm-2 col-form-label">Satuan</label>
+                            <div class="col-sm-10">
+                             
+                              <select class="form-control" name="SATUAN" id="SATUAN" value="<?php echo set_value('SATUAN'); ?>" >
+                                <option value="" disabled>Pilih Satuan</option>
+                                <option value="M"<?php echo set_value('SATUAN'); ?>>M</option>
+                                <option value="PC"<?php echo set_value('SATUAN'); ?>>PC</option>
+                                <option value="BTG"<?php echo set_value('SATUAN'); ?>>BTG</option>
+                              </select>
+                              <span class="badge badge-warning"><?php echo strip_tags(form_error('SATUAN')); ?></span>
+                            </div>
+                          </div>
+
+                </div>
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-info">Simpan</button>
+                </div>
+              </form>
+    
+            </div>
+          </div>
+        </section>
+      </div>
+    
+    <?php
+    }
+
+  //========================================Edit material Keluar==========================//
+ else if ($page == 'bm_edit') {
+  ?>
+    <div class="content-wrapper">
+      <section class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1><?php echo  $judul; ?></h1>
+            </div>
+          </div>
+        </div>
+      </section>
+  
+      <section class="content">
+        <div class="card">
+          <div class="card-body">
+  
+            <form method="POST" action="<?php echo base_url('dashboard/bm_edit/' . $d['ID_MATERIAL_MASUK']); ?>" class="form-horizontal">
+  
+              <div class="card-body">
+                <div class="form-group row">
+                  <label for="ID_MATERIAL" class="col-sm-2 col-form-label">Pilih material</label>
+                  <div class="col-sm-10" >
+                    <select class="form-control" name="ID_MATERIAL" id="ID_MATERIAL" value="<?php echo form_dropdown('ID_MATERIAL', $ddmaterial, set_value('ID_MATERIAL',$d['ID_MATERIAL'])); ?>
+                    
+                    <span class="badge badge-warning"><?php echo strip_tags(form_error('ID_MATERIAL')); ?></span>
+                    </select>
+                </div>
+              </div>
+
+                 <div class="form-group row">
+                <label for="JUMLAH" class="col-sm-2 col-form-label">Jumlah</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" name="JUMLAH" id="JUMLAH" value="<?php echo set_value('JUMLAH',$d['JUMLAH']); ?>" placeholder="Masukkan Jumlah">
+                  <span class="badge badge-warning"><?php echo strip_tags(form_error('JUMLAH')); ?></span>
+                </div>
+              </div>
+  
+                
+              </div>
+              <div class="card-footer">
+                <button type="submit" class="btn btn-info">Simpan</button>
+              </div>
+            </form>
+  
+  
+          </div>
+      </section>
+    </div>
+  <?php
+  }
+  ?>
