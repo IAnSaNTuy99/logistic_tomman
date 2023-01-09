@@ -187,7 +187,7 @@
           </li>
           <li class="nav-item  
             <?php
-              if (in_array($page, $menu_master6))
+              if (in_array($page, $menu_master6)||in_array($page, $menu_master7 ))
                 echo "menu-open";
               ?>
             "> 

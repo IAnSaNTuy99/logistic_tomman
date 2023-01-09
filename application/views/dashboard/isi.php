@@ -602,7 +602,7 @@ else if ($page == 'qcm') {
           <div class="card-body">
             <a href=<?php echo base_url("dashboard/qcm_upload") ?> class="btn btn-primary" style="margin-bottom:15px">
             Input QC Material</a>
-            <table class="table table-bordered">
+            <table id=datatable_02 class="table table-bordered">
               <thead>
                 <tr>
                   <th>NO</th>
@@ -672,7 +672,7 @@ else if ($page == 'qcm_upload') {
                   <div class="col-sm-10">
                   <select class="form-control" name="id_material" id="id_material" 
                   value="<?php echo form_dropdown('id_material', $ddmaterial, set_value('id_material')); ?>  
-                    <span class="badge badge-warning"><?php echo strip_tags(form_error('id_material')); ?></span>
+                    <span class= "badge badge-warning"><?php echo strip_tags(form_error('id_material')); ?></span>
                   </div>
                 </div>
 

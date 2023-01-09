@@ -17,7 +17,8 @@
   <link rel="stylesheet" href="<?php echo base_url(); ?>assets/adminlte/dist/css/adminlte.css">
   <style>
     .login-page {
-      background-image: url("<?php echo base_url(); ?>assets/img/telkom_wh.jpeg");
+      /* background-image: url("<?php echo base_url(); ?>assets/img/bg_Simawar.jpg"); */
+      background: linear-gradient(#B03A2E, #343a40);  
       background-position: center center;
       background-size: cover;
       background-attachment: fixed;
@@ -27,13 +28,13 @@
 
 <body class="hold-transition login-page">
   <div class="login-box">
-    <div class="login-logo">
+    <div class="card">
+      <div class="card-body p-lg-5 p-0">
+      <div class="login-logo">
       <img src="<?php echo base_url(); ?>assets/img/telkom_logo.png">
       <span class="text-warning"><b></b></a></span>
     </div>
     <!-- /.login-logo -->
-    <div class="card">
-      <div class="card-body login-card-body">
         <p class="login-box-msg">Silahkan Login Disini</p>
                 <?php if(($this->session->flashdata('message'))){?> 
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -81,11 +82,10 @@
 
           </div>
         </form>
-
-      </div>
+        </div>
       <!-- /.login-card-body -->
     </div>
-  </div>
+</div>
   <!-- /.login-box -->
 
   <!-- jQuery -->

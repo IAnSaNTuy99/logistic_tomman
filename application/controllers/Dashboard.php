@@ -144,14 +144,10 @@ class Dashboard extends CI_Controller {
         //     'required|min_length[3]|max_length[45]',
         //     array('required' => '%s harus diisi.')
         // );
-        $this->form_validation->set_rules('JUMLAH', 'JUMLAH', 'required|', array('required' => '%s harus diisi'));
         $this->form_validation->set_rules(
             'JUMLAH',
-            'JUMLAH',
-            "required|trim|numeric|greater_than[0]|less_than[{$stok_valid}]",
-            [
-                'less_than' => "Jumlah Keluar tidak boleh lebih dari {$stok}"
-            ]
+            'Jumlah',
+            "required|trim|numeric|greater_than[0]|less_than[{$stok_valid}]",array('required' => '%s harus diisi','less_than' => "Jumlah Keluar tidak boleh lebih dari {$stok}")   
         );
         $data['d'] = $this->m_dashboard->cari_data('material_keluar', 'ID_material_KELUAR', $id);
        
