@@ -177,72 +177,7 @@ class M_dashboard extends CI_Model{
         return $query->result_array();        
     }
 
-    function dt_qcm_tambah()
-    {
-        echo "dt_qcm_tambah function called";
-        $data = array();
-
-    if (isset($_FILES['filepdf']) && !empty($_FILES['filepdf']['name'])) {
-        $this->load->library('upload', $this->getPDFConfig());
-
-        if ( ! $this->upload->do_upload('filepdf')) {
-            $error = array('error' => $this->upload->display_errors());
-            return $error;
-        } else {
-            $uploadedpdf = $this->upload->data();
-            $data['dokumen'] = $uploadedpdf['file_name'];
-        }
-    }
-
-    if (isset($_FILES['fileimg']) && !empty($_FILES['fileimg']['name'])) {
-        $this->load->library('upload', $this->getImgConfig());
-
-        if ( ! $this->upload->do_upload('fileimg')) {
-            $error = array('error' => $this->upload->display_errors());
-            return $error;
-        } else {
-            $uploadedimg = $this->upload->data();
-            $data['evidence'] = $uploadedimg['file_name'];
-        }
-    }
-
-    if (!empty($data)) {
-        $data['id_material'] = $this->input->post('id_material');
-        $data['status_qcm'] = $this->input->post('status_qcm');
-        $data['tgl_qcm'] = $this->input->post('tgl_qcm');
-        $data['tgl_upload'] = $this->input->post('tgl_upload');
-        return $this->db->insert('qcmaterial', $data);
-    }
-
-    return false;
-    }
-
-    function dt_qcm_tambah2()
-    {
-        if ( !$this->upload->do_upload('dokumen')){
-            redirect(base_url('dashboard/qcm_tambah'));
-        }else {
-            $uploadedpdf = $this->upload->data();
-            $pdf=$uploadedpdf['file_name'];
-        }if ( !$this->upload->do_upload('evidance')){
-            redirect(base_url('dashboard/qcm_tambah'));
-        }else{
-            $uploadedimg = $this->upload->data();
-            $img= $uploadedimg['file_name'];
-        }
-        $data = array(
-            'id_material' => $this->input->post('id_material'),
-            'dokumen' => $pdf,
-            'evidence' => $img,
-            'status_qcm' => $this->input->post('status_qcm'),
-            'tgl_qcm' => $this->input->post('tgl_qcm'),
-            'tgl_upload' => $this->input->post('tgl_upload'),
-        );    
-        return $this->db->insert('qcmaterial', $data);
-
-    }
-
-    public function dt_qcm_tambah3()
+    public function dt_qcm_tambah3($pdf,$img)
     {
         $data = array(
             'id_material' => $this->input->post('id_material'),
@@ -254,24 +189,6 @@ class M_dashboard extends CI_Model{
         );    
         return $this->db->insert('qcmaterial', $data);
 
-    }
-
-    private function getPDFConfig() {
-        $config = array();
-        $config['upload_path'] = 'uploads/pdf/';
-        $config['allowed_types'] = 'pdf';
-        $config['max_size'] = 100;
-        $config['encrypt_name'] = TRUE;
-        return $config;
-    }
-    
-    private function getImgConfig() {
-        $config = array();
-        $config['upload_path'] = 'uploads/images/';
-        $config['allowed_types'] = 'jpeg|JPEG|JPG|jpg|png|PNG';
-        $config['max_size'] = 100;
-        $config['encrypt_name'] = TRUE;
-        return $config;
     }
 
 //================================TOOLS======================//

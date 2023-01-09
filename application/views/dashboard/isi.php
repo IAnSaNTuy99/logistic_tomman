@@ -660,7 +660,7 @@ else if ($page == 'qcm_upload') {
       <section class="content">
         <div class="card">
           <div class="card-body">
-                <!-- <?php echo validation_errors(); ?> -->
+                <?php echo validation_errors(); ?>
 
           
                <?php echo form_open_multipart('dashboard/qcm_upload');?>
