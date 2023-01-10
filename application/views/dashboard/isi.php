@@ -52,8 +52,10 @@
         <div class="card-body">
           <h2>Info</h2>
           <p>Ini adalah contoh sistem informasi menggunakan CI3 dengan sistem login,
-            dan menggunakan data yang berelasi. Didalamnya juga menggunakan sistem
-            multilogin untuk membedakan level user tertentu.<br>
+            dan menggunakan data yang berelasi. Website ini diperuntukkan untuk Kantor Administrasi
+            Telkom Akses WH Banjarmasin yang berada di Kecamatan Gambut Kabupaten Banjar. Berfungsi
+            sebagai pendataan stok material, pendataan barang keluar dan masuk, pendataan hasil QC Material
+            , dan pendataan data Staff.<br>
             Besar harapan contoh coding ini bermanfaat sebagai start awal memahami
             membangun sebuah sistem informasi yang lebih rumit.</p>
           <p></p>
@@ -660,7 +662,7 @@ else if ($page == 'qcm_upload') {
       <section class="content">
         <div class="card">
           <div class="card-body">
-                <!-- <?php echo validation_errors(); ?> -->
+                <?php echo validation_errors(); ?>
 
           
                <?php echo form_open_multipart('dashboard/qcm_upload');?>
@@ -679,14 +681,20 @@ else if ($page == 'qcm_upload') {
                 <div class="form-group row">
                   <label for="dokumen" class="col-sm-2 col-form-label">Upload PDF</label>
                   <div class="col-sm-10">
-                    <input type="file" accept=".pdf" class="form-control-file" id="dokumen" name="dokumen" >
+                    <div class="custom-file mb-2">
+                        <input type="file" accept=".pdf" class="custom-file-input" id="dokumen" name="dokumen" >
+                        <label class="custom-file-label" for="dokumen">Pilih dokumen formulir QC</label>
+                    </div>
                   </div>
                 </div>
 
-                <div class="form-group row">
+                  <div class="form-group row">
                   <label for="evidence" class="col-sm-2 col-form-label">Upload Evidence</label>
                   <div class="col-sm-10">
-                    <input type="file" accept=".jpg,.png,.jpeg" class="form-control-file" id="evidence" name="evidence" >
+                    <div class="custom-file mb-2">
+                        <input type="file" accept=".jpg,.jpeg,.png" class="custom-file-input" id="evidence" name="evidence" >
+                        <label class="custom-file-label" for="Evidence">Pilih Bukti QC</label>
+                    </div>
                   </div>
                 </div>
                 
@@ -755,8 +763,8 @@ else if ($page == 'qcm_edit') {
           <div class="card-body">
                 <!-- <?php echo validation_errors(); ?> -->
 
-          
-               <?php echo form_open_multipart('dashboard/qcm_edit');?>
+              
+               <?php echo form_open_multipart('dashboard/qcm_edit/'. $d['id_qcm'],array('method' => 'POST'));?>
 
               <div class="card-body">
 
@@ -764,22 +772,39 @@ else if ($page == 'qcm_edit') {
                   <label for="id_material" class="col-sm-2 col-form-label">Nama material</label>
                   <div class="col-sm-10">
                   <select class="form-control" name="id_material" id="id_material" 
-                  value="<?php echo form_dropdown('id_material', $ddmaterial, set_value('id_material')); ?>  
+                  value="<?php echo form_dropdown('id_material', $ddmaterial, set_value('id_material',$d['id_material'])); ?>  
                     <span class="badge badge-warning"><?php echo strip_tags(form_error('id_material')); ?></span>
                   </div>
                 </div>
 
+
                 <div class="form-group row">
                   <label for="dokumen" class="col-sm-2 col-form-label">Upload PDF</label>
                   <div class="col-sm-10">
-                    <input type="file" accept=".pdf" class="form-control-file" id="dokumen" name="dokumen" >
+                    <label >Current Files : <?php echo $d['dokumen'] ? '<a href="' . base_url("uploads/pdf/{$d['dokumen']}") . '" target="_blank">EXIST</a>' : 'NOT EXIST'?></label>
+                    <div class="form-check form-check-inline ml-3">
+                      <input type="checkbox" class="form-check-input" name="update_file" value="1">
+                      <label class="form-check-label">Update Current files</label>
+                    </div>
+                    <div class="custom-file mb-2">
+                        <input type="file" accept=".pdf" class="custom-file-input" id="dokumen" name="dokumen" >
+                        <label class="custom-file-label" for="dokumen">Choose file</label>
+                    </div>
                   </div>
                 </div>
 
                 <div class="form-group row">
                   <label for="evidence" class="col-sm-2 col-form-label">Upload Evidence</label>
                   <div class="col-sm-10">
-                    <input type="file" accept=".jpg,.png,.jpeg" class="form-control-file" id="evidence" name="evidence" >
+                    <label >Current Files : <?php echo $d['evidence'] ? '<a href="' . base_url("uploads/images/{$d['evidence']}") . '" target="_blank">EXIST</a>' : 'NOT EXIST'?></label>
+                    <div class="form-check form-check-inline ml-3">
+                      <input type="checkbox" class="form-check-input" name="update_file" value="2">
+                      <label class="form-check-label">Update Current files</label>
+                    </div>
+                    <div class="custom-file mb-2">
+                        <input type="file" accept=".jpg,.jpeg,.png" class="custom-file-input" id="evidence" name="evidence" >
+                        <label class="custom-file-label" for="evidence">Pilih Bukti QC</label>
+                    </div>
                   </div>
                 </div>
                 
@@ -787,10 +812,10 @@ else if ($page == 'qcm_edit') {
                   <label for="statusqcm" class="col-sm-2 col-form-label">Status QC</label>
                   <div class="col-sm-10">
                     <label >
-                    <input type="radio"  name="status_qcm" id="status_qcm" value="SPEC" <?php echo set_value('status_qcm'); ?>> SPEC
+                    <input type="radio"  name="status_qcm" id="status_qcm" value="SPEC" <?php if($d['status_qcm']=='SPEC') echo 'checked'?>> SPEC
                   </label>
                   <label >
-                    <input type="radio"  name="status_qcm" id="status_qcm" value="UNSPEC" <?php echo set_value('status_qcm'); ?>> UNSPEC
+                    <input type="radio"  name="status_qcm" id="status_qcm" value="UNSPEC"  <?php if($d['status_qcm']=='UNSPEC') echo 'checked'?>> UNSPEC
                   </label>
                   <span class="badge badge-warning"><?php echo strip_tags(form_error('status_qcm')); ?></span>
                   </div>
@@ -800,7 +825,7 @@ else if ($page == 'qcm_edit') {
                     <label for="tanggal lahir" class="col-sm-2 col-form-label">Tanggal QCM</label>
                       <div class="col-sm-10">
                         <input type="date" class="form-control" name="tgl_qcm" id="tgl_qcm"
-                              value="<?php echo set_value('tgl_qcm'); ?>">
+                              value="<?php echo set_value('tgl_qcm',$d['tgl_qcm']); ?>">
                                 <span class="badge badge-warning"><?php echo strip_tags(form_error('tgl_qcm')); ?></span>
                       </div>
                 </div>
@@ -809,7 +834,7 @@ else if ($page == 'qcm_edit') {
                     <label for="tanggal lahir" class="col-sm-2 col-form-label">Tanggal Upload</label>
                       <div class="col-sm-10">
                         <input type="date" class="form-control" name="tgl_upload" id="tgl_upload"
-                              value="<?php echo set_value('tgl_upload'); ?>">
+                              value="<?php echo set_value('tgl_upload',$d['tgl_upload']); ?>">
                                 <span class="badge badge-warning"><?php echo strip_tags(form_error('tgl_upload')); ?></span>
                       </div>
                 </div>
@@ -967,7 +992,7 @@ else if ($page == 'bmnew_tambah') {
               <?php echo validation_errors(); ?>
     
               <form method="POST" action="<?php echo base_url('dashboard/bmnew_tambah/' ); ?>" class="form-horizontal">
-    
+
                 <div class="card-body">
     
                    <div class="form-group row">

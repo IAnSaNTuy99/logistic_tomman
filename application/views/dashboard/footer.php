@@ -4,8 +4,8 @@
     <div class="float-right d-none d-sm-block">
       <b>Version</b> 1.0.0
     </div>
-    [Telkom Akses WH Banjarmasin@2022]
-    <strong>Copyright &copy; 2015-2022 <a href="https://adminlte.io">Simawar</a>.</strong> All rights reserved.
+    [Telkom Akses WH Banjarmasin@2023]
+    <strong>Copyright &copy; 2022-2023 <a href="<?= base_url("dashboard")?>">Simawar</a>.</strong> All rights reserved.
   
  <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
@@ -82,6 +82,13 @@
      
     }).buttons().container().appendTo('#example_wrapper .col-md-6:eq(0)');
   });
+</script>
+
+<script>
+    $(".custom-file-input").on("change", function() {
+      var fileName = $(this).val().split("\\").pop();
+      $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+    });
 </script>
   </footer>
   
