@@ -177,7 +177,7 @@ class M_dashboard extends CI_Model{
         return $query->result_array();        
     }
 
-    public function dt_qcm_tambah3($pdf,$img)
+    public function dt_qcm_tambah($pdf,$img)
     {
         $data = array(
             'id_material' => $this->input->post('id_material'),
@@ -188,6 +188,21 @@ class M_dashboard extends CI_Model{
             'tgl_upload' => $this->input->post('tgl_upload'),
         );    
         return $this->db->insert('qcmaterial', $data);
+
+    }
+
+    public function dt_qcm_edit($id,$pdf,$img)
+    {
+        $data = array(
+            'id_material' => $this->input->post('id_material'),
+            'dokumen' => $pdf,
+            'evidence' => $img,
+            'status_qcm' => $this->input->post('status_qcm'),
+            'tgl_qcm' => $this->input->post('tgl_qcm'),
+            'tgl_upload' => $this->input->post('tgl_upload'),
+        );    
+        $this->db->where('id_qcm', $id);
+        return $this->db->update('qcmaterial', $data);
 
     }
 

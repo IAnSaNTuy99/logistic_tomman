@@ -755,8 +755,8 @@ else if ($page == 'qcm_edit') {
           <div class="card-body">
                 <!-- <?php echo validation_errors(); ?> -->
 
-          
-               <?php echo form_open_multipart('dashboard/qcm_edit');?>
+              
+               <?php echo form_open_multipart('dashboard/qcm_edit/'. $d['id_qcm'],array('method' => 'POST'));?>
 
               <div class="card-body">
 
@@ -764,7 +764,7 @@ else if ($page == 'qcm_edit') {
                   <label for="id_material" class="col-sm-2 col-form-label">Nama material</label>
                   <div class="col-sm-10">
                   <select class="form-control" name="id_material" id="id_material" 
-                  value="<?php echo form_dropdown('id_material', $ddmaterial, set_value('id_material')); ?>  
+                  value="<?php echo form_dropdown('id_material', $ddmaterial, set_value('id_material',$d['id_material'])); ?>  
                     <span class="badge badge-warning"><?php echo strip_tags(form_error('id_material')); ?></span>
                   </div>
                 </div>
@@ -772,6 +772,7 @@ else if ($page == 'qcm_edit') {
                 <div class="form-group row">
                   <label for="dokumen" class="col-sm-2 col-form-label">Upload PDF</label>
                   <div class="col-sm-10">
+                    <!-- <script>$(document).ready(function() {var fileName = "<?php echo $d['dokumen']; ?>";$("#dokumen").val(fileName);});</script> -->
                     <input type="file" accept=".pdf" class="form-control-file" id="dokumen" name="dokumen" >
                   </div>
                 </div>
@@ -779,7 +780,7 @@ else if ($page == 'qcm_edit') {
                 <div class="form-group row">
                   <label for="evidence" class="col-sm-2 col-form-label">Upload Evidence</label>
                   <div class="col-sm-10">
-                    <input type="file" accept=".jpg,.png,.jpeg" class="form-control-file" id="evidence" name="evidence" >
+                    <input type="file" accept=".jpg,.png,.jpeg" class="form-control-file" id="evidence" name="evidence" value="<?php echo set_value('evidence',$d['evidence']);?>">
                   </div>
                 </div>
                 
@@ -787,10 +788,10 @@ else if ($page == 'qcm_edit') {
                   <label for="statusqcm" class="col-sm-2 col-form-label">Status QC</label>
                   <div class="col-sm-10">
                     <label >
-                    <input type="radio"  name="status_qcm" id="status_qcm" value="SPEC" <?php echo set_value('status_qcm'); ?>> SPEC
+                    <input type="radio"  name="status_qcm" id="status_qcm" value="SPEC" <?php if($d['status_qcm']=='SPEC') echo 'checked'?>> SPEC
                   </label>
                   <label >
-                    <input type="radio"  name="status_qcm" id="status_qcm" value="UNSPEC" <?php echo set_value('status_qcm'); ?>> UNSPEC
+                    <input type="radio"  name="status_qcm" id="status_qcm" value="UNSPEC"  <?php if($d['status_qcm']=='UNSPEC') echo 'checked'?>> UNSPEC
                   </label>
                   <span class="badge badge-warning"><?php echo strip_tags(form_error('status_qcm')); ?></span>
                   </div>
@@ -800,7 +801,7 @@ else if ($page == 'qcm_edit') {
                     <label for="tanggal lahir" class="col-sm-2 col-form-label">Tanggal QCM</label>
                       <div class="col-sm-10">
                         <input type="date" class="form-control" name="tgl_qcm" id="tgl_qcm"
-                              value="<?php echo set_value('tgl_qcm'); ?>">
+                              value="<?php echo set_value('tgl_qcm',$d['tgl_qcm']); ?>">
                                 <span class="badge badge-warning"><?php echo strip_tags(form_error('tgl_qcm')); ?></span>
                       </div>
                 </div>
@@ -809,7 +810,7 @@ else if ($page == 'qcm_edit') {
                     <label for="tanggal lahir" class="col-sm-2 col-form-label">Tanggal Upload</label>
                       <div class="col-sm-10">
                         <input type="date" class="form-control" name="tgl_upload" id="tgl_upload"
-                              value="<?php echo set_value('tgl_upload'); ?>">
+                              value="<?php echo set_value('tgl_upload',$d['tgl_upload']); ?>">
                                 <span class="badge badge-warning"><?php echo strip_tags(form_error('tgl_upload')); ?></span>
                       </div>
                 </div>
@@ -967,7 +968,7 @@ else if ($page == 'bmnew_tambah') {
               <?php echo validation_errors(); ?>
     
               <form method="POST" action="<?php echo base_url('dashboard/bmnew_tambah/' ); ?>" class="form-horizontal">
-    
+
                 <div class="card-body">
     
                    <div class="form-group row">
