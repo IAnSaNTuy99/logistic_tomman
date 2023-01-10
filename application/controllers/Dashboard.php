@@ -410,6 +410,7 @@ function tampil($data)
         $this->form_validation->set_rules('tgl_upload', 'Tanggal Upload', 'required');
 
         $data['ddmaterial'] = $this->m_dashboard->dropdown_material();
+        
         $this->load->library('upload');
 
             $uploadPath1='uploads/pdf/';
@@ -420,6 +421,7 @@ function tampil($data)
                 // Set configuration for first file input field
             $config1['upload_path']          = $uploadPath1;
             $config1['allowed_types']        = 'pdf';
+            $config1['max_size']             = 10485760;
             $config1['encrypt_name']         = TRUE;
             $this->upload->initialize($config1);
 
@@ -478,7 +480,7 @@ function tampil($data)
 
     public function qcm_edit($id=false)
     {
-        $data['judul'] = 'Form Input Data QC Material';
+        $data['judul'] = 'Form Update Data QC Material';
         $data['page'] = 'qcm_edit';
         
         // set validation rules
@@ -493,6 +495,9 @@ function tampil($data)
 
         $data['d'] = $this->m_dashboard->cari_data('qcmaterial', 'id_qcm', $id);
 
+
+    //     $file_id = $this->input->post('file_id');
+    // $file_name = $this->file_model->get_file_name($file_id);
 
         $this->load->library('upload');
 

@@ -52,8 +52,10 @@
         <div class="card-body">
           <h2>Info</h2>
           <p>Ini adalah contoh sistem informasi menggunakan CI3 dengan sistem login,
-            dan menggunakan data yang berelasi. Didalamnya juga menggunakan sistem
-            multilogin untuk membedakan level user tertentu.<br>
+            dan menggunakan data yang berelasi. Website ini diperuntukkan untuk Kantor Administrasi
+            Telkom Akses WH Banjarmasin yang berada di Kecamatan Gambut Kabupaten Banjar. Berfungsi
+            sebagai pendataan stok material, pendataan barang keluar dan masuk, pendataan hasil QC Material
+            , dan pendataan data Staff.<br>
             Besar harapan contoh coding ini bermanfaat sebagai start awal memahami
             membangun sebuah sistem informasi yang lebih rumit.</p>
           <p></p>
@@ -679,14 +681,20 @@ else if ($page == 'qcm_upload') {
                 <div class="form-group row">
                   <label for="dokumen" class="col-sm-2 col-form-label">Upload PDF</label>
                   <div class="col-sm-10">
-                    <input type="file" accept=".pdf" class="form-control-file" id="dokumen" name="dokumen" >
+                    <div class="custom-file mb-2">
+                        <input type="file" accept=".pdf" class="custom-file-input" id="dokumen" name="dokumen" >
+                        <label class="custom-file-label" for="dokumen">Pilih dokumen formulir QC</label>
+                    </div>
                   </div>
                 </div>
 
-                <div class="form-group row">
+                  <div class="form-group row">
                   <label for="evidence" class="col-sm-2 col-form-label">Upload Evidence</label>
                   <div class="col-sm-10">
-                    <input type="file" accept=".jpg,.png,.jpeg" class="form-control-file" id="evidence" name="evidence" >
+                    <div class="custom-file mb-2">
+                        <input type="file" accept=".jpg,.jpeg,.png" class="custom-file-input" id="evidence" name="evidence" >
+                        <label class="custom-file-label" for="Evidence">Pilih Bukti QC</label>
+                    </div>
                   </div>
                 </div>
                 
@@ -769,18 +777,34 @@ else if ($page == 'qcm_edit') {
                   </div>
                 </div>
 
+
                 <div class="form-group row">
                   <label for="dokumen" class="col-sm-2 col-form-label">Upload PDF</label>
                   <div class="col-sm-10">
-                    <!-- <script>$(document).ready(function() {var fileName = "<?php echo $d['dokumen']; ?>";$("#dokumen").val(fileName);});</script> -->
-                    <input type="file" accept=".pdf" class="form-control-file" id="dokumen" name="dokumen" >
+                    <label >Current Files : <?php echo $d['dokumen'] ? '<a href="' . base_url("uploads/pdf/{$d['dokumen']}") . '" target="_blank">EXIST</a>' : 'NOT EXIST'?></label>
+                    <div class="form-check form-check-inline ml-3">
+                      <input type="checkbox" class="form-check-input" name="update_file" value="1">
+                      <label class="form-check-label">Update Current files</label>
+                    </div>
+                    <div class="custom-file mb-2">
+                        <input type="file" accept=".pdf" class="custom-file-input" id="dokumen" name="dokumen" >
+                        <label class="custom-file-label" for="dokumen">Choose file</label>
+                    </div>
                   </div>
                 </div>
 
                 <div class="form-group row">
                   <label for="evidence" class="col-sm-2 col-form-label">Upload Evidence</label>
                   <div class="col-sm-10">
-                    <input type="file" accept=".jpg,.png,.jpeg" class="form-control-file" id="evidence" name="evidence" value="<?php echo set_value('evidence',$d['evidence']);?>">
+                    <label >Current Files : <?php echo $d['evidence'] ? '<a href="' . base_url("uploads/images/{$d['evidence']}") . '" target="_blank">EXIST</a>' : 'NOT EXIST'?></label>
+                    <div class="form-check form-check-inline ml-3">
+                      <input type="checkbox" class="form-check-input" name="update_file" value="2">
+                      <label class="form-check-label">Update Current files</label>
+                    </div>
+                    <div class="custom-file mb-2">
+                        <input type="file" accept=".jpg,.jpeg,.png" class="custom-file-input" id="evidence" name="evidence" >
+                        <label class="custom-file-label" for="evidence">Pilih Bukti QC</label>
+                    </div>
                   </div>
                 </div>
                 
